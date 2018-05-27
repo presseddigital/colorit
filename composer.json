@@ -1,19 +1,19 @@
 {
-    "name": "fruitstudios/validateit",
-    "description": "Supercharged text field validation.",
+    "name": "fruitstudios/styleit",
+    "description": "Give clients the control they want with the guidelines your set. Adds palette, heading, alignment and CSS background fieldtypes to Craft CMS.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.0",
     "keywords": [
         "craft",
         "cms",
         "craftcms",
         "craft-plugin",
-        "validate",
-        "validateit"
+        "palette",
+        "styleit"
     ],
     "support": {
-        "docs": "https://github.com/fruitstudios/craft-validateit/blob/master/README.md",
-        "issues": "https://github.com/fruitstudios/craft-validateit/issues"
+        "docs": "https://github.com/fruitstudios/craft-styleit/blob/master/README.md",
+        "issues": "https://github.com/fruitstudios/craft-styleit/issues"
     },
     "license": "proprietary",
     "authors": [
@@ -27,15 +27,15 @@
     },
     "autoload": {
         "psr-4": {
-          "fruitstudios\\validateit\\": "src/"
+          "fruitstudios\\styleit\\": "src/"
         }
     },
     "extra": {
-        "name": "Validateit",
-        "handle": "validateit",
-        "hasCpSettings": false,
+        "name": "Styleit",
+        "handle": "styleit",
+        "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-validateit/master/CHANGELOG.md",
-        "class": "fruitstudios\\validateit\\Validateit"
+        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-styleit/master/CHANGELOG.md",
+        "class": "fruitstudios\\styleit\\Styleit"
     }
 }

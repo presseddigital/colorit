@@ -1,14 +1,14 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {#
 /**
- * Validateit plugin for Craft CMS
+ * Styleit plugin for Craft CMS
  *
- * ValidateitField Field Settings
+ * StyleitField Field Settings
  *
  * @author    Fruit Studios
  * @copyright Copyright (c) 2018 Fruit Studios
  * @link      https://fruitstudios.co.uk
- * @package   Validateit
+ * @package   Styleit
  * @since     1.0.0
  */
 #}
@@ -16,8 +16,8 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.selectField({
-    label: 'Type'|t('validateit'),
-    instructions: 'What would you like to validate.'|t('validateit'),
+    label: 'Type'|t('styleit'),
+    instructions: 'What would you like to validate.'|t('styleit'),
     id: 'type',
     name: 'type',
     value: field.type,
@@ -29,8 +29,8 @@
 <div id="custom" class="{{ field.type != 'custom' ? 'hidden' }}">
 
     {{ forms.textField({
-        label: 'Regex'|t('validateit'),
-        instructions: 'Validate this field with a custom regex rule.'|t('validateit'),
+        label: 'Regex'|t('styleit'),
+        instructions: 'Validate this field with a custom regex rule.'|t('styleit'),
         id: 'regex',
         name: 'regex',
         value: field.regex,
@@ -40,8 +40,8 @@
 </div>
 
 {{ forms.textField({
-    label: 'Validation Message'|t('validateit'),
-    instructions: 'Override the default validation message displayed on failed validation.'|t('validateit'),
+    label: 'Validation Message'|t('styleit'),
+    instructions: 'Override the default validation message displayed on failed validation.'|t('styleit'),
     id: 'message',
     name: 'message',
     value: field.message,
@@ -49,8 +49,8 @@
 }) }}
 
 {{ forms.textField({
-    label: 'Placeholder'|t('validateit'),
-    instructions: 'Override the default input placeholder.'|t('validateit'),
+    label: 'Placeholder'|t('styleit'),
+    instructions: 'Override the default input placeholder.'|t('styleit'),
     id: 'placeholder',
     name: 'placeholder',
     value: field.placeholder,
@@ -61,8 +61,8 @@
 
 {#
 {{ forms.lightswitchField({
-    label: 'Toggle Visibility'|t('validateit'),
-    instructions: 'Select this if you would like the toggle to show / hide the selected field'|t('validateit'),
+    label: 'Toggle Visibility'|t('styleit'),
+    instructions: 'Select this if you would like the toggle to show / hide the selected field'|t('styleit'),
     id: 'toggle',
     name: 'toggle',
     on: field.toggle,
@@ -70,8 +70,8 @@
 }) }}
 
 {{ forms.textField({
-    label: 'Toggle Label'|t('validateit'),
-    instructions: 'Label for the toggle field'|t('validateit'),
+    label: 'Toggle Label'|t('styleit'),
+    instructions: 'Label for the toggle field'|t('styleit'),
     id: 'label',
     name: 'label',
     value: field.label,
@@ -79,8 +79,8 @@
 }) }}
 
 {{ forms.selectField({
-    label: 'Field'|t('validateit'),
-    instructions: 'What type of field should we toggle?'|t('validateit'),
+    label: 'Field'|t('styleit'),
+    instructions: 'What type of field should we toggle?'|t('styleit'),
     id: 'type',
     name: 'type',
     value: field.type,
