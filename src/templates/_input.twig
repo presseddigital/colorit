@@ -1,0 +1,8 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    id: name,
+    name: name,
+    value: value,
+    placeholder: field.placeholder ? field.placeholder : ( field.types[field.type].placeholder ?? ''),
+}) }}

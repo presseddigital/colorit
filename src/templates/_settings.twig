@@ -1,0 +1,102 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Validateit plugin for Craft CMS
+ *
+ * ValidateitField Field Settings
+ *
+ * @author    Fruit Studios
+ * @copyright Copyright (c) 2018 Fruit Studios
+ * @link      https://fruitstudios.co.uk
+ * @package   Validateit
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: 'Type'|t('validateit'),
+    instructions: 'What would you like to validate.'|t('validateit'),
+    id: 'type',
+    name: 'type',
+    value: field.type,
+    options: field.types,
+    errors: field.getErrors('type'),
+    toggle: true
+}) }}
+
+<div id="custom" class="{{ field.type != 'custom' ? 'hidden' }}">
+
+    {{ forms.textField({
+        label: 'Regex'|t('validateit'),
+        instructions: 'Validate this field with a custom regex rule.'|t('validateit'),
+        id: 'regex',
+        name: 'regex',
+        value: field.regex,
+        errors: field.getErrors('regex')
+    }) }}
+
+</div>
+
+{{ forms.textField({
+    label: 'Validation Message'|t('validateit'),
+    instructions: 'Override the default validation message displayed on failed validation.'|t('validateit'),
+    id: 'message',
+    name: 'message',
+    value: field.message,
+    errors: field.getErrors('message')
+}) }}
+
+{{ forms.textField({
+    label: 'Placeholder'|t('validateit'),
+    instructions: 'Override the default input placeholder.'|t('validateit'),
+    id: 'placeholder',
+    name: 'placeholder',
+    value: field.placeholder,
+    errors: field.getErrors('placeholder')
+}) }}
+
+
+
+{#
+{{ forms.lightswitchField({
+    label: 'Toggle Visibility'|t('validateit'),
+    instructions: 'Select this if you would like the toggle to show / hide the selected field'|t('validateit'),
+    id: 'toggle',
+    name: 'toggle',
+    on: field.toggle,
+    errors: field.getErrors('toggle')
+}) }}
+
+{{ forms.textField({
+    label: 'Toggle Label'|t('validateit'),
+    instructions: 'Label for the toggle field'|t('validateit'),
+    id: 'label',
+    name: 'label',
+    value: field.label,
+    errors: field.getErrors('label')
+}) }}
+
+{{ forms.selectField({
+    label: 'Field'|t('validateit'),
+    instructions: 'What type of field should we toggle?'|t('validateit'),
+    id: 'type',
+    name: 'type',
+    value: field.type,
+    options: field.fields,
+    errors: field.getErrors('type')
+}) }}
+ #}
+
+{#
+{% for type in allFieldTypes %}
+    {% set isCurrent = (type == className(field)) %}
+    <div id="{{ type|id }}"{% if not isCurrent %} class="hidden"{% endif %}>
+        {% namespace 'types['~type~']' %}
+            {% set _field = isCurrent ? field : craft.app.fields.createField(type) %}
+            {{ _field.getSettingsHtml()|raw }}
+        {% endnamespace %}
+    </div>
+{% endfor %}
+#}

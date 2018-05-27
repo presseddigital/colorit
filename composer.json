@@ -1,0 +1,41 @@
+{
+    "name": "fruitstudios/validateit",
+    "description": "Supercharged text field validation.",
+    "type": "craft-plugin",
+    "version": "1.0.3",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "validate",
+        "validateit"
+    ],
+    "support": {
+        "docs": "https://github.com/fruitstudios/craft-validateit/blob/master/README.md",
+        "issues": "https://github.com/fruitstudios/craft-validateit/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Fruit Studios",
+            "homepage": "https://fruitstudios.co.uk"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+          "fruitstudios\\validateit\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Validateit",
+        "handle": "validateit",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-validateit/master/CHANGELOG.md",
+        "class": "fruitstudios\\validateit\\Validateit"
+    }
+}
