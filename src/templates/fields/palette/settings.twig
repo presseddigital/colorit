@@ -100,8 +100,8 @@
 
     <div id="{{ field.id }}-global" class="{{ not field.useGlobalSettings ? 'hidden' }}">
 
-
-        Example of what the global settings would look like here
+        {{ field.inputPreviewHtml | raw }}
+        <p><a href="{{ cpUrl('settings/plugins/styleit') }}">Update Global Settings</a></p>
 
     </div>
 

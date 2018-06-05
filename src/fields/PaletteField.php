@@ -180,6 +180,20 @@ class PaletteField extends Field
         );
     }
 
+    public function getInputPreviewHtml(): string
+    {
+        $view = Craft::$app->getView();
+
+        $view->registerAssetBundle(PaletteAssetBundle::class);
+
+        return $view->renderTemplate(
+            'styleit/fields/palette/preview',
+            [
+                'field' => $this,
+            ]
+        );
+    }
+
     public function getPalette()
     {
         $palette = ColourHelper::baseColours($this->paletteBaseColours);
