@@ -29,8 +29,12 @@ class PaletteField extends Field
     // Public Properties
     // =========================================================================
 
-    public $useGlobalSettings;
+    const SCENARIO_GLOBAl = 'global';
 
+    // Public Properties
+    // =========================================================================
+
+    public $useGlobalSettings = false;
     public $paletteColours;
     public $paletteBaseColours;
     public $allowCustomColour = false;
@@ -51,11 +55,12 @@ class PaletteField extends Field
     public function init()
     {
         parent::init();
-        // if($this->useGlobalSettings)
-        // {
-        //     $globalSettings = Styleit::$plugin->getSettings()->palette ?? [];
-        //     Craft::configure($this, $globalSettings);
-        // }
+        if($this->useGlobalSettings && $this->getScenario() != self::SCENARIO_GLOBAl)
+        {
+            $globalSettings = Styleit::$plugin->getSettings()->palette ?? [];
+            Craft::configure($this, $globalSettings);
+            $this->useGlobalSettings = true;
+        }
     }
     public function rules()
     {
@@ -63,6 +68,7 @@ class PaletteField extends Field
         $rules[] = ['paletteColours', 'validatePaletteColours'];
         $rules[] = ['paletteBaseColours', ArrayValidator::class];
         $rules[] = ['colourFormat', 'string'];
+        $rules[] = ['useGlobalSettings', 'default', 'value' => false];
         $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];

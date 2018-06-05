@@ -1,17 +1,23 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.lightswitchField({
-    label: "Global Settings"|t('styleit'),
-    instructions: "Use the global settings defined in your plugin settings"|t('styleit'),
-    id: 'useGlobalSettings',
-    name: 'useGlobalSettings',
-    on: field.useGlobalSettings,
-    errors: field.getErrors('useGlobalSettings'),
-    toggle: field.id ~ '-global',
-    reverseToggle: field.id ~ '-local',
-}) }}
+{% set global = field.scenario == 'global' %}
 
-<div id="{{ field.id }}-local">
+{% if not global %}
+
+    {{ forms.lightswitchField({
+        label: "Global Settings"|t('styleit'),
+        instructions: "Use the global settings defined in your plugin settings"|t('styleit'),
+        id: 'useGlobalSettings',
+        name: 'useGlobalSettings',
+        on: field.useGlobalSettings,
+        errors: field.getErrors('useGlobalSettings'),
+        toggle: field.id ~ '-global',
+        reverseToggle: field.id ~ '-local',
+    }) }}
+
+{% endif %}
+
+<div id="{{ field.id }}-local" class="{{ field.useGlobalSettings ? 'hidden' }}">
 
     {{ forms.editableTableField({
         label: 'Palette Colours',
@@ -90,8 +96,13 @@
 
 </div>
 
-<div id="{{ field.id }}-global">
+{% if not global %}
 
-    Example of what the global settings would look like here
+    <div id="{{ field.id }}-global" class="{{ not field.useGlobalSettings ? 'hidden' }}">
 
-</div>
+
+        Example of what the global settings would look like here
+
+    </div>
+
+{% endif %}

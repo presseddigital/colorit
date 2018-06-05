@@ -88,9 +88,14 @@ var Palette = (function() {
 	        if(clearValue) {
 	        	dom.customColourInput.value = '';
 	        }
-	        dom.customColour.setAttribute('data-colour', '');
-	        dom.customColour.style.backgroundColor = null;
-	        dom.custom.classList.remove(classes.selectedColour);
+	        if(dom.customColour) {
+	        	dom.customColour.setAttribute('data-colour', '');
+	        	dom.customColour.style.backgroundColor = null;
+	        }
+	        if (dom.custom) {
+		        dom.custom.classList.remove(classes.selectedColour);
+	        }
+
 		};
 
 		// Event Handlers

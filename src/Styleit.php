@@ -105,6 +105,7 @@ class Styleit extends Plugin
 
         $paletteField = new PaletteField();
         $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
+        $paletteField->setScenario('global');
 
         return Craft::$app->getView()->renderTemplate('styleit/settings', [
             'settings' => $settings,

@@ -16,9 +16,4 @@ class Settings extends Model
     // Public Methods
     // =========================================================================
 
-    public function rules()
-    {
-        $rules = parent::rules();
-        return $rules;
-    }
 }
