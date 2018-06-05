@@ -1,0 +1,87 @@
+{% import "_includes/forms" as forms %}
+
+{% set handle = value.handle ?? '' %}
+{% set custom = value.custom ?? '' %}
+{% set opacity = value.opacity ?? 100 %}
+
+<div id="{{ id }}" class="styleit--palette flex">
+
+	{% if field.palette|length %}
+
+		<div>
+
+			<ul class="styleit--palette-colours" data-styleit-palette-colours>
+
+				{% for paletteColour in field.palette %}
+
+					{% set class = [
+						'styleit--palette-colour',
+						craft.styleit.hexIsTransparent(paletteColour.colour) ? 'styleit--palette-colourIsTransparent' : null,
+						handle == paletteColour.handle ? 'styleit--palette-colourIsSelected' : null,
+					]|filter|join(' ') %}
+
+					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.styleit.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+
+					<li class="{{ class }}" data-handle="{{ paletteColour.handle }}" data-colour="{{ paletteColour.colour }}" style="background:{{ processedColour }} !important;" data-styleit-palette-colour>
+						<img class="styleit--palette-selectedIcon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDQ0IDQ0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0NCA0NCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CiAgPHBhdGggZD0ibTIyLDBjLTEyLjIsMC0yMiw5LjgtMjIsMjJzOS44LDIyIDIyLDIyIDIyLTkuOCAyMi0yMi05LjgtMjItMjItMjJ6bTEyLjcsMTUuMWwwLDAtMTYsMTYuNmMtMC4yLDAuMi0wLjQsMC4zLTAuNywwLjMtMC4zLDAtMC42LTAuMS0wLjctMC4zbC03LjgtOC40LS4yLS4yYy0wLjItMC4yLTAuMy0wLjUtMC4zLTAuN3MwLjEtMC41IDAuMy0wLjdsMS40LTEuNGMwLjQtMC40IDEtMC40IDEuNCwwbC4xLC4xIDUuNSw1LjljMC4yLDAuMiAwLjUsMC4yIDAuNywwbDEzLjQtMTMuOWgwLjFjMC40LTAuNCAxLTAuNCAxLjQsMGwxLjQsMS40YzAuNCwwLjMgMC40LDAuOSAwLDEuM3oiIGZpbGw9IiMwMDAwMDAiLz4KPC9zdmc+Cg==" />
+					</li>
+
+				{% endfor %}
+
+			</ul>
+
+			<input id="{{ id }}-handle" type="hidden" name="{{ name }}[handle]" value="{{ handle }}">
+
+		</div>
+
+	{% else %}
+
+		<input id="{{ id }}-handle" type="hidden" name="{{ name }}[handle]" value="{{ handle }}">
+
+	{% endif %}
+
+
+	{% if field.allowCustomColour %}
+
+		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.styleit.hexToRgba(custom, opacity) : custom %}
+
+		<div class="styleit--palette-customColour{{ processedColour ? ' styleit--palette-colourIsSelected' }}" data-styleit-palette-custom>
+			{{ forms.text({
+				id: id~'-custom',
+				name: name~'[custom]',
+				placeholder: '#D65B4B',
+				value: custom
+			}) }}
+			<div class="styleit--palette-customColourSwatch" data-colour="{{ custom }}" style="background:{{ custom }} !important;" data-styleit-palette-custom-colour>
+				{#
+					<img class="styleit--palette-selectedIcon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDQ0IDQ0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0NCA0NCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CiAgPHBhdGggZD0ibTIyLDBjLTEyLjIsMC0yMiw5LjgtMjIsMjJzOS44LDIyIDIyLDIyIDIyLTkuOCAyMi0yMi05LjgtMjItMjItMjJ6bTEyLjcsMTUuMWwwLDAtMTYsMTYuNmMtMC4yLDAuMi0wLjQsMC4zLTAuNywwLjMtMC4zLDAtMC42LTAuMS0wLjctMC4zbC03LjgtOC40LS4yLS4yYy0wLjItMC4yLTAuMy0wLjUtMC4zLTAuN3MwLjEtMC41IDAuMy0wLjdsMS40LTEuNGMwLjQtMC40IDEtMC40IDEuNCwwbC4xLC4xIDUuNSw1LjljMC4yLDAuMiAwLjUsMC4yIDAuNywwbDEzLjQtMTMuOWgwLjFjMC40LTAuNCAxLTAuNCAxLjQsMGwxLjQsMS40YzAuNCwwLjMgMC40LDAuOSAwLDEuM3oiIGZpbGw9IiMwMDAwMDAiLz4KPC9zdmc+Cg==" />
+				#}
+			</div>
+		</div>
+
+	{% else %}
+
+		<input type="hidden" name="{{ name }}[custom]" value="" />
+
+	{% endif %}
+
+
+	{% if field.allowOpacity %}
+
+		<div class="styleit--palette-opacity" data-styleit-palette-opacity>
+			<input id="{{ id }}-opacity" class="text" type="number" name="{{ name }}[opacity]" value="{{ opacity }}" min="1" max="120" novalidate/>
+		</div>
+
+	{% else %}
+
+		<input id="{{ id }}-opacity" type="hidden" name="{{ name }}[opacity]" value="100" />
+
+	{% endif %}
+
+</div>
+
+{% if value.hasErrors() %}
+	{% for error in value.getErrors() %}
+		{{ forms.errorList(error) }}
+	{% endfor %}
+{% endif %}

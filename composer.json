@@ -1,6 +1,6 @@
 {
     "name": "fruitstudios/styleit",
-    "description": "Give clients the control they want with the guidelines your set. Adds palette, heading, alignment and CSS background fieldtypes to Craft CMS.",
+    "description": "Adds palette, heading, alignment and background fieldtypes to Craft CMS.",
     "type": "craft-plugin",
     "version": "1.0.0",
     "keywords": [

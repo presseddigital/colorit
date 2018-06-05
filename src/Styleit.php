@@ -10,12 +10,16 @@
 
 namespace fruitstudios\styleit;
 
-use fruitstudios\styleit\fields\StyleitField;
+use fruitstudios\styleit\models\Settings;
+use fruitstudios\styleit\fields\PaletteField;
+use fruitstudios\styleit\services\Colours;
+use fruitstudios\styleit\variables\StyleitVariable;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Fields;
 use craft\events\RegisterComponentTypesEvent;
+use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
 
@@ -60,7 +64,20 @@ class Styleit extends Plugin
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function (RegisterComponentTypesEvent $event) {
-                $event->types[] = StyleitField::class;
+                $event->types[] = PaletteField::class;
+                // $event->types[] = BackgroundField::class;
+                // $event->types[] = AlignmentField::class;
+                // $event->types[] = HeadingField::class;
+            }
+        );
+
+
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                $variable = $event->sender;
+                $variable->set('styleit', StyleitVariable::class);
             }
         );
 
@@ -74,4 +91,24 @@ class Styleit extends Plugin
         );
     }
 
+    // Protected Methods
+    // =========================================================================
+
+    protected function createSettingsModel()
+    {
+        return new Settings();
+    }
+
+    protected function settingsHtml()
+    {
+        $settings = $this->getSettings();
+
+        $paletteField = new PaletteField();
+        $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
+
+        return Craft::$app->getView()->renderTemplate('styleit/settings', [
+            'settings' => $settings,
+            'palette' => $paletteField,
+        ]);
+    }
 }

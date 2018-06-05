@@ -1,0 +1,97 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: "Global Settings"|t('styleit'),
+    instructions: "Use the global settings defined in your plugin settings"|t('styleit'),
+    id: 'useGlobalSettings',
+    name: 'useGlobalSettings',
+    on: field.useGlobalSettings,
+    errors: field.getErrors('useGlobalSettings'),
+    toggle: field.id ~ '-global',
+    reverseToggle: field.id ~ '-local',
+}) }}
+
+<div id="{{ field.id }}-local">
+
+    {{ forms.editableTableField({
+        label: 'Palette Colours',
+        instructions : 'Set the palette colours, these can be changed at any time.'|t('styleit'),
+        id: 'paletteColours',
+        rows: 4,
+        textual: false,
+        name: 'paletteColours',
+        addRowLabel: 'Add colour',
+        cols: {
+            'label' : {
+                'heading' : 'Label',
+                'type'   : 'singleline'
+            },
+            'handle' : {
+                'heading' : 'Handle',
+                'type'   : 'singleline'
+            },
+            'colour' : {
+                'heading' : 'Colour',
+                'type'   : 'singleline'
+            }
+        },
+        rows: field.paletteColours ?? false,
+        errors: []
+    }) }}
+
+    {#
+    {% js %}
+        new Craft.HandleGenerator('#label', '#handle');
+    {% endjs %}
+    #}
+
+    {{ forms.checkboxSelectField({
+        label: "Base Colours"|t('styleit'),
+        instructions: "Select any base colours that you would like to include in your palette field."|t('styleit'),
+        id: 'paletteBaseColours',
+        name: 'paletteBaseColours',
+        options: craft.styleit.baseColoursAsOptions,
+        values: field.paletteBaseColours,
+        errors: field.getErrors('paletteBaseColours')
+    })}}
+
+    {{ forms.lightswitchField({
+        label: "Opacity"|t('styleit'),
+        instructions: "Allow the user to set opacty on this palette field."|t('styleit'),
+        id: 'allowOpacity',
+        name: 'allowOpacity',
+        on: field.allowOpacity,
+        errors: field.getErrors('allowOpacity')
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Custom Colour"|t('styleit'),
+        instructions: "Allow the user to set a custom colour hex for this palette field."|t('styleit'),
+        id: 'allowCustomColour',
+        name: 'allowCustomColour',
+        on: field.allowCustomColour,
+        errors: field.getErrors('allowCustomColour')
+    }) }}
+
+    {{ forms.selectField({
+        label: "Colour Output"|t('styleit'),
+        instructions: "Select the default colour output you would like to return."|t('styleit'),
+        id: 'colourFormat',
+        name: 'colourFormat',
+        options: {
+            'auto' : 'Auto: Best Guess',
+            'hex' : 'HEX: #454545',
+            'rgb' : 'RGB: rgb(255,255,255)',
+            'rgba' : 'RGBA: rgb(255,255,255,0.5)'
+        },
+        value: field.colourFormat,
+        errors: field.getErrors('colourFormat')
+    }) }}
+
+</div>
+
+<div id="{{ field.id }}-global">
+
+    Example of what the global settings would look like here
+
+</div>
