@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\styleit\helpers;
+namespace fruitstudios\palette\helpers;
 
 use Craft;
 
@@ -12,17 +12,17 @@ class ColourHelper
     {
         $baseColours = [
             'transparent' => [
-                'label' => Craft::t('styleit', 'Transparent'),
+                'label' => Craft::t('palette', 'Transparent'),
                 'handle' => 'transparent',
                 'colour' => 'transparent'
             ],
             'white' => [
-                'label' => Craft::t('styleit', 'White'),
+                'label' => Craft::t('palette', 'White'),
                 'handle' => 'white',
                 'colour' => '#FFFFFF'
             ],
             'black' => [
-                'label' => Craft::t('styleit', 'Black'),
+                'label' => Craft::t('palette', 'Black'),
                 'handle' => 'black',
                 'colour' => '#000000'
             ],

@@ -1,6 +1,6 @@
 <?php
 /**
- * Styleit plugin for Craft CMS 3.x
+ * Palette plugin for Craft CMS 3.x
  *
  * A super simple field type which allows you toggle existing field types.
  *
@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2018 Fruit Studios
  */
 
-namespace fruitstudios\styleit;
+namespace fruitstudios\palette;
 
-use fruitstudios\styleit\models\Settings;
-use fruitstudios\styleit\fields\PaletteField;
-use fruitstudios\styleit\services\Colours;
-use fruitstudios\styleit\variables\StyleitVariable;
+use fruitstudios\palette\models\Settings;
+use fruitstudios\palette\fields\PaletteField;
+use fruitstudios\palette\services\Colours;
+use fruitstudios\palette\variables\PaletteVariable;
 
 use Craft;
 use craft\base\Plugin;
@@ -24,20 +24,20 @@ use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 
 /**
- * Class Styleit
+ * Class Palette
  *
  * @author    Fruit Studios
- * @package   Styleit
+ * @package   Palette
  * @since     1.0.0
  *
  */
-class Styleit extends Plugin
+class Palette extends Plugin
 {
     // Static Properties
     // =========================================================================
 
     /**
-     * @var Styleit
+     * @var Palette
      */
     public static $plugin;
 
@@ -65,9 +65,6 @@ class Styleit extends Plugin
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = PaletteField::class;
-                // $event->types[] = BackgroundField::class;
-                // $event->types[] = AlignmentField::class;
-                // $event->types[] = HeadingField::class;
             }
         );
 
@@ -77,13 +74,13 @@ class Styleit extends Plugin
             CraftVariable::EVENT_INIT,
             function (Event $event) {
                 $variable = $event->sender;
-                $variable->set('styleit', StyleitVariable::class);
+                $variable->set('palette', PaletteVariable::class);
             }
         );
 
         Craft::info(
             Craft::t(
-                'styleit',
+                'palette',
                 '{name} plugin loaded',
                 ['name' => $this->name]
             ),
@@ -107,7 +104,7 @@ class Styleit extends Plugin
         $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
         $paletteField->setScenario('global');
 
-        return Craft::$app->getView()->renderTemplate('styleit/settings', [
+        return Craft::$app->getView()->renderTemplate('palette/settings', [
             'settings' => $settings,
             'palette' => $paletteField,
         ]);

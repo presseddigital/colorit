@@ -11,16 +11,16 @@ var Palette = (function() {
 	};
 
 	var selectors = {
-		palette: '[data-styleit-palette]',
-		paletteColours: '[data-styleit-palette-colours]',
-		paletteColour: '[data-styleit-palette-colour]',
-		opacity: '[data-styleit-palette-opacity]',
-		custom: '[data-styleit-palette-custom]',
-		customColour: '[data-styleit-palette-custom-colour]',
+		palette: '[data-palette-palette]',
+		paletteColours: '[data-palette-palette-colours]',
+		paletteColour: '[data-palette-palette-colour]',
+		opacity: '[data-palette-palette-opacity]',
+		custom: '[data-palette-palette-custom]',
+		customColour: '[data-palette-palette-custom-colour]',
 	};
 
 	var classes = {
-		selectedColour: 'styleit--palette-colourIsSelected',
+		selectedColour: 'palette--palette-colourIsSelected',
 	};
 
 	var constructor = function(options) {

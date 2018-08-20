@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\styleit\validators;
+namespace fruitstudios\palette\validators;
 
 use Craft;
 

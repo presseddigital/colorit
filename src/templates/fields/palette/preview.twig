@@ -3,22 +3,26 @@
 {% set custom = '#cc5643' %}
 {% set opacity = 100 %}
 
-<div class="styleit--palette flex">
+<div class="palette--palette flex">
+
+	{{ d(field.palette) }}
+	{{ d(field.allowCustomColour) }}
+	{{ d(field.allowOpacity) }}
 
 	{% if field.palette|length %}
 
 		<div>
 
-			<ul class="styleit--palette-colours">
+			<ul class="palette--palette-colours">
 
 				{% for paletteColour in field.palette %}
 
 					{% set class = [
-						'styleit--palette-colour',
-						craft.styleit.hexIsTransparent(paletteColour.colour) ? 'styleit--palette-colourIsTransparent' : null,
+						'palette--palette-colour',
+						craft.palette.hexIsTransparent(paletteColour.colour) ? 'palette--palette-colourIsTransparent' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.styleit.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
 
 					<li class="{{ class }}" style="background:{{ processedColour }} !important;"></li>
 
@@ -33,11 +37,11 @@
 
 	{% if field.allowCustomColour %}
 
-		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.styleit.hexToRgba(custom, opacity) : custom %}
+		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.hexToRgba(custom, opacity) : custom %}
 
-		<div class="styleit--palette-customColour{{ processedColour ? ' styleit--palette-colourIsSelected' }}">
+		<div class="palette--palette-customColour{{ processedColour ? ' palette--palette-colourIsSelected' }}">
 			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
-			<div class="styleit--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
+			<div class="palette--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
 		</div>
 
 	{% endif %}
@@ -45,7 +49,7 @@
 
 	{% if field.allowOpacity %}
 
-		<div class="styleit--palette-opacity">
+		<div class="palette--palette-opacity">
 			<input class="text" type="number" value="{{ opacity }}" min="1" max="100" novalidate disabled/>
 		</div>
 

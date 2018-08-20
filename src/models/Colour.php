@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\styleit\models;
+namespace fruitstudios\palette\models;
 
-use fruitstudios\styleit\helpers\ColourHelper;
+use fruitstudios\palette\helpers\ColourHelper;
 
 use Craft;
 use craft\base\Model;
@@ -47,7 +47,7 @@ class Colour extends Model
     {
         $rules = parent::rules();
         $rules[] = ['handle', 'string'];
-        $rules[] = ['custom', ColourValidator::class, 'when' => [$this, 'isCustomColour'], 'message' => Craft::t('styleit', 'A valid custom colour hex is required')];
+        $rules[] = ['custom', ColourValidator::class, 'when' => [$this, 'isCustomColour'], 'message' => Craft::t('palette', 'A valid custom colour hex is required')];
         $rules[] = ['opacity', 'required'];
         $rules[] = ['opacity', 'default', 'value' => 100];
         $rules[] = ['opacity', 'integer', 'min' => 0, 'max' => 100];

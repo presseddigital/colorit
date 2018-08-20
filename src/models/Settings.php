@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\styleit\models;
+namespace fruitstudios\palette\models;
 
-use fruitstudios\styleit\fields\PaletteField;
+use fruitstudios\palette\fields\PaletteField;
 
 use Craft;
 use craft\base\Model;

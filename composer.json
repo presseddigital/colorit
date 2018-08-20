@@ -1,6 +1,6 @@
 {
-    "name": "fruitstudios/styleit",
-    "description": "Adds palette, heading, alignment and background fieldtypes to Craft CMS.",
+    "name": "fruitstudios/palette",
+    "description": "Add a palette fieldtype to Craft CMS and configure your colours per field or globally.",
     "type": "craft-plugin",
     "version": "1.0.0",
     "keywords": [
@@ -9,11 +9,14 @@
         "craftcms",
         "craft-plugin",
         "palette",
-        "styleit"
+        "colour",
+        "colours",
+        "color",
+        "colors"
     ],
     "support": {
-        "docs": "https://github.com/fruitstudios/craft-styleit/blob/master/README.md",
-        "issues": "https://github.com/fruitstudios/craft-styleit/issues"
+        "docs": "https://github.com/fruitstudios/craft-palette/blob/master/README.md",
+        "issues": "https://github.com/fruitstudios/craft-palette/issues"
     },
     "license": "proprietary",
     "authors": [
@@ -27,15 +30,15 @@
     },
     "autoload": {
         "psr-4": {
-          "fruitstudios\\styleit\\": "src/"
+          "fruitstudios\\palette\\": "src/"
         }
     },
     "extra": {
-        "name": "Styleit",
-        "handle": "styleit",
+        "name": "Palette",
+        "handle": "palette",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-styleit/master/CHANGELOG.md",
-        "class": "fruitstudios\\styleit\\Styleit"
+        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-palette/master/CHANGELOG.md",
+        "class": "fruitstudios\\palette\\Palette"
     }
 }

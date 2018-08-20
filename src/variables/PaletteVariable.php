@@ -1,10 +1,10 @@
 <?php
-namespace fruitstudios\styleit\variables;
+namespace fruitstudios\palette\variables;
 
-use fruitstudios\styleit\Styleit;
-use fruitstudios\styleit\helpers\ColourHelper;
+use fruitstudios\palette\Palette;
+use fruitstudios\palette\helpers\ColourHelper;
 
-class StyleitVariable
+class PaletteVariable
 {
     public function getBaseColours()
     {

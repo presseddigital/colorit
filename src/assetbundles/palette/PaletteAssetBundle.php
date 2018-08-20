@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\styleit\assetbundles\styleit;
+namespace fruitstudios\palette\assetbundles\palette;
 
 use Craft;
 
@@ -13,7 +13,7 @@ class PaletteAssetBundle extends AssetBundle
 
     public function init()
     {
-        $this->sourcePath = "@fruitstudios/styleit/assetbundles/styleit/build";
+        $this->sourcePath = "@fruitstudios/palette/assetbundles/palette/build";
 
         $this->depends = [];
 

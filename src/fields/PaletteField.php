@@ -1,10 +1,10 @@
 <?php
-namespace fruitstudios\styleit\fields;
+namespace fruitstudios\palette\fields;
 
-use fruitstudios\styleit\Styleit;
-use fruitstudios\styleit\models\Colour;
-use fruitstudios\styleit\helpers\ColourHelper;
-use fruitstudios\styleit\assetbundles\styleit\PaletteAssetBundle;
+use fruitstudios\palette\Palette;
+use fruitstudios\palette\models\Colour;
+use fruitstudios\palette\helpers\ColourHelper;
+use fruitstudios\palette\assetbundles\palette\PaletteAssetBundle;
 
 use Craft;
 use craft\web\View;
@@ -21,7 +21,7 @@ use yii\db\Schema;
 
 /**
  * @author    Fruit Studios
- * @package   Styleit
+ * @package   Palette
  * @since     1.0.0
  */
 class PaletteField extends Field
@@ -46,7 +46,7 @@ class PaletteField extends Field
 
     public static function displayName(): string
     {
-        return Craft::t('styleit', 'Palette');
+        return Craft::t('palette', 'Palette');
     }
 
     // Public Methods
@@ -57,7 +57,7 @@ class PaletteField extends Field
         parent::init();
         if($this->useGlobalSettings && $this->getScenario() != self::SCENARIO_GLOBAl)
         {
-            $globalSettings = Styleit::$plugin->getSettings()->palette ?? [];
+            $globalSettings = Palette::$plugin->getSettings()->palette ?? [];
             Craft::configure($this, $globalSettings);
             $this->useGlobalSettings = true;
         }
@@ -147,7 +147,7 @@ class PaletteField extends Field
     public function getSettingsHtml()
     {
         return Craft::$app->getView()->renderTemplate(
-            'styleit/fields/palette/settings',
+            'palette/fields/palette/settings',
             [
                 'field' => $this,
             ]
@@ -170,7 +170,7 @@ class PaletteField extends Field
         $view->registerJs('new Palette('.$js.');', View::POS_END);
 
         return $view->renderTemplate(
-            'styleit/fields/palette/input',
+            'palette/fields/palette/input',
             [
                 'id' => $id,
                 'name' => $this->handle,
@@ -187,7 +187,7 @@ class PaletteField extends Field
         $view->registerAssetBundle(PaletteAssetBundle::class);
 
         return $view->renderTemplate(
-            'styleit/fields/palette/preview',
+            'palette/fields/palette/preview',
             [
                 'field' => $this,
             ]

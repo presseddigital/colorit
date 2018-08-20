@@ -1,6 +1,6 @@
-.styleit--palette {}
+.palette--palette {}
 
-.styleit--palette .styleit--palette-colour {
+.palette--palette .palette--palette-colour {
     color: #FFFFFF !important;
     margin: 0 3px 0 0 !important;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -14,11 +14,11 @@
     cursor: pointer;
     overflow: hidden;
 }
-.styleit--palette .styleit--palette-colour:last-child {
+.palette--palette .palette--palette-colour:last-child {
     margin: 0 !important;
 }
 
-.styleit--palette .styleit--palette-selectedIcon {
+.palette--palette .palette--palette-selectedIcon {
     opacity: 0.5;
     width: 20px;
     height: 20px;
@@ -30,9 +30,9 @@
     background-color: #fff;
     border-radius: 50%;
 }
-.styleit--palette .styleit--palette-colour.styleit--palette-colourIsSelected .styleit--palette-selectedIcon { display: block; }
+.palette--palette .palette--palette-colour.palette--palette-colourIsSelected .palette--palette-selectedIcon { display: block; }
 
-.styleit--palette .styleit--palette-colour.styleit--palette-colourIsTransparent:before {
+.palette--palette .palette--palette-colour.palette--palette-colourIsTransparent:before {
     content: '';
     width: 60px;
     height: 60px;
@@ -48,24 +48,24 @@
             transform: translateY(-35px) translateX(-35px) rotate(-45deg);
 }
 
-.styleit--palette .styleit--palette-opacity,
-.styleit--palette .styleit--palette-customColour {
+.palette--palette .palette--palette-opacity,
+.palette--palette .palette--palette-customColour {
     position: relative;
     margin-top: -6px;
 }
 
-.styleit--palette .styleit--palette-opacity input,
-.styleit--palette .styleit--palette-customColour input {
+.palette--palette .palette--palette-opacity input,
+.palette--palette .palette--palette-customColour input {
     width: 110px;
     height: 34px;
     border-radius: 3px;
 }
 
-.styleit--palette .styleit--palette-opacity input {
+.palette--palette .palette--palette-opacity input {
     width: 56px;
 }
 
-.styleit--palette .styleit--palette-customColour .styleit--palette-customColourSwatch {
+.palette--palette .palette--palette-customColour .palette--palette-customColourSwatch {
     height:24px;
     width:24px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -76,12 +76,12 @@
     top: 4px;
 }
 
-.styleit--palette .styleit--palette-customColour.styleit--palette-colourIsSelected .styleit--palette-customColourSwatch { display: block; }
-.styleit--palette .styleit--palette-customColour.styleit--palette-colourIsSelected .styleit--palette-selectedIcon {
+.palette--palette .palette--palette-customColour.palette--palette-colourIsSelected .palette--palette-customColourSwatch { display: block; }
+.palette--palette .palette--palette-customColour.palette--palette-colourIsSelected .palette--palette-selectedIcon {
     display: block;
     top: 2px;
     left: 2px;
 }
 
-.styleit--palette .styleit--palette-opacity input:focus,
-.styleit--palette .styleit--palette-customColour input:focus { outline: 0; }
+.palette--palette .palette--palette-opacity input:focus,
+.palette--palette .palette--palette-customColour input:focus { outline: 0; }
