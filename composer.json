@@ -1,8 +1,8 @@
 {
     "name": "fruitstudios/palette",
-    "description": "Add a palette fieldtype to Craft CMS and configure your colours per field or globally.",
+    "description": "A palette fieldtype for Craft CMS.",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",

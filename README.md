@@ -4,7 +4,7 @@
 
 Plugin under development, not for production, docs coming soon...
 
-Add a palette fieldtype to Craft CMS and configure your colours per field or globally.
+A palette fieldtype built for Craft CMS
 
 Configure each palette field to:
 
