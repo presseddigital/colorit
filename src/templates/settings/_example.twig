@@ -1,0 +1,124 @@
+{% extends 'firebase/_layouts/base' %}
+
+{% import "_includes/forms" as forms %}
+
+{% set fullPageForm = true %}
+{% set selectedTab = 'settings' %}
+
+{% set crumbs = [
+    { label: 'Firebase' | t('firebase'), url: url('firebase') },
+    { label: "Settings" | t('firebase'), url: url('firebase/settings') },
+] %}
+
+{% block content %}
+
+	<input type="hidden" name="action" value="plugins/save-plugin-settings">
+	<input type="hidden" name="pluginHandle" value="firebase">
+
+	{% namespace 'settings' %}
+
+		{{ forms.selectField({
+    	    id: 'databaseType',
+    	    label: 'Database'|t('firebase'),
+    	    instructions: 'Select the database you want to use'|t('firebase'),
+    	    name: 'database[type]',
+    	    options: {
+    	    	'firestore': 'Cloud Firestore',
+    	    	'realtime': 'Realtime Database',
+    		},
+    	    value: settings.database.type ?? 'firestore',
+    	    first: true
+    	}) }}
+
+    	<hr>
+
+		{% for section in craft.app.sections.allSections %}
+
+			{% set id = 'section'~section.id %}
+			{% set name = 'database[sections]['~section.id~']' %}
+			{% set value = settings.database.sections[section.id] ?? false %}
+			{% set isEnabled = value.enabled ?? false %}
+
+			{{ forms.lightSwitchField({
+				id: id~'Enabled',
+			    label: section.name,
+			    instructions: 'Sync the {section} section'|t('firebase', {
+			    	section: section.name|lower
+			    }),
+			    name: name~'[enabled]',
+				on: isEnabled,
+				toggle: id~'Settings',
+			}) }}
+
+			<div id="{{ id }}Settings" class="flex{{ not isEnabled ? ' hidden' }}">
+
+				<div class="flex-grow">
+					{{ forms.textField({
+					    id: id~'Path',
+				    	name: name~'[path]',
+				    	instructions: '',
+				    	placeholder: 'path/to/firestore/collection'|t('firebase'),
+					    value: value.path ?? '',
+					}) }}
+				</div>
+
+				<div class="flex-grow">
+					{{ forms.textField({
+					    id: id~'Template',
+				    	name: name~'[template]',
+				    	placeholder: 'path/to/craft/template',
+					    value: value.template ?? ''
+					}) }}
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+		<hr>
+
+		{% for category in craft.app.categories.allGroups %}
+
+			{% set id = 'category'~category.id %}
+			{% set name = 'database[categories]['~category.id~']' %}
+			{% set value = settings.database.categories[category.id] ?? false %}
+			{% set isEnabled = value.enabled ?? false %}
+
+			{{ forms.lightSwitchField({
+				id: id~'Enabled',
+			    label: category.name,
+			    instructions: 'Sync the {category} category'|t('firebase', {
+			    	category: category.name|lower
+			    }),
+			    name: name~'[enabled]',
+				on: isEnabled,
+				toggle: id~'Settings',
+			}) }}
+
+			<div id="{{ id }}Settings" class="flex{{ not isEnabled ? ' hidden' }}">
+
+				<div class="flex-grow">
+					{{ forms.textField({
+					    id: id~'Path',
+				    	name: name~'[path]',
+				    	placeholder: 'path/to/firestore/collection'|t('firebase'),
+					    value: value.path ?? '',
+					}) }}
+				</div>
+
+				<div class="flex-grow">
+					{{ forms.textField({
+					    id: id~'Template',
+				    	name: name~'[template]',
+				    	placeholder: 'path/to/craft/template',
+					    value: value.template ?? ''
+					}) }}
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+	{% endnamespace %}
+
+{% endblock %}

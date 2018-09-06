@@ -4,7 +4,7 @@ namespace fruitstudios\palette\fields;
 use fruitstudios\palette\Palette;
 use fruitstudios\palette\models\Colour;
 use fruitstudios\palette\helpers\ColourHelper;
-use fruitstudios\palette\assetbundles\palette\PaletteAssetBundle;
+use fruitstudios\palette\web\assets\palette\PaletteAssetBundle;
 
 use Craft;
 use craft\web\View;
@@ -35,6 +35,7 @@ class PaletteField extends Field
     // =========================================================================
 
     public $useGlobalSettings = false;
+
     public $paletteColours;
     public $paletteBaseColours;
     public $allowCustomColour = false;
@@ -147,7 +148,7 @@ class PaletteField extends Field
     public function getSettingsHtml()
     {
         return Craft::$app->getView()->renderTemplate(
-            'palette/fields/palette/settings',
+            'palette/_fields/palette/settings',
             [
                 'field' => $this,
             ]
@@ -170,7 +171,7 @@ class PaletteField extends Field
         $view->registerJs('new Palette('.$js.');', View::POS_END);
 
         return $view->renderTemplate(
-            'palette/fields/palette/input',
+            'palette/_fields/palette/input',
             [
                 'id' => $id,
                 'name' => $this->handle,
@@ -187,7 +188,7 @@ class PaletteField extends Field
         $view->registerAssetBundle(PaletteAssetBundle::class);
 
         return $view->renderTemplate(
-            'palette/fields/palette/preview',
+            'palette/_fields/palette/preview',
             [
                 'field' => $this,
             ]

@@ -1,0 +1,74 @@
+{% extends "palette/_layouts/main" %}
+{% import "_includes/forms" as forms %}
+
+
+	{#
+	 {% namespace 'palette' %}
+		{{ palette.settingsHtml | raw }}
+	{% endnamespace %}
+
+	 #}
+
+{% set presets = [
+	{
+		id: 1,
+		name: 'Preset 1',
+	},
+	{
+		id: 2,
+		name: 'Preset 2',
+	},
+	{
+		id: 3,
+		name: 'Preset 3',
+	},
+	{
+		id: 4,
+		name: 'Preset 4',
+	}
+] %}
+
+
+{% block content %}
+    <h2>{{ "Preset Field Settings"|t('palette') }}</h2>
+
+    <div id="no-presets"{% if presets|length %} class="hidden"{% endif %}>
+        <p>{{ "No preset field settings exist yet."|t('palette') }}</p>
+    </div>
+
+    {% if presets|length %}
+        <table id="presets" class="data fullwidth collapsible">
+            <thead>
+            <tr>
+                <th scope="col">{{ "Preset Name"|t('palette') }}</th>
+                <td class="thin"></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for preset in presets %}
+                <tr data-id="{{ preset.id }}" data-name="{{ preset.name }}">
+                    <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/presets/'~preset.id) }}">{{ preset.name }}</a></th>
+                    <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    {% endif %}
+
+    <div class="buttons">
+        <a href="{{ url('palette/settings/presets/new') }}" class="btn submit add icon">{{ 'New preset field'|t('palette') }}</a>
+    </div>
+{% endblock %}
+
+{% js %}
+    var adminTable = new Craft.AdminTable({
+        tableSelector: '#presets',
+        noObjectsSelector: '#no-presets',
+        newObjectBtnSelector: '#newPresetButtonContainer',
+        deleteAction: 'palette/settings/presets/delete',
+        confirmDeleteMessage: '{{ "Are you sure you want to delete the “{name}” preset?"|t('palette') }}'
+    });
+{% endjs %}
+
+

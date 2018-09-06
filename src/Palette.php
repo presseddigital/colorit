@@ -10,16 +10,22 @@
 
 namespace fruitstudios\palette;
 
+use fruitstudios\palette\web\twig\CraftVariableBehavior;
+
+
 use fruitstudios\palette\models\Settings;
 use fruitstudios\palette\fields\PaletteField;
-use fruitstudios\palette\services\Colours;
-use fruitstudios\palette\variables\PaletteVariable;
+use fruitstudios\palette\plugin\Routes as PaletteRoutes;
+use fruitstudios\palette\plugin\Services as PaletteServices;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Fields;
+use craft\helpers\UrlHelper;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\twig\variables\CraftVariable;
+
+use craft\commerce\Plugin as CommercePlugin;
 
 use yii\base\Event;
 
@@ -36,18 +42,22 @@ class Palette extends Plugin
     // Static Properties
     // =========================================================================
 
-    /**
-     * @var Palette
-     */
     public static $plugin;
+    public static $settings;
+    public static $devMode;
+    public static $view;
+    public static $commerceInstalled;
 
     // Public Properties
     // =========================================================================
 
-    /**
-     * @var string
-     */
     public $schemaVersion = '1.0.0';
+
+    // Traits
+    // =========================================================================
+
+    use PaletteServices;
+    use PaletteRoutes;
 
     // Public Methods
     // =========================================================================
@@ -58,34 +68,37 @@ class Palette extends Plugin
     public function init()
     {
         parent::init();
+
         self::$plugin = $this;
+        self::$settings = Palette::$plugin->getSettings();
+        self::$devMode = Craft::$app->getConfig()->getGeneral()->devMode;
+        self::$view = Craft::$app->getView();
+        self::$commerceInstalled = class_exists(CommercePlugin::class);
 
-        Event::on(
-            Fields::class,
-            Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
-                $event->types[] = PaletteField::class;
-            }
-        );
+        $this->name = Palette::$settings->pluginName;
+        $this->hasCpSection = Palette::$settings->showInCpNav;
 
+        $this->_setPluginComponents(); // See Trait
+        $this->_registerCpRoutes(); // See Trait
+        $this->_addTwigExtensions();
+        $this->_registerFieldTypes();
+        $this->_registerPermissions();
+        $this->_registerEventListeners();
+        $this->_registerWidgets();
+        $this->_registerVariables();
+        $this->_registerElementTypes();
 
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                $variable = $event->sender;
-                $variable->set('palette', PaletteVariable::class);
-            }
-        );
+        Craft::info(Craft::t('palette', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
+    }
 
-        Craft::info(
-            Craft::t(
-                'palette',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
+    public function beforeInstall(): bool
+    {
+        return true;
+    }
+
+    public function getSettingsResponse()
+    {
+        return Craft::$app->controller->redirect(UrlHelper::cpUrl('palette/settings'));
     }
 
     // Protected Methods
@@ -100,13 +113,82 @@ class Palette extends Plugin
     {
         $settings = $this->getSettings();
 
-        $paletteField = new PaletteField();
-        $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
-        $paletteField->setScenario('global');
+        // $paletteField = new PaletteField();
+        // $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
 
         return Craft::$app->getView()->renderTemplate('palette/settings', [
             'settings' => $settings,
-            'palette' => $paletteField,
+            // 'palette' => $paletteField,
         ]);
+    }
+
+
+    // Private Methods
+    // =========================================================================
+
+    private function _addTwigExtensions()
+    {
+        // Craft::$app->view->registerTwigExtension(new Extension);
+    }
+
+    private function _registerPermissions()
+    {
+        // Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+        //     $productTypes = Plugin::getInstance()->getProductTypes()->getAllProductTypes();
+        //     $productTypePermissions = [];
+        //     foreach ($productTypes as $id => $productType) {
+        //         $suffix = ':' . $id;
+        //         $productTypePermissions['commerce-manageProductType' . $suffix] = ['label' => Craft::t('commerce', 'Manage “{type}” products', ['type' => $productType->name])];
+        //     }
+        //     $event->permissions[Craft::t('commerce', 'Craft Commerce')] = [
+        //         'commerce-manageProducts' => ['label' => Craft::t('commerce', 'Manage products'), 'nested' => $productTypePermissions],
+        //         'commerce-manageOrders' => ['label' => Craft::t('commerce', 'Manage orders')],
+        //         'commerce-managePromotions' => ['label' => Craft::t('commerce', 'Manage promotions')],
+        //         'commerce-manageSubscriptions' => ['label' => Craft::t('commerce', 'Manage subscriptions')],
+        //         'commerce-manageShipping' => ['label' => Craft::t('commerce', 'Manage shipping')],
+        //         'commerce-manageTaxes' => ['label' => Craft::t('commerce', 'Manage taxes')],
+        //     ];
+        // });
+    }
+
+    private function _registerEventListeners()
+    {
+        // Event::on(Sites::class, Sites::EVENT_AFTER_SAVE_SITE, [$this->getServiceName(), 'functionToCall']);
+
+        // if (!Craft::$app->getRequest()->getIsConsoleRequest()) {
+        //     Event::on(UserElement::class, UserElement::EVENT_AFTER_SAVE, [$this->getFunction(), 'functionToCall']);
+        //     Event::on(User::class, User::EVENT_AFTER_LOGIN, [$this->getCustomers(), 'loginHandler']);
+        //     Event::on(User::class, User::EVENT_AFTER_LOGOUT, [$this->getCustomers(), 'logoutHandler']);
+        // }
+    }
+
+    private function _registerFieldTypes()
+    {
+        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
+            $event->types[] = PaletteField::class;
+        });
+    }
+
+    private function _registerWidgets()
+    {
+        // Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
+        //     $event->types[] = Example::class;
+        // });
+    }
+
+    private function _registerVariables()
+    {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+            /** @var CraftVariable $variable */
+            $variable = $event->sender;
+            // $variable->attachBehavior('palette', CraftVariableBehavior::class);
+        });
+    }
+
+    private function _registerElementTypes()
+    {
+        // Event::on(Elements::class, Elements::EVENT_REGISTER_ELEMENT_TYPES, function(RegisterComponentTypesEvent $e) {
+        //     $e->types[] = Example::class;
+        // });
     }
 }

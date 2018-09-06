@@ -1,0 +1,14 @@
+{% extends '_layouts/cp' %}
+
+{#
+	{% set hideTabs = hideTabs ?? false %}
+	{% if not hideTabs %}
+	    {% set tabs = {
+	        tools: { label: "Tools" | t('palette'), url: url('palette/tools') },
+	        logs: { label: "Logs" | t('palette'), url: url('palette/logs') },
+	        settings: { label: "Settings" | t('palette'), url: url('palette/settings') },
+	    } %}
+	{% endif %}
+#}
+
+{% set title = ( title ?? 'Palette' ) ~ ' ' %}

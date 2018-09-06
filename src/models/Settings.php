@@ -11,9 +11,22 @@ class Settings extends Model
     // Public Properties
     // =========================================================================
 
+	public $pluginName = 'Palette';
+	public $showInCpNav = false;
+
+    public $presets;
     public $palette;
 
     // Public Methods
     // =========================================================================
 
+	public function rules(): array
+    {
+        return [
+            ['pluginName', 'string'],
+            ['pluginName', 'default', 'value' => 'Palette'],
+            ['showInCpNav', 'boolean'],
+            ['showInCpNav', 'default', 'value' => false],
+        ];
+    }
 }

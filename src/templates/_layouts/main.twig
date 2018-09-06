@@ -1,0 +1,31 @@
+{% extends "palette/_layouts/base" %}
+
+{% set title = "Palette"|t('palette') %}
+
+{% set navItems = {
+    'settings': { heading: "Settings"|t('palette') },
+    'settings/general': { title: "General"|t('palette') },
+    'settings/presets': { title: "Presets"|t('palette') },
+    'utilities': { heading: "Utilities"|t('palette') },
+    'utilities/logs': { title: "Logs"|t('palette') },
+    'utilities/tools': { title: "Tools"|t('palette') },
+} %}
+
+{% set selectedItemHandle = selectedItem ?? craft.app.request.getSegment(2)~(craft.app.request.getSegment(3) ? '/'~craft.app.request.getSegment(3)) %}
+{% set docTitle = ((navItems[selectedItemHandle] ?? false) ? navItems[selectedItemHandle].title ~' - ')~title %}
+
+{% block sidebar %}
+    <nav>
+        <ul>
+            {% for handle, item in navItems %}
+                {% if item.heading is defined %}
+                    <li class="heading"><span>{{ item.heading }}</span></li>
+                {% else %}
+                    <li>
+                        <a href="{{ url('palette/'~handle) }}"{% if handle == selectedItemHandle %} class="sel"{% endif %}>{{ item.title }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}
