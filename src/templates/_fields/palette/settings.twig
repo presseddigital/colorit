@@ -1,23 +1,18 @@
 {% import "_includes/forms" as forms %}
 
-{% set global = field.scenario == 'global' %}
+{{ forms.selectField({
+    label: "Presets Settings"|t('palette'),
+    instructions: "Select from your preset settings which can be "|t('palette'),
+    id: 'presetSettingsId',
+    name: 'presetSettingsId',
+    options: [
+        { value: '', label: 'Select preset...'  }
+    ],
+    value: field.presetSettingsId,
+    errors: field.getErrors('presetSettingsId'),
+}) }}
 
-{% if not global %}
-
-    {{ forms.lightswitchField({
-        label: "Global Settings"|t('palette'),
-        instructions: "Use the global settings defined in your plugin settings"|t('palette'),
-        id: 'useGlobalSettings',
-        name: 'useGlobalSettings',
-        on: field.useGlobalSettings,
-        errors: field.getErrors('useGlobalSettings'),
-        toggle: field.id ~ '-global',
-        reverseToggle: field.id ~ '-local',
-    }) }}
-
-{% endif %}
-
-<div id="{{ field.id }}-local" class="{{ field.useGlobalSettings ? 'hidden' }}">
+<div id="{{ field.id }}-local" class="{{ field.presetSettingsId ? 'hidden' }}">
 
     {{ forms.editableTableField({
         label: 'Palette Colours',

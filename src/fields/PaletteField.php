@@ -16,7 +16,6 @@ use craft\helpers\Json;
 use craft\validators\ColourValidator;
 use craft\validators\ArrayValidator;
 
-
 use yii\db\Schema;
 
 /**
@@ -29,12 +28,7 @@ class PaletteField extends Field
     // Public Properties
     // =========================================================================
 
-    const SCENARIO_GLOBAl = 'global';
-
-    // Public Properties
-    // =========================================================================
-
-    public $useGlobalSettings = false;
+    public $presetSettingsId;
 
     public $paletteColours;
     public $paletteBaseColours;
@@ -56,12 +50,12 @@ class PaletteField extends Field
     public function init()
     {
         parent::init();
-        if($this->useGlobalSettings && $this->getScenario() != self::SCENARIO_GLOBAl)
-        {
-            $globalSettings = Palette::$plugin->getSettings()->palette ?? [];
-            Craft::configure($this, $globalSettings);
-            $this->useGlobalSettings = true;
-        }
+        // if($this->useGlobalSettings && $this->getScenario() != self::SCENARIO_GLOBAl)
+        // {
+        //     $globalSettings = Palette::$plugin->getSettings()->palette ?? [];
+        //     Craft::configure($this, $globalSettings);
+        //     $this->useGlobalSettings = true;
+        // }
     }
     public function rules()
     {
@@ -69,7 +63,6 @@ class PaletteField extends Field
         $rules[] = ['paletteColours', 'validatePaletteColours'];
         $rules[] = ['paletteBaseColours', ArrayValidator::class];
         $rules[] = ['colourFormat', 'string'];
-        $rules[] = ['useGlobalSettings', 'default', 'value' => false];
         $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
@@ -143,6 +136,22 @@ class PaletteField extends Field
         }
 
         return parent::serializeValue($serialized, $element);
+    }
+
+    public function getSettings(): array
+    {
+        $settings = [];
+
+        if($presetSettingsId)
+        {
+            $presetSettings = false; // Function to get preset settings from table by presetSettingsId
+        }
+
+        foreach ($this->settingsAttributes() as $attribute) {
+            $settings[$attribute] = $presetSettings ? $presetSettings->$attribute : $this->$attribute;
+        }
+
+        return $settings;
     }
 
     public function getSettingsHtml()
