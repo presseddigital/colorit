@@ -17,7 +17,7 @@
 	            instructions: 'Override the plugin name for this install'|t('palette'),
 	            id: 'pluginName',
 	            name: 'pluginName',
-	            placeholder: settings.pluginName,
+	            placeholder: 'Palette'|t('palette'),
 	            value: settings.pluginName,
 	            errors: settings.getErrors('pluginName'),
 	            first: true
@@ -37,6 +37,7 @@
 		{% endnamespace %}
 
     </form>
+
 {% endblock %}
 
 
