@@ -1,0 +1,55 @@
+{% extends "palette/_layouts/main" %}
+{% import "_includes/forms" as forms %}
+
+{% set inuse = 'TestField, Another Field & This Field' %}
+
+{% block content %}
+
+    {# <h2>{{ "Field Templates"|t('palette') }}</h2> #}
+
+    <p>When you need to use the same palette field settings accross multiple fields you can use field templates to manage your field settings globally.</p>
+
+    <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
+        <p>{{ "No field templates exist yet."|t('palette') }}</p>
+    </div>
+
+    {% if fieldTemplates|length %}
+
+        <table id="fieldTemplates" class="data fullwidth collapsible">
+            <thead>
+                <tr>
+                    <th scope="col">{{ "Field Template"|t('palette') }}</th>
+                    <th scope="col">{{ "In Use"|t('palette') }}</th>
+                    <td class="thin"></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fieldTemplate in fieldTemplates %}
+                    <tr data-id="{{ fieldTemplate.id }}" data-name="{{ fieldTemplate.name }}">
+                        <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
+                        <td data-title="{{ 'In Use'|t('commerce') }}">{{ inuse }}</td>
+                        <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    <div class="buttons">
+        <a href="{{ url('palette/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New'|t('palette') }}</a>
+    </div>
+
+{% endblock %}
+
+{% js %}
+    var adminTable = new Craft.AdminTable({
+        tableSelector: '#fieldTemplates',
+        noObjectsSelector: '#no-fieldTemplates',
+        newObjectBtnSelector: '#newFieldTemplateButtonContainer',
+        deleteAction: 'palette/field-templates/delete',
+        confirmDeleteMessage: '{{ "Are you sure you want to delete the field template “{name}”?"|t('palette') }}'
+    });
+{% endjs %}
+
+

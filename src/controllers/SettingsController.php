@@ -2,9 +2,13 @@
 namespace fruitstudios\palette\controllers;
 
 use fruitstudios\palette\Palette;
+use fruitstudios\palette\fields\PaletteFieldTemplate;
 
 use Craft;
 use craft\web\Controller;
+use craft\helpers\StringHelper;
+
+use yii\web\Response;
 
 class SettingsController extends Controller
 {
@@ -13,10 +17,8 @@ class SettingsController extends Controller
 
     public function actionGeneral()
     {
-        $settings = Palette::$plugin->getSettings();
-
         return $this->renderTemplate('palette/settings/general', [
-            'settings' => $settings,
+            'settings' => Palette::$settings,
         ]);
     }
 }

@@ -10,13 +10,11 @@
 
 namespace fruitstudios\palette;
 
-use fruitstudios\palette\web\twig\CraftVariableBehavior;
-
-
 use fruitstudios\palette\models\Settings;
 use fruitstudios\palette\fields\PaletteField;
 use fruitstudios\palette\plugin\Routes as PaletteRoutes;
 use fruitstudios\palette\plugin\Services as PaletteServices;
+use fruitstudios\palette\web\twig\CraftVariableBehavior;
 
 use Craft;
 use craft\base\Plugin;
@@ -109,18 +107,14 @@ class Palette extends Plugin
         return new Settings();
     }
 
-    protected function settingsHtml()
-    {
-        $settings = $this->getSettings();
+    // protected function settingsHtml()
+    // {
+    //     $settings = $this->getSettings();
 
-        // $paletteField = new PaletteField();
-        // $paletteField = Craft::configure($paletteField, $settings->palette ?? []);
-
-        return Craft::$app->getView()->renderTemplate('palette/settings', [
-            'settings' => $settings,
-            // 'palette' => $paletteField,
-        ]);
-    }
+    //     return Craft::$app->getView()->renderTemplate('palette/settings', [
+    //         'settings' => $settings,
+    //     ]);
+    // }
 
 
     // Private Methods
@@ -181,7 +175,7 @@ class Palette extends Plugin
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
-            // $variable->attachBehavior('palette', CraftVariableBehavior::class);
+            $variable->attachBehavior('palette', CraftVariableBehavior::class);
         });
     }
 

@@ -28,8 +28,7 @@ class PaletteField extends Field
     // Public Properties
     // =========================================================================
 
-    public $presetSettingsId;
-
+    public $fieldTemplateId;
     public $paletteColours;
     public $paletteBaseColours;
     public $allowCustomColour = false;
@@ -44,19 +43,19 @@ class PaletteField extends Field
         return Craft::t('palette', 'Palette');
     }
 
+    public static function isFieldTemplate(): bool
+    {
+        return false;
+    }
+
     // Public Methods
     // =========================================================================
 
     public function init()
     {
         parent::init();
-        // if($this->useGlobalSettings && $this->getScenario() != self::SCENARIO_GLOBAl)
-        // {
-        //     $globalSettings = Palette::$plugin->getSettings()->palette ?? [];
-        //     Craft::configure($this, $globalSettings);
-        //     $this->useGlobalSettings = true;
-        // }
     }
+
     public function rules()
     {
         $rules = parent::rules();
@@ -67,6 +66,11 @@ class PaletteField extends Field
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
         return $rules;
+    }
+
+    public function getType(): string
+    {
+        return get_class($this);
     }
 
     public function validatePaletteColours()
@@ -138,21 +142,21 @@ class PaletteField extends Field
         return parent::serializeValue($serialized, $element);
     }
 
-    public function getSettings(): array
-    {
-        $settings = [];
+    // public function getSettings(): array
+    // {
+    //     $settings = [];
 
-        if($presetSettingsId)
-        {
-            $presetSettings = false; // Function to get preset settings from table by presetSettingsId
-        }
+    //     if($this->fieldTemplateId)
+    //     {
+    //         $fieldTemplates = false; // Function to get preset settings from table by presetSettingsId
+    //     }
 
-        foreach ($this->settingsAttributes() as $attribute) {
-            $settings[$attribute] = $presetSettings ? $presetSettings->$attribute : $this->$attribute;
-        }
+    //     foreach ($this->settingsAttributes() as $attribute) {
+    //         $settings[$attribute] = $presetSettings ? $presetSettings->$attribute : $this->$attribute;
+    //     }
 
-        return $settings;
-    }
+    //     return $settings;
+    // }
 
     public function getSettingsHtml()
     {

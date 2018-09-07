@@ -1,0 +1,47 @@
+{% extends "palette/_layouts/main" %}
+{% import "_includes/forms" as forms %}
+
+{% block content %}
+
+    {{ d(fieldTemplate)}}
+
+ 	<form action="" method="post" accept-charset="UTF-8">
+
+        <input type="hidden" name="action" value="palette/field-templates/save">
+
+        {% if id %}
+        	<input type="hidden" name="fieldTemplateId" value="{{ id }}">
+        {% endif %}
+
+        <input type="hidden" name="type" value="{{ fieldTemplate.type }}">
+
+        {{ redirectInput('palette/settings/fieldtemplates') }}
+        {{ csrfInput() }}
+
+        {{ forms.textField({
+            label: 'Name'|t('palette'),
+            instructions: 'What this field template will be called in the CP.'|t('palette'),
+            id: 'name',
+            name: 'name',
+            placeholder: '',
+            value: fieldTemplate.name ?? '',
+            errors: fieldTemplate.getErrors('name') ?? false,
+            first: true
+        }) }}
+
+        {% if fieldTemplate.getField() %}
+            {% namespace 'settings' %}
+
+                {{ fieldTemplate.field.settingsHtml | raw }}
+
+            {% endnamespace %}
+        {% endif %}
+
+
+
+
+        <input type="submit" class="btn submit" value="{{ 'Save'|t('palette') }}">
+
+    </form>
+
+{% endblock %}

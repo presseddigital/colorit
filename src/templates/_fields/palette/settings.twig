@@ -1,18 +1,40 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.selectField({
-    label: "Presets Settings"|t('palette'),
-    instructions: "Select from your preset settings which can be "|t('palette'),
-    id: 'presetSettingsId',
-    name: 'presetSettingsId',
-    options: [
-        { value: '', label: 'Select preset...'  }
-    ],
-    value: field.presetSettingsId,
-    errors: field.getErrors('presetSettingsId'),
-}) }}
+{% if field.isFieldTemplate %}
 
-<div id="{{ field.id }}-local" class="{{ field.presetSettingsId ? 'hidden' }}">
+    {{ forms.textField({
+        label: 'Name'|t('palette'),
+        instructions: 'What this field template will be called in the CP.'|t('palette'),
+        id: 'name',
+        name: 'name',
+        placeholder: '',
+        value: field.name ?? '',
+        errors: field.getErrors('name') ?? false,
+        first: true
+    }) }}
+
+{% else %}
+
+    {{ forms.selectField({
+        label: "Field Template"|t('palette'),
+        instructions: "Use a field template to define this fields settings."|t('palette'),
+        id: 'fieldTemplateId',
+        name: 'fieldTemplateId',
+        options: [
+            {
+                value: '',
+                label: 'Custom field settings'
+            }
+        ],
+        value: field.fieldTemplateId,
+        errors: field.getErrors('fieldTemplateId'),
+    }) }}
+
+    <hr>
+
+{% endif %}
+
+<div id="palette-{{ field.id }}" class="{{ field.fieldTemplateId ? 'hidden' }}">
 
     {{ forms.editableTableField({
         label: 'Palette Colours',
@@ -51,7 +73,7 @@
         instructions: "Select any base colours that you would like to include in your palette field."|t('palette'),
         id: 'paletteBaseColours',
         name: 'paletteBaseColours',
-        options: craft.palette.baseColoursAsOptions,
+        options: craft.palette.colours.baseColoursAsOptions,
         values: field.paletteBaseColours,
         errors: field.getErrors('paletteBaseColours')
     })}}
@@ -90,14 +112,3 @@
     }) }}
 
 </div>
-
-{% if not global %}
-
-    <div id="{{ field.id }}-global" class="{{ not field.useGlobalSettings ? 'hidden' }}">
-
-        {{ field.inputPreviewHtml | raw }}
-        <p><a href="{{ cpUrl('settings/plugins/palette') }}">Update Global Settings</a></p>
-
-    </div>
-
-{% endif %}

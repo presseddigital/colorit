@@ -5,10 +5,7 @@
 {% set navItems = {
     'settings': { heading: "Settings"|t('palette') },
     'settings/general': { title: "General"|t('palette') },
-    'settings/presets': { title: "Presets"|t('palette') },
-    'utilities': { heading: "Utilities"|t('palette') },
-    'utilities/logs': { title: "Logs"|t('palette') },
-    'utilities/tools': { title: "Tools"|t('palette') },
+    'settings/fieldtemplates': { title: "Field Templates"|t('palette') },
 } %}
 
 {% set selectedItemHandle = selectedItem ?? craft.app.request.getSegment(2)~(craft.app.request.getSegment(3) ? '/'~craft.app.request.getSegment(3)) %}

@@ -1,11 +1,17 @@
 <?php
-namespace fruitstudios\palette\variables;
+namespace fruitstudios\palette\services;
 
 use fruitstudios\palette\Palette;
 use fruitstudios\palette\helpers\ColourHelper;
 
-class PaletteVariable
+use Craft;
+use craft\base\Component;
+
+class Colours extends Component
 {
+    // Public Methods
+    // =========================================================================
+
     public function getBaseColours()
     {
         return ColourHelper::baseColours();
@@ -40,4 +46,5 @@ class PaletteVariable
     {
         return ColourHelper::hexToRgb($colour, $asArray);
     }
+
 }

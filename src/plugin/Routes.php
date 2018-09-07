@@ -18,9 +18,9 @@ trait Routes
 
             $event->rules['palette/settings/general'] = 'palette/settings/general';
 
-            $event->rules['palette/settings/presets'] = 'palette/presets/preset-index';
-            $event->rules['palette/settings/presets/<presetId:\d+>'] = 'palette/presets/edit-preset';
-            $event->rules['palette/settings/presets/new'] = 'palette/presets/edit-preset';
+            $event->rules['palette/settings/fieldtemplates'] = 'palette/field-templates/index';
+            $event->rules['palette/settings/fieldtemplates/<fieldTemplateId:\d+>'] = 'palette/field-templates/edit';
+            $event->rules['palette/settings/fieldtemplates/new'] = 'palette/field-templates/edit';
 
         });
     }
