@@ -1,0 +1,22 @@
+{% extends "palette/_layouts/main" %}
+
+{% block content %}
+
+	<a href="https://github.com/fruitstudios/craft-palette" target="_blank">
+		<img width="100" height="100" src="{{ craft.app.assetManager.getPublishedUrl('@fruitstudios/palette/web/assets/palette/build/img/', true, 'palette.svg') }}" alt="Palette">
+	</a>
+
+    <h2>{{ "Thanks for using Palette"|t('palette') }}</h2>
+
+    <p>Bit of useful info on palette, key features, what it does etc etc</p>
+
+    <p>Some links to the docs and changelog:</p>
+    <a class="btn" href="https://github.com/fruitstudios/craft-palette" target="_blank">{{ "Documentation" | t('palette') }}</a>
+    <a class="btn" href="https://github.com/fruitstudios/craft-palette" target="_blank">{{ "Changelog" | t('palette') }}</a>
+
+    <p>Please report any issues through github:</p>
+    <a class="btn" href="https://github.com/fruitstudios/craft-palette/issues" target="_blank">{{ "Report an issue" | t('palette') }}</a>
+
+{% endblock %}
+
+

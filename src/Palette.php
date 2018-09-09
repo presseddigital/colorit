@@ -18,9 +18,11 @@ use fruitstudios\palette\web\twig\CraftVariableBehavior;
 
 use Craft;
 use craft\base\Plugin;
+use craft\services\Plugins;
 use craft\services\Fields;
 use craft\helpers\UrlHelper;
 use craft\events\RegisterComponentTypesEvent;
+use craft\events\PluginEvent;
 use craft\web\twig\variables\CraftVariable;
 
 use craft\commerce\Plugin as CommercePlugin;
@@ -73,8 +75,8 @@ class Palette extends Plugin
         self::$view = Craft::$app->getView();
         self::$commerceInstalled = class_exists(CommercePlugin::class);
 
-        $this->name = Palette::$settings->pluginName;
-        $this->hasCpSection = Palette::$settings->showInCpNav;
+        $this->name = Palette::$settings->pluginNameOverride;
+        $this->hasCpSection = Palette::$settings->hasCpSectionOverride;
 
         $this->_setPluginComponents(); // See Trait
         $this->_registerCpRoutes(); // See Trait
@@ -92,6 +94,15 @@ class Palette extends Plugin
     public function beforeInstall(): bool
     {
         return true;
+    }
+
+    public function afterInstallPlugin(PluginEvent $event)
+    {
+        $isCpRequest = Craft::$app->getRequest()->isCpRequest;
+        if ($event->plugin === $this && $isCpRequest)
+        {
+            Craft::$app->controller->redirect(UrlHelper::cpUrl('palette/about'))->send();
+        }
     }
 
     public function getSettingsResponse()
@@ -147,6 +158,8 @@ class Palette extends Plugin
 
     private function _registerEventListeners()
     {
+        Event::on(Plugins::class, Plugins::EVENT_AFTER_INSTALL_PLUGIN, [$this, 'afterInstallPlugin']);
+
         // Event::on(Sites::class, Sites::EVENT_AFTER_SAVE_SITE, [$this->getServiceName(), 'functionToCall']);
 
         // if (!Craft::$app->getRequest()->getIsConsoleRequest()) {

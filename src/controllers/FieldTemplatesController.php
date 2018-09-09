@@ -22,84 +22,70 @@ class FieldTemplatesController extends Controller
         return $this->renderTemplate('palette/settings/fieldtemplates/index', compact('fieldTemplates'));
     }
 
-    public function actionEdit(int $id = null, FieldTemplate $fieldTemplate = null): Response
+    public function actionEdit(int $fieldTemplateId = null, FieldTemplate $fieldTemplate = null): Response
     {
-
-        $variables = [
-            'id' => $id,
-            'fieldTemplate' => $fieldTemplate,
-        ];
-
-        if (!$variables['fieldTemplate'])
+        if (!$fieldTemplate)
         {
-            if ($variables['id'])
+            if ($fieldTemplateId)
             {
-                $variables['fieldTemplate'] = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($variables['id']);
-                if (!$variables['fieldTemplate'])
+                $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($fieldTemplateId);
+                if (!$fieldTemplate)
                 {
                     throw new HttpException(404);
                 }
             }
             else
             {
-                $variables['fieldTemplate'] = new FieldTemplate();
+                $fieldTemplate = new FieldTemplate();
             }
         }
 
-        return $this->renderTemplate('palette/settings/fieldtemplates/_edit', $variables);
+        return $this->renderTemplate('palette/settings/fieldtemplates/_edit', [
+            'fieldTemplate' => $fieldTemplate
+        ]);
     }
 
     public function actionSave()
     {
         $this->requirePostRequest();
 
-        $type = Craft::$app->getRequest()->getBodyParam('type', false);
-        $attributes = Craft::$app->getRequest()->getBodyParam('settings', []);
+        $fieldTemplate = new FieldTemplate();
 
-        $isNew = !$handle;
-        if($isNew)
+        // Shared attributes
+        $fields = ['id', 'name', 'type', 'settings'];
+        foreach ($fields as $field)
         {
-            $fieldTemplate = Palette::$plugin->getFieldTemplates()->createFieldTemplate($type);
-        }
-        if(!$isNew)
-        {
-            $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplate($type, $handle);
+            $fieldTemplate->$field = Craft::$app->getRequest()->getBodyParam($field);
         }
 
-
-
-
-        $fieldTemplate->validate();
-
-        Craft::dd($fieldTemplate);
-
-        if ($plugin === null) {
-            throw new NotFoundHttpException('Plugin not found');
-        }
-
-        if (!Craft::$app->getPlugins()->savePluginSettings($plugin, $settings)) {
-            Craft::$app->getSession()->setError(Craft::t('app', 'Couldn’t save plugin settings.'));
+        if (!Palette::$plugin->getFieldTemplates()->saveFieldTemplate($fieldTemplate)) {
+            Craft::$app->getSession()->setError(Craft::t('palette', 'Couldn’t save field template.'));
 
             // Send the plugin back to the template
             Craft::$app->getUrlManager()->setRouteParams([
-                'plugin' => $plugin
+                'fieldTemplate' => $fieldTemplate
             ]);
 
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(Craft::t('app', 'Plugin settings saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('palette', 'Field template saved.'));
 
         return $this->redirectToPostedUrl();
     }
 
     public function actionDelete(): Response
     {
-        $settings = Palette::$settings;
+        $this->requirePostRequest();
+        $this->requireAcceptsJson();
 
-        return $this->renderTemplate('palette/settings/fieldtemplates/_edit', [
-            'fieldTemplate' => false,
-        ]);
+        $id = Craft::$app->getRequest()->getRequiredBodyParam('id');
+
+        if (Palette::$plugin->getFieldTemplates()->deleteFieldTemplateById($id))
+        {
+            return $this->asJson(['success' => true]);
+        }
+        return $this->asErrorJson(Craft::t('palette', 'Could not delete field template'));
     }
 
     // Private Methods

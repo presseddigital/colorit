@@ -3,17 +3,15 @@
 
 {% block content %}
 
-    {{ d(fieldTemplate)}}
+{{d(fieldTemplate.getErrors())}}
 
  	<form action="" method="post" accept-charset="UTF-8">
 
         <input type="hidden" name="action" value="palette/field-templates/save">
-
-        {% if id %}
-        	<input type="hidden" name="fieldTemplateId" value="{{ id }}">
+        {% if fieldTemplate.id %}
+        	<input type="hidden" name="id" value="{{ fieldTemplate.id }}">
+            <input type="hidden" name="type" value="{{ fieldTemplate.type }}">
         {% endif %}
-
-        <input type="hidden" name="type" value="{{ fieldTemplate.type }}">
 
         {{ redirectInput('palette/settings/fieldtemplates') }}
         {{ csrfInput() }}
@@ -29,13 +27,49 @@
             first: true
         }) }}
 
-        {% if fieldTemplate.getField() %}
+        {% if fieldTemplate.id %}
+
+            {% namespace 'settings' %}
+                {{ fieldTemplate.field.settingsHtml|raw }}
+            {% endnamespace %}
+
+        {% else %}
+
+            <input type="hidden" name="type" value="fruitstudios\palette\fields\PaletteFieldTemplate">
+
+
+            <p> Field type select of fields avaible for this plugin</p>
+
+        {% endif %}
+
+
+ {#        {% if isNew %}
+
+
+        {% endif %}
+
+
+        {{ forms.selectField({
+            label: "Field Type"|t('app'),
+            instructions: "What type of field is this?"|t('app'),
+            warning: (fieldId is not empty and not field.hasErrors('type') ? "Changing this may result in data loss."|t('app')),
+            id: 'type',
+            name: 'type',
+            options: fieldTypeOptions,
+            value: className(field),
+            toggle: true
+        }) }}
+
+        <input type="hidden" name="type" value="{{ fieldTemplate.type }}">
+#}
+
+        {# {% if fieldTemplate.field %}
             {% namespace 'settings' %}
 
                 {{ fieldTemplate.field.settingsHtml | raw }}
 
             {% endnamespace %}
-        {% endif %}
+        {% endif %} #}
 
 
 

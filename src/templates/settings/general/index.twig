@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h2>{{ "Field Templates"|t('palette') }}</h2>
+    {# <h2>{{ "General Settings"|t('palette') }}</h2> #}
 
  	<form action="" method="post" accept-charset="UTF-8">
 
@@ -17,21 +17,21 @@
 	        {{ forms.textField({
 	            label: 'Plugin Name'|t('palette'),
 	            instructions: 'Override the plugin name for this install'|t('palette'),
-	            id: 'pluginName',
-	            name: 'pluginName',
+	            id: 'pluginNameOverride',
+	            name: 'pluginNameOverride',
 	            placeholder: 'Palette'|t('palette'),
-	            value: settings.pluginName,
-	            errors: settings.getErrors('pluginName'),
+	            value: settings.pluginNameOverride,
+	            errors: settings.getErrors('pluginNameOverride'),
 	            first: true
 	        }) }}
 
 	     	{{ forms.lightswitchField({
 	            label: 'Show in CP Nav'|t('palette'),
 	            instructions: 'Display a link to this plugin in the main cp navigation'|t('palette'),
-	            id: 'showInCpNav',
-	            name: 'showInCpNav',
-	            on: settings.showInCpNav,
-	            errors: settings.getErrors('showInCpNav'),
+	            id: 'hasCpSectionOverride',
+	            name: 'hasCpSectionOverride',
+	            on: settings.hasCpSectionOverride,
+	            errors: settings.getErrors('hasCpSectionOverride'),
 	        }) }}
 
 	        <input type="submit" class="btn submit" value="{{ 'Save'|t('palette') }}">

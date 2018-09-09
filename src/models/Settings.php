@@ -11,8 +11,8 @@ class Settings extends Model
     // Public Properties
     // =========================================================================
 
-	public $pluginName = 'Palette';
-	public $showInCpNav = false;
+    public $pluginNameOverride = 'Palette';
+	public $hasCpSectionOverride = false;
 
     // Public Methods
     // =========================================================================
@@ -20,10 +20,10 @@ class Settings extends Model
 	public function rules(): array
     {
         return [
-            [['pluginName', 'fieldTemplates'], 'string'],
-            ['pluginName', 'default', 'value' => 'Palette'],
-            ['showInCpNav', 'boolean'],
-            ['showInCpNav', 'default', 'value' => false],
+            ['pluginNameOverride', 'string'],
+            ['pluginNameOverride', 'default', 'value' => 'Palette'],
+            ['hasCpSectionOverride', 'boolean'],
+            ['hasCpSectionOverride', 'default', 'value' => false],
         ];
     }
 }

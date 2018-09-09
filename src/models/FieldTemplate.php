@@ -9,6 +9,7 @@ class FieldTemplate extends Model
     // Public Properties
     // =========================================================================
 
+    public $id;
     public $name;
     public $type;
 	public $settings;
@@ -22,6 +23,7 @@ class FieldTemplate extends Model
             [['name', 'type'], 'string'],
             [['name', 'type'], 'required'],
             ['settings', 'validateSettings'],
+            ['settings', 'default', 'value' => []],
         ];
     }
 
@@ -49,7 +51,10 @@ class FieldTemplate extends Model
 
         try {
             $field = Craft::createObject($this->type);
-            return Craft::configure($field, $this->settings);
+            $field->setAttributes($this->settings, false);
+            return $field;
+            Craft::dd($this->settings);
+            return Craft::configure($field, $this->settings ?? []);
         } catch(ErrorException $exception) {
             $error = $exception->getMessage();
             return false;

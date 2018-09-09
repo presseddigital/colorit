@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th scope="col">{{ "Field Template"|t('palette') }}</th>
+                    <th scope="col">{{ "Type"|t('palette') }}</th>
                     <th scope="col">{{ "In Use"|t('palette') }}</th>
                     <td class="thin"></td>
                 </tr>
@@ -27,6 +28,7 @@
                 {% for fieldTemplate in fieldTemplates %}
                     <tr data-id="{{ fieldTemplate.id }}" data-name="{{ fieldTemplate.name }}">
                         <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
+                        <td data-title="{{ 'Type'|t('commerce') }}">{{ fieldTemplate.type }}</td>
                         <td data-title="{{ 'In Use'|t('commerce') }}">{{ inuse }}</td>
                         <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
                     </tr>
@@ -37,7 +39,7 @@
     {% endif %}
 
     <div class="buttons">
-        <a href="{{ url('palette/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New'|t('palette') }}</a>
+        <a href="{{ url('palette/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New field template'|t('palette') }}</a>
     </div>
 
 {% endblock %}
