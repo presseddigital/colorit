@@ -3,9 +3,12 @@ namespace fruitstudios\palette\models;
 
 use Craft;
 use craft\base\Model;
+use craft\helpers\Json;
 
 class FieldTemplate extends Model
 {
+    private $_field;
+
     // Public Properties
     // =========================================================================
 
@@ -19,30 +22,42 @@ class FieldTemplate extends Model
 
 	public function rules(): array
     {
-        return [
-            [['name', 'type'], 'string'],
-            [['name', 'type'], 'required'],
-            ['settings', 'validateSettings'],
-            ['settings', 'default', 'value' => []],
-        ];
+        $rules = parent::rules();
+        $rules[] = [['name', 'type'], 'string'];
+        $rules[] = [['name', 'type'], 'required'];
+        $rules[] = [['settings'], 'validateFieldTypeSettings'];
+        return $rules;
     }
 
-    public function validateSettings()
+    public function validateFieldTypeSettings()
     {
-        return true;
-
-        // //  Function to push validation onto this link
-        // public function validateLinkValue(ElementInterface $element)
-        // {
-        //     $fieldValue = $element->getFieldValue($this->handle);
-        //     if($fieldValue && !$fieldValue->validate())
-        //     {
-        //         $element->addModelErrors($fieldValue, $this->handle);
-        //     }
-        // }
+        $fieldType = $this->getFieldType();
+        if($fieldType && !$fieldType->validate())
+        {
+            $this->addError('settings', $fieldType->getErrors());
+        }
     }
 
-    public function getField()
+    public function getFieldSettingsHtml()
+    {
+        // Get field type for this template and add any errors to it
+        $fieldType = $this->getFieldType();
+        $fieldTypeErrors = $this->getFirstError('settings');
+        if($fieldTypeErrors)
+        {
+            foreach ($fieldTypeErrors as $handle => $errors)
+            {
+                foreach ($errors as $error)
+                {
+                   $fieldType->addError($handle, $error);
+                }
+            }
+        }
+        return $fieldType ? $fieldType->getSettingsHtml() : '';
+    }
+
+    // TODO: Move this into the service, it needs to be used in multiple places
+    public function getFieldType()
     {
         if(!$this->type)
         {
@@ -50,14 +65,26 @@ class FieldTemplate extends Model
         }
 
         try {
-            $field = Craft::createObject($this->type);
-            $field->setAttributes($this->settings, false);
-            return $field;
-            Craft::dd($this->settings);
-            return Craft::configure($field, $this->settings ?? []);
+            $fieldType = Craft::createObject($this->type);
+            $fieldType->setAttributes($this->normalizeSettings($this->settings), false);
+            return $fieldType;
         } catch(ErrorException $exception) {
             $error = $exception->getMessage();
             return false;
         }
     }
+
+    public function normalizeSettings($settings)
+    {
+        if(is_array($settings))
+        {
+            return $settings;
+        }
+
+        return is_string($settings) ? Json::decodeIfJson($settings) : ($settings ?? []);
+    }
+
+
+
+
 }

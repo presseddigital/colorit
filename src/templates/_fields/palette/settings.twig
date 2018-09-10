@@ -2,7 +2,7 @@
 
 {% if field.isFieldTemplate %}
 
-    {{ forms.textField({
+{#     {{ forms.textField({
         label: 'Name'|t('palette'),
         instructions: 'What this field template will be called in the CP.'|t('palette'),
         id: 'name',
@@ -11,7 +11,7 @@
         value: field.name ?? '',
         errors: field.getErrors('name') ?? false,
         first: true
-    }) }}
+    }) }} #}
 
 {% else %}
 
@@ -34,7 +34,20 @@
 
 {% endif %}
 
+
 <div id="palette-{{ field.id }}" class="{{ field.fieldTemplateId ? 'hidden' }}">
+
+
+    {{ forms.textField({
+        label: 'Test Attr'|t('palette'),
+        instructions: 'What this field template will be called in the CP.'|t('palette'),
+        id: 'testAttr',
+        name: 'testAttr',
+        placeholder: '',
+        value: field.testAttr ?? '',
+        errors: field.getErrors('testAttr') ?? false,
+        first: true
+    }) }}
 
     {{ forms.editableTableField({
         label: 'Palette Colours',

@@ -110,6 +110,11 @@ class Palette extends Plugin
         return Craft::$app->controller->redirect(UrlHelper::cpUrl('palette/settings'));
     }
 
+    public function getGitHubUrl(string $append = '')
+    {
+        return 'https://github.com/fruitstudios/craft-'.$this->handle.$append;
+    }
+
     // Protected Methods
     // =========================================================================
 

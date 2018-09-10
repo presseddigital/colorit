@@ -5,10 +5,15 @@ use fruitstudios\palette\fields\PaletteField;
 
 use Craft;
 
-class PaletteFieldTemplate extends PaletteField
+class PaletteAlternativeFieldTemplate extends PaletteField
 {
     // Static Methods
     // =========================================================================
+
+    public static function displayName(): string
+    {
+        return Craft::t('palette', 'Palette Alternative');
+    }
 
     public static function isFieldTemplate(): bool
     {
@@ -17,11 +22,6 @@ class PaletteFieldTemplate extends PaletteField
 
     // Public Methods
     // =========================================================================
-
-    public function init()
-    {
-        parent::init();
-    }
 
     public function rules()
     {

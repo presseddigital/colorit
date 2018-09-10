@@ -40,8 +40,28 @@ class FieldTemplatesController extends Controller
             }
         }
 
+        // TODO: Could this be a service and grabbed only when its needed
+        $allFieldTemplatesTypes = Palette::$plugin->getFieldTemplates()->getAllFieldTemplateTypes();
+        $fieldTemplateTypeOptions = [];
+        foreach ($allFieldTemplatesTypes as $class) {
+            $fieldTemplateTypeOptions[] = [
+                'value' => $class,
+                'label' => $class::displayName(),
+            ];
+        }
+
+        // if($fieldTemplate->hasErrors()){
+
+        // }
+        // Craft::dd($fieldTemplate->getAttributes());
+
+
+
         return $this->renderTemplate('palette/settings/fieldtemplates/_edit', [
-            'fieldTemplate' => $fieldTemplate
+            'isNewFieldTemplate' => !$fieldTemplate->id,
+            'fieldTemplate' => $fieldTemplate,
+            'allFieldTemplatesTypes' => $allFieldTemplatesTypes,
+            'fieldTemplateTypeOptions' => $fieldTemplateTypeOptions,
         ]);
     }
 
@@ -49,14 +69,16 @@ class FieldTemplatesController extends Controller
     {
         $this->requirePostRequest();
 
-        $fieldTemplate = new FieldTemplate();
+        $fieldTemplatesService = Palette::$plugin->getFieldTemplates();
+        $request = Craft::$app->getRequest();
+        $type = $request->getRequiredBodyParam('type');
 
-        // Shared attributes
-        $fields = ['id', 'name', 'type', 'settings'];
-        foreach ($fields as $field)
-        {
-            $fieldTemplate->$field = Craft::$app->getRequest()->getBodyParam($field);
-        }
+        $fieldTemplate = $fieldTemplatesService->createFieldTemplate([
+            'type' => $type,
+            'id' => $request->getBodyParam('fieldTemplateId'),
+            'name' => $request->getBodyParam('name'),
+            'settings' => $request->getBodyParam('types.'.$type),
+        ]);
 
         if (!Palette::$plugin->getFieldTemplates()->saveFieldTemplate($fieldTemplate)) {
             Craft::$app->getSession()->setError(Craft::t('palette', 'Couldn’t save field template.'));

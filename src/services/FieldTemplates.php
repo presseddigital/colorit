@@ -5,6 +5,10 @@ use fruitstudios\palette\Palette;
 use fruitstudios\palette\models\FieldTemplate;
 use fruitstudios\palette\records\FieldTemplate as FieldTemplateRecord;
 
+use fruitstudios\palette\Fields\PaletteFieldTemplate;
+use fruitstudios\palette\Fields\PaletteAlternativeFieldTemplate;
+
+
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
@@ -21,6 +25,14 @@ class FieldTemplates extends Component
 
     // Public Methods
     // =========================================================================
+
+    public function getAllFieldTemplateTypes(): array
+    {
+        return [
+            PaletteFieldTemplate::class,
+            PaletteAlternativeFieldTemplate::class,
+        ];
+    }
 
     public function getAllFieldTemplates(): array
     {
@@ -121,6 +133,25 @@ class FieldTemplates extends Component
             return (bool)$record->delete();
         }
         return false;
+    }
+
+    public function getFieldTemplateField(string $type)
+    {
+        $field = Craft::$app->getFields()->createField($type);
+        if(!$field)
+        {
+            return false;
+        }
+        // $field->isFieldTemplate = true;
+        return $field;
+    }
+
+
+    public function createFieldTemplate($config)
+    {
+        return $this->_populateFieldTemplate($config);
+        // $field->isFieldTemplate = true;
+        // return $field;
     }
 
     // Private Methods

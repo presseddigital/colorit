@@ -35,6 +35,8 @@ class PaletteField extends Field
     public $allowOpacity = false;
     public $colourFormat = 'auto';
 
+    public $testAttr;
+
     // Static Methods
     // =========================================================================
 
@@ -48,6 +50,20 @@ class PaletteField extends Field
         return false;
     }
 
+    public static function fieldRules(): array
+    {
+        $rules = [];
+        $rules[] = ['paletteColours', 'validatePaletteColours'];
+        $rules[] = ['paletteBaseColours', ArrayValidator::class];
+        $rules[] = ['colourFormat', 'string'];
+        $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
+        $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
+        $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
+        $rules[] = ['testAttr', 'required'];
+        return $rules;
+    }
+
+
     // Public Methods
     // =========================================================================
 
@@ -58,14 +74,7 @@ class PaletteField extends Field
 
     public function rules()
     {
-        $rules = parent::rules();
-        $rules[] = ['paletteColours', 'validatePaletteColours'];
-        $rules[] = ['paletteBaseColours', ArrayValidator::class];
-        $rules[] = ['colourFormat', 'string'];
-        $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
-        return $rules;
+        return array_merge(parent::rules(), self::fieldRules);
     }
 
     public function getType(): string

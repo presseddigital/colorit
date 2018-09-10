@@ -11,11 +11,11 @@
     <p>Bit of useful info on palette, key features, what it does etc etc</p>
 
     <p>Some links to the docs and changelog:</p>
-    <a class="btn" href="https://github.com/fruitstudios/craft-palette" target="_blank">{{ "Documentation" | t('palette') }}</a>
-    <a class="btn" href="https://github.com/fruitstudios/craft-palette" target="_blank">{{ "Changelog" | t('palette') }}</a>
+    <a class="btn" href="{{ craft.palette.documentationUrl }}" target="_blank">{{ "Documentation" | t('palette') }}</a>
+    <a class="btn" href="{{ craft.palette.changelogUrl }}" target="_blank">{{ "Changelog" | t('palette') }}</a>
 
     <p>Please report any issues through github:</p>
-    <a class="btn" href="https://github.com/fruitstudios/craft-palette/issues" target="_blank">{{ "Report an issue" | t('palette') }}</a>
+    <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('palette') }}</a>
 
 {% endblock %}
 

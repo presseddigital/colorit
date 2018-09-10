@@ -28,7 +28,7 @@
                 {% for fieldTemplate in fieldTemplates %}
                     <tr data-id="{{ fieldTemplate.id }}" data-name="{{ fieldTemplate.name }}">
                         <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
-                        <td data-title="{{ 'Type'|t('commerce') }}">{{ fieldTemplate.type }}</td>
+                        <td data-title="{{ 'Type'|t('commerce') }}">{{ fieldTemplate.fieldType.displayName }}</td>
                         <td data-title="{{ 'In Use'|t('commerce') }}">{{ inuse }}</td>
                         <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
                     </tr>
