@@ -15,6 +15,14 @@ class PaletteFieldTemplate extends PaletteField
         return true;
     }
 
+    public function ignoreErrors()
+    {
+        return [
+            'name',
+            'handle'
+        ];
+    }
+
     // Public Methods
     // =========================================================================
 

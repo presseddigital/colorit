@@ -1,0 +1,54 @@
+{% import "_includes/forms" as forms %}
+
+{% set custom = '#cc5643' %}
+{% set opacity = 100 %}
+
+<div class="palette--palette flex">
+
+	{% if field.palette|length %}
+
+		<div>
+
+			<ul class="palette--palette-colours">
+
+				{% for paletteColour in field.palette %}
+
+					{% set class = [
+						'palette--palette-colour',
+						craft.palette.hexIsTransparent(paletteColour.colour) ? 'palette--palette-colourIsTransparent' : null,
+					]|filter|join(' ') %}
+
+					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+
+					<li class="{{ class }}" style="background:{{ processedColour }} !important;"></li>
+
+				{% endfor %}
+
+			</ul>
+
+		</div>
+
+	{% endif %}
+
+
+	{% if field.allowCustomColour %}
+
+		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.hexToRgba(custom, opacity) : custom %}
+
+		<div class="palette--palette-customColour{{ processedColour ? ' palette--palette-colourIsSelected' }}">
+			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
+			<div class="palette--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
+		</div>
+
+	{% endif %}
+
+
+	{% if field.allowOpacity %}
+
+		<div class="palette--palette-opacity">
+			<input class="text" type="number" value="{{ opacity }}" min="1" max="100" novalidate disabled/>
+		</div>
+
+	{% endif %}
+
+</div>

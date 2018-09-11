@@ -23,7 +23,7 @@ use yii\db\Schema;
  * @package   Palette
  * @since     1.0.0
  */
-class PaletteField extends Field
+class PaletteAlternativeField extends Field
 {
     // Public Properties
     // =========================================================================
@@ -166,7 +166,7 @@ class PaletteField extends Field
 
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('palette/_fields/palette/settings', [
+        return Craft::$app->getView()->renderTemplate('palette/_fields/palettealternative/settings', [
             'field' => $this,
         ]);
     }

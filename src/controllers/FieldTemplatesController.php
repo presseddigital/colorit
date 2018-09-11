@@ -40,7 +40,8 @@ class FieldTemplatesController extends Controller
             }
         }
 
-        // TODO: Could this be a service and grabbed only when its needed
+        $isNewFieldTemplate = !$fieldTemplate->id;
+
         $allFieldTemplatesTypes = Palette::$plugin->getFieldTemplates()->getAllFieldTemplateTypes();
         $fieldTemplateTypeOptions = [];
         foreach ($allFieldTemplatesTypes as $class) {
@@ -50,15 +51,13 @@ class FieldTemplatesController extends Controller
             ];
         }
 
-        // if($fieldTemplate->hasErrors()){
-
-        // }
-        // Craft::dd($fieldTemplate->getAttributes());
-
-
+        if($isNewFieldTemplate && !$fieldTemplate->type)
+        {
+            $fieldTemplate->type = $allFieldTemplatesTypes[0];
+        }
 
         return $this->renderTemplate('palette/settings/fieldtemplates/_edit', [
-            'isNewFieldTemplate' => !$fieldTemplate->id,
+            'isNewFieldTemplate' => $isNewFieldTemplate,
             'fieldTemplate' => $fieldTemplate,
             'allFieldTemplatesTypes' => $allFieldTemplatesTypes,
             'fieldTemplateTypeOptions' => $fieldTemplateTypeOptions,

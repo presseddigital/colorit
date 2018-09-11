@@ -1,12 +1,13 @@
 <?php
 namespace fruitstudios\palette\fields;
 
-use fruitstudios\palette\fields\PaletteField;
+use fruitstudios\palette\fields\PaletteAlternativeField;
 
 use Craft;
 
-class PaletteAlternativeFieldTemplate extends PaletteField
+class PaletteAlternativeFieldTemplate extends PaletteAlternativeField
 {
+
     // Static Methods
     // =========================================================================
 

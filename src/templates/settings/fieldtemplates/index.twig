@@ -1,7 +1,7 @@
 {% extends "palette/_layouts/main" %}
 {% import "_includes/forms" as forms %}
 
-{% set inuse = 'TestField, Another Field & This Field' %}
+{% set inuse = '<p><a>TestField</a>, <a>Another Field</a>, <a>This Field</a></p>' %}
 
 {% block content %}
 
@@ -20,7 +20,7 @@
                 <tr>
                     <th scope="col">{{ "Field Template"|t('palette') }}</th>
                     <th scope="col">{{ "Type"|t('palette') }}</th>
-                    <th scope="col">{{ "In Use"|t('palette') }}</th>
+                    <th scope="col">{{ "Fields"|t('palette') }}</th>
                     <td class="thin"></td>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                     <tr data-id="{{ fieldTemplate.id }}" data-name="{{ fieldTemplate.name }}">
                         <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
                         <td data-title="{{ 'Type'|t('commerce') }}">{{ fieldTemplate.fieldType.displayName }}</td>
-                        <td data-title="{{ 'In Use'|t('commerce') }}">{{ inuse }}</td>
+                        <td data-title="{{ 'Fields'|t('commerce') }}">{{ inuse|raw }}</td>
                         <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
                     </tr>
                 {% endfor %}

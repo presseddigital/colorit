@@ -1,6 +1,5 @@
 {% import "_includes/forms" as forms %}
 
-
 {% if field.isFieldTemplate %}
 
 {#     {{ forms.textField({
@@ -38,38 +37,6 @@
 
 <div id="palette-{{ field.id }}" class="{{ field.fieldTemplateId ? 'hidden' }}">
 
-    {{ forms.editableTableField({
-        label: 'Palette Colours',
-        instructions : 'Set the palette colours, these can be changed at any time.'|t('palette'),
-        id: 'paletteColours',
-        rows: 4,
-        textual: false,
-        name: 'paletteColours',
-        addRowLabel: 'Add colour',
-        cols: {
-            'label' : {
-                'heading' : 'Label',
-                'type'   : 'singleline'
-            },
-            'handle' : {
-                'heading' : 'Handle',
-                'type'   : 'singleline'
-            },
-            'colour' : {
-                'heading' : 'Colour',
-                'type'   : 'singleline'
-            }
-        },
-        rows: field.paletteColours ?? false,
-        errors: []
-    }) }}
-
-    {#
-    {% js %}
-        new Craft.HandleGenerator('#label', '#handle');
-    {% endjs %}
-    #}
-
     {{ forms.checkboxSelectField({
         label: "Base Colours"|t('palette'),
         instructions: "Select any base colours that you would like to include in your palette field."|t('palette'),
@@ -96,21 +63,6 @@
         name: 'allowCustomColour',
         on: field.allowCustomColour,
         errors: field.getErrors('allowCustomColour')
-    }) }}
-
-    {{ forms.selectField({
-        label: "Colour Output"|t('palette'),
-        instructions: "Select the default colour output you would like to return."|t('palette'),
-        id: 'colourFormat',
-        name: 'colourFormat',
-        options: {
-            'auto' : 'Auto: Best Guess',
-            'hex' : 'HEX: #454545',
-            'rgb' : 'RGB: rgb(255,255,255)',
-            'rgba' : 'RGBA: rgb(255,255,255,0.5)'
-        },
-        value: field.colourFormat,
-        errors: field.getErrors('colourFormat')
     }) }}
 
 </div>

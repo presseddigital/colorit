@@ -12,6 +12,7 @@ namespace fruitstudios\palette;
 
 use fruitstudios\palette\models\Settings;
 use fruitstudios\palette\fields\PaletteField;
+use fruitstudios\palette\fields\PaletteAlternativeField;
 use fruitstudios\palette\plugin\Routes as PaletteRoutes;
 use fruitstudios\palette\plugin\Services as PaletteServices;
 use fruitstudios\palette\web\twig\CraftVariableBehavior;
@@ -178,6 +179,7 @@ class Palette extends Plugin
     {
         Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = PaletteField::class;
+            $event->types[] = PaletteAlternativeField::class;
         });
     }
 

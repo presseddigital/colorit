@@ -42,15 +42,18 @@
 
             {% for type in allFieldTemplatesTypes %}
 
-                {% set isCurrent = (not fieldTemplate.type and loop.first) or (fieldTemplate.type == type) %}
+                {% set isCurrent = fieldTemplate.type == type %}
+
                 <div id="{{ type|id }}"{% if not isCurrent %} class="hidden"{% endif %}>
+
                     {% namespace 'types['~type~']' %}
 
-                        {% set _fieldType = fieldTemplate.type and isCurrent ? fieldTemplate.getField() : craft.palette.fieldTemplates.getFieldTemplateField(type) %}
+                        {% set _fieldTemplate = isCurrent ? fieldTemplate : craft.palette.fieldTemplates.createFieldTemplate(type) %}
 
-                        {{ fieldTemplate.getFieldSettingsHtml()|raw }}
+                        {{ _fieldTemplate.getFieldSettingsHtml()|raw }}
 
                     {% endnamespace %}
+
                 </div>
 
             {% endfor %}
@@ -66,7 +69,5 @@
         <input type="submit" class="btn submit" value="{{ 'Save'|t('palette') }}">
 
     </form>
-
-    <hr>
 
 {% endblock %}

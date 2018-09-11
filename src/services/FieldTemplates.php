@@ -44,7 +44,7 @@ class FieldTemplates extends Component
         $results = $this->_createFieldTemplatesQuery()->all();
         foreach($results as $result)
         {
-            $fieldTemplate = $this->_populateFieldTemplate($result);
+            $fieldTemplate = $this->createFieldTemplate($result);
             $this->_allFieldTemplates[$result['id']] = $fieldTemplate;
             $this->_allFieldTemplatesByType[$result['type']] = $fieldTemplate;
         }
@@ -81,7 +81,7 @@ class FieldTemplates extends Component
         {
             return null;
         }
-        return $this->_allFieldTemplates[$id] = $this->_populateFieldTemplate($result);
+        return $this->_allFieldTemplates[$id] = $this->createFieldTemplate($result);
     }
 
     public function saveFieldTemplate(FieldTemplate $model, bool $runValidation = true): bool
@@ -142,16 +142,19 @@ class FieldTemplates extends Component
         {
             return false;
         }
-        // $field->isFieldTemplate = true;
         return $field;
     }
 
 
-    public function createFieldTemplate($config)
+    public function createFieldTemplate($config): FieldTemplate
     {
-        return $this->_populateFieldTemplate($config);
-        // $field->isFieldTemplate = true;
-        // return $field;
+        if(is_string($config))
+        {
+            $config = [
+                'type' => $config
+            ];
+        }
+        return new FieldTemplate($config);
     }
 
     // Private Methods
@@ -168,11 +171,4 @@ class FieldTemplates extends Component
             ])
             ->from(['{{%palette_fieldtemplates}}']);
     }
-
-
-    private function _populateFieldTemplate(array $result): FieldTemplate
-    {
-        return new FieldTemplate($result);
-    }
-
 }
