@@ -24,7 +24,8 @@ class PaletteAssetBundle extends AssetBundle
         ];
 
         $this->css = [
-            'css/styles.css',
+            'css/cp.css',
+            'css/palette.css',
         ];
 
         parent::init();

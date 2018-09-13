@@ -5,8 +5,8 @@ use fruitstudios\palette\Palette;
 use fruitstudios\palette\models\FieldTemplate;
 use fruitstudios\palette\records\FieldTemplate as FieldTemplateRecord;
 
-use fruitstudios\palette\Fields\PaletteFieldTemplate;
-use fruitstudios\palette\Fields\PaletteAlternativeFieldTemplate;
+use fruitstudios\palette\fields\PaletteFieldTemplate;
+use fruitstudios\palette\fields\PaletteAlternativeFieldTemplate;
 
 
 use Craft;
@@ -46,7 +46,7 @@ class FieldTemplates extends Component
         {
             $fieldTemplate = $this->createFieldTemplate($result);
             $this->_allFieldTemplates[$result['id']] = $fieldTemplate;
-            $this->_allFieldTemplatesByType[$result['type']] = $fieldTemplate;
+            $this->_allFieldTemplatesByType[$result['type']][$result['id']] = $fieldTemplate;
         }
         $this->_fetchedAllFieldTemplates = true;
         return $this->_allFieldTemplates;
@@ -58,6 +58,10 @@ class FieldTemplates extends Component
         {
             $this->getAllFieldTemplates();
         }
+        // var_dump($type);
+        // print_r($this->_allFieldTemplatesByType);
+        // print_r($this->_allFieldTemplatesByType[$type] ?? []);
+        // die;
         return $this->_allFieldTemplatesByType[$type] ?? [];
     }
 

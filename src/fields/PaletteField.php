@@ -2,6 +2,7 @@
 namespace fruitstudios\palette\fields;
 
 use fruitstudios\palette\Palette;
+use fruitstudios\palette\fields\PaletteFieldTemplate;
 use fruitstudios\palette\models\Colour;
 use fruitstudios\palette\helpers\ColourHelper;
 use fruitstudios\palette\web\assets\palette\PaletteAssetBundle;
@@ -67,11 +68,16 @@ class PaletteField extends Field
     public function init()
     {
         parent::init();
+        if($this->fieldTemplateId)
+        {
+            $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
+            Craft::configure($this, $fieldTemplate->getSettings());
+        }
     }
 
     public function rules()
     {
-        return array_merge(parent::rules(), self::fieldRules);
+        return array_merge(parent::rules(), self::fieldRules());
     }
 
     public function getType(): string
@@ -151,14 +157,15 @@ class PaletteField extends Field
     // public function getSettings(): array
     // {
     //     $settings = [];
+    //     $fieldTemplate;
 
     //     if($this->fieldTemplateId)
     //     {
-    //         $fieldTemplates = false; // Function to get preset settings from table by presetSettingsId
+    //         $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
     //     }
 
     //     foreach ($this->settingsAttributes() as $attribute) {
-    //         $settings[$attribute] = $presetSettings ? $presetSettings->$attribute : $this->$attribute;
+    //         $settings[$attribute] = $fieldTemplate ? $fieldTemplate->settings->$attribute : $this->$attribute;
     //     }
 
     //     return $settings;
@@ -166,9 +173,30 @@ class PaletteField extends Field
 
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('palette/_fields/palette/settings', [
-            'field' => $this,
-        ]);
+        $field = $this;
+        $fieldTemplates = [];
+        $fieldTemplateOptions = [];
+        if(!self::isFieldTemplate())
+        {
+            $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(PaletteFieldTemplate::class);
+            if($fieldTemplates)
+            {
+                $fieldTemplateOptions[] = [ 'value' => '', 'label' => 'Inline Settings' ];
+                foreach ($fieldTemplates as $fieldTemplate)
+                {
+                    $fieldTemplateOptions[] = [
+                        'value' => $fieldTemplate->id,
+                        'label' => $fieldTemplate->name,
+                    ];
+                }
+            }
+        }
+
+        return Craft::$app->getView()->renderTemplate('palette/_fields/palette/settings', compact(
+            'field',
+            'fieldTemplates',
+            'fieldTemplateOptions'
+        ));
     }
 
     public function getInputHtml($value, ElementInterface $element = null): string
@@ -186,13 +214,21 @@ class PaletteField extends Field
         ]);
         $view->registerJs('new Palette('.$js.');', View::POS_END);
 
+        // TODO: Replace with settings set on init
+        $field = $this;
+        // if($this->fieldTemplateId)
+        // {
+        //     $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
+        //     $field = $fieldTemplate->getFieldType();
+        // }
+
         return $view->renderTemplate(
             'palette/_fields/palette/input',
             [
                 'id' => $id,
                 'name' => $this->handle,
                 'value' => $value,
-                'field' => $this,
+                'field' => $field,
             ]
         );
     }

@@ -1,10 +1,13 @@
 {% extends "palette/_layouts/main" %}
+{% do view.registerAssetBundle("fruitstudios\\palette\\web\\assets\\palette\\PaletteAssetBundle") %}
+
+{% set config = craft.app.plugins.getPluginInfo('linkit') %}
 
 {% block content %}
 
-	<a href="https://github.com/fruitstudios/craft-palette" target="_blank">
-		<img width="100" height="100" src="{{ craft.app.assetManager.getPublishedUrl('@fruitstudios/palette/web/assets/palette/build/img/', true, 'palette.svg') }}" alt="Palette">
-	</a>
+    <div class="fruit--abouticon">
+        {{ svg(craft.app.plugins.getPluginIconSvg('palette')) }}
+    </div>
 
     <h2>{{ "Thanks for using Palette"|t('palette') }}</h2>
 
@@ -16,6 +19,23 @@
 
     <p>Please report any issues through github:</p>
     <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('palette') }}</a>
+    <hr>
+
+    <h2>{{ "Licence"|t('palette') }}</h2>
+
+    {% set showLicenseKey = config.licenseKey or config.licenseKeyStatus != 'unknown' %}
+
+    <div class="flex">
+        <div class="pane fruit-licencekey">
+            <input class="text code{% if config.hasIssues %} error{% endif %}" size="29" maxlength="29" value="{{ config.licenseKey|replace('/.{4}/', '$0-')|trim('-') }}" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" readonly>
+        </div>
+        <a class="btn{% if config.hasIssues %} submit{% endif %}{% if not (showLicenseKey and not config.licenseKey) %} hidden{% endif %}" href="{{ url('plugin-store/buy/palette')}}">{{ "Buy now"|t('app') }}</a>
+        <div class="spinner hidden"></div>
+    </div>
+
+    {% if showLicenseKey and config.licenseStatusMessage %}
+        <p class="error">{{ config.licenseStatusMessage|raw }}</p>
+    {% endif %}
 
 {% endblock %}
 

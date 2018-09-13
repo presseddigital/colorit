@@ -35,4 +35,5 @@ class PaletteFieldTemplate extends PaletteField
     {
         return parent::fieldRules();
     }
+
 }

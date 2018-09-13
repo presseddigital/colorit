@@ -1,42 +1,35 @@
 {% import "_includes/forms" as forms %}
 
-
-{% if field.isFieldTemplate %}
-
-{#     {{ forms.textField({
-        label: 'Name'|t('palette'),
-        instructions: 'What this field template will be called in the CP.'|t('palette'),
-        id: 'name',
-        name: 'name',
-        placeholder: '',
-        value: field.name ?? '',
-        errors: field.getErrors('name') ?? false,
-        first: true
-    }) }} #}
-
-{% else %}
+{% if not field.isFieldTemplate %}
 
     {{ forms.selectField({
         label: "Field Template"|t('palette'),
         instructions: "Use a field template to define this fields settings."|t('palette'),
         id: 'fieldTemplateId',
         name: 'fieldTemplateId',
-        options: [
-            {
-                value: '',
-                label: 'Custom field settings'
-            }
-        ],
-        value: field.fieldTemplateId,
+        options: fieldTemplateOptions,
+        value: field.fieldTemplateId ?? '',
         errors: field.getErrors('fieldTemplateId'),
+        toggle: true,
     }) }}
 
     <hr>
 
+    {% if fieldTemplates %}
+
+        {% for fieldTemplate in fieldTemplates %}
+            {% set currentFieldTemplate = field.fieldTemplateId == fieldTemplate.id %}
+            <div id="{{ fieldTemplate.id|id }}"{% if not currentFieldTemplate %} class="hidden"{% endif %}>
+                {{ fieldTemplate.getFieldInputPreviewHtml()|raw }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
 {% endif %}
 
-
-<div id="palette-{{ field.id }}" class="{{ field.fieldTemplateId ? 'hidden' }}">
+{% set showInlineSettings = field.isFieldTemplate or (not field.fieldTemplateId or field.fieldTemplateId == '') %}
+<div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
     {{ forms.editableTableField({
         label: 'Palette Colours',

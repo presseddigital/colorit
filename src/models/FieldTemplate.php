@@ -56,6 +56,13 @@ class FieldTemplate extends Model
         return $fieldType ? $fieldType->getSettingsHtml() : '';
     }
 
+    public function getFieldInputPreviewHtml()
+    {
+        // Get field type for this template and add any errors to it
+        $fieldType = $this->getFieldType();
+        return $fieldType ? $fieldType->getInputPreviewHtml() : '';
+    }
+
     // TODO: Move this into the service, it needs to be used in multiple places
     public function getFieldType()
     {
@@ -72,6 +79,11 @@ class FieldTemplate extends Model
             $error = $exception->getMessage();
             return false;
         }
+    }
+
+    public function getSettings()
+    {
+        return $this->normalizeSettings($this->settings);
     }
 
     public function normalizeSettings($settings)
