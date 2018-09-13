@@ -6,8 +6,6 @@ use fruitstudios\palette\models\FieldTemplate;
 use fruitstudios\palette\records\FieldTemplate as FieldTemplateRecord;
 
 use fruitstudios\palette\fields\PaletteFieldTemplate;
-use fruitstudios\palette\fields\PaletteAlternativeFieldTemplate;
-
 
 use Craft;
 use craft\base\Component;
@@ -20,8 +18,12 @@ class FieldTemplates extends Component
     // =========================================================================
 
     private $_fetchedAllFieldTemplates = false;
+
     private $_allFieldTemplates = [];
     private $_allFieldTemplatesByType = [];
+
+    private $_allFieldsUsingTemplates;
+    private $_allFieldsUsingTemplatesById;
 
     // Public Methods
     // =========================================================================
@@ -30,7 +32,6 @@ class FieldTemplates extends Component
     {
         return [
             PaletteFieldTemplate::class,
-            PaletteAlternativeFieldTemplate::class,
         ];
     }
 
@@ -58,10 +59,6 @@ class FieldTemplates extends Component
         {
             $this->getAllFieldTemplates();
         }
-        // var_dump($type);
-        // print_r($this->_allFieldTemplatesByType);
-        // print_r($this->_allFieldTemplatesByType[$type] ?? []);
-        // die;
         return $this->_allFieldTemplatesByType[$type] ?? [];
     }
 
@@ -109,16 +106,9 @@ class FieldTemplates extends Component
             return false;
         }
 
-        $fields = [
-            'name',
-            'type',
-            'settings'
-        ];
-
-        foreach ($fields as $field)
-        {
-            $record->$field = $model->$field;
-        }
+        $record->name = $model->name;
+        $record->type = $model->type;
+        $record->settings = $model->settings;
 
         // Save it!
         $record->save(false);
@@ -160,6 +150,29 @@ class FieldTemplates extends Component
         }
         return new FieldTemplate($config);
     }
+
+    // public function getAllFieldsUsingTemplate(): array
+    // {
+    //     if(is_null($this->_allFieldsUsingTemplates))
+    //     {
+    //         $fields = [];
+    //         if($fields)
+    //         {
+    //             foreach($fields as $field)
+    //             {
+    //                 $this->_allFieldsUsingTemplates[] = $field;
+    //                 $this->_allFieldsUsingTemplatesById[$field['id']][] = $field;
+    //             }
+    //         }
+    //     }
+    //     return $this->_allFieldTemplates;
+    // }
+
+    // public function getFieldsUsingTemplateById(int $id)
+    // {
+    //     $this->getAllFieldsUsingTemplates();
+    //     return $this->_allFieldsUsingTemplatesById[$id] ?? [];
+    // }
 
     // Private Methods
     // =========================================================================

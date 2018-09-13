@@ -29,6 +29,8 @@ class PaletteField extends Field
     // Public Properties
     // =========================================================================
 
+    public $fieldTemplateMode = false;
+
     public $fieldTemplateId;
     public $paletteColours;
     public $paletteBaseColours;
@@ -68,11 +70,6 @@ class PaletteField extends Field
     public function init()
     {
         parent::init();
-        if($this->fieldTemplateId)
-        {
-            $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
-            Craft::configure($this, $fieldTemplate->getSettings());
-        }
     }
 
     public function rules()
@@ -154,23 +151,6 @@ class PaletteField extends Field
         return parent::serializeValue($serialized, $element);
     }
 
-    // public function getSettings(): array
-    // {
-    //     $settings = [];
-    //     $fieldTemplate;
-
-    //     if($this->fieldTemplateId)
-    //     {
-    //         $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
-    //     }
-
-    //     foreach ($this->settingsAttributes() as $attribute) {
-    //         $settings[$attribute] = $fieldTemplate ? $fieldTemplate->settings->$attribute : $this->$attribute;
-    //     }
-
-    //     return $settings;
-    // }
-
     public function getSettingsHtml()
     {
         $field = $this;
@@ -181,7 +161,7 @@ class PaletteField extends Field
             $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(PaletteFieldTemplate::class);
             if($fieldTemplates)
             {
-                $fieldTemplateOptions[] = [ 'value' => '', 'label' => 'Inline Settings' ];
+                $fieldTemplateOptions[] = [ 'value' => '', 'label' => 'No Template' ];
                 foreach ($fieldTemplates as $fieldTemplate)
                 {
                     $fieldTemplateOptions[] = [
@@ -201,6 +181,8 @@ class PaletteField extends Field
 
     public function getInputHtml($value, ElementInterface $element = null): string
     {
+        $this->_populateWithFieldTemplate();
+
         $view = Craft::$app->getView();
         $id = $view->formatInputId($this->handle);
         $namespacedId = Craft::$app->view->namespaceInputId($id);
@@ -260,5 +242,17 @@ class PaletteField extends Field
         }
 
         return $palette;
+    }
+
+    // Static Methods
+    // =========================================================================
+
+    private function _populateWithFieldTemplate()
+    {
+        if($this->fieldTemplateId)
+        {
+            $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
+            Craft::configure($this, $fieldTemplate->getSettings());
+        }
     }
 }
