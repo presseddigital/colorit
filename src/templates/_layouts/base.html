@@ -1,6 +1,9 @@
 {% extends '_layouts/cp' %}
+{% do view.registerAssetBundle("fruitstudios\\palette\\web\\assets\\palette\\PaletteAssetBundle") %}
 
 {#
+	Tabs
+
 	{% set hideTabs = hideTabs ?? false %}
 	{% if not hideTabs %}
 	    {% set tabs = {

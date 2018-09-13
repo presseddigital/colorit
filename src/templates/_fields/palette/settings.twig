@@ -29,6 +29,7 @@
 {% endif %}
 
 {% set showInlineSettings = field.isFieldTemplate or (not field.fieldTemplateId or field.fieldTemplateId == '') %}
+
 <div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
     {{ forms.editableTableField({
