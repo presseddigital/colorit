@@ -15,7 +15,8 @@ class FieldTemplate extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'type'], 'required'],
+            [['type'], 'string'],
             [['name'], 'string', 'max' => 255],
         ];
     }

@@ -2,7 +2,6 @@
 namespace fruitstudios\palette\fields;
 
 use fruitstudios\palette\Palette;
-use fruitstudios\palette\fields\PaletteFieldTemplate;
 use fruitstudios\palette\models\Colour;
 use fruitstudios\palette\helpers\ColourHelper;
 use fruitstudios\palette\web\assets\palette\PaletteAssetBundle;
@@ -46,24 +45,6 @@ class PaletteField extends Field
         return Craft::t('palette', 'Palette');
     }
 
-    public static function isFieldTemplate(): bool
-    {
-        return false;
-    }
-
-    public static function fieldRules(): array
-    {
-        $rules = [];
-        $rules[] = ['paletteColours', 'validatePaletteColours'];
-        $rules[] = ['paletteBaseColours', ArrayValidator::class];
-        $rules[] = ['colourFormat', 'string'];
-        $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
-        return $rules;
-    }
-
-
     // Public Methods
     // =========================================================================
 
@@ -72,14 +53,27 @@ class PaletteField extends Field
         parent::init();
     }
 
-    public function rules()
+    public function setFieldTemplateMode(bool $on)
     {
-        return array_merge(parent::rules(), self::fieldRules());
+        $this->fieldTemplateMode = $on;
     }
 
-    public function getType(): string
+    public function rules()
     {
-        return get_class($this);
+        $rules = [];
+        $rules[] = ['paletteColours', 'validatePaletteColours'];
+        $rules[] = ['paletteBaseColours', ArrayValidator::class];
+        $rules[] = ['colourFormat', 'string'];
+        $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
+        $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
+        $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
+
+        if($this->fieldTemplateMode)
+        {
+            return $rules;
+        }
+
+        return array_merge(parent::rules(), $rules);
     }
 
     public function validatePaletteColours()
@@ -87,14 +81,9 @@ class PaletteField extends Field
         return true;
     }
 
-    public function getContentColumnType(): string
+    public function getType(): string
     {
-        return Schema::TYPE_TEXT;
-    }
-
-    public function isValueEmpty($value, ElementInterface $element): bool
-    {
-        return empty($value->handle ?? '');
+        return get_class($this);
     }
 
     public function getElementValidationRules(): array
@@ -112,6 +101,16 @@ class PaletteField extends Field
                 $element->addModelErrors($fieldValue, $this->handle);
             }
         }
+    }
+
+    public function getContentColumnType(): string
+    {
+        return Schema::TYPE_TEXT;
+    }
+
+    public function isValueEmpty($value, ElementInterface $element): bool
+    {
+        return empty($value->handle ?? '');
     }
 
     public function normalizeValue($value, ElementInterface $element = null)
@@ -147,7 +146,6 @@ class PaletteField extends Field
                 'opacity' => $value->opacity,
             ];
         }
-
         return parent::serializeValue($serialized, $element);
     }
 
@@ -155,13 +153,16 @@ class PaletteField extends Field
     {
         $field = $this;
         $fieldTemplates = [];
-        $fieldTemplateOptions = [];
-        if(!self::isFieldTemplate())
+        $fieldTemplateOptions[] =  [
+            'value' => '',
+            'label' => 'No Template'
+        ];
+
+        if(!$this->fieldTemplateMode)
         {
-            $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(PaletteFieldTemplate::class);
+            $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(self::class);
             if($fieldTemplates)
             {
-                $fieldTemplateOptions[] = [ 'value' => '', 'label' => 'No Template' ];
                 foreach ($fieldTemplates as $fieldTemplate)
                 {
                     $fieldTemplateOptions[] = [
@@ -196,23 +197,12 @@ class PaletteField extends Field
         ]);
         $view->registerJs('new Palette('.$js.');', View::POS_END);
 
-        // TODO: Replace with settings set on init
-        $field = $this;
-        // if($this->fieldTemplateId)
-        // {
-        //     $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
-        //     $field = $fieldTemplate->getFieldType();
-        // }
-
-        return $view->renderTemplate(
-            'palette/_fields/palette/input',
-            [
-                'id' => $id,
-                'name' => $this->handle,
-                'value' => $value,
-                'field' => $field,
-            ]
-        );
+        return $view->renderTemplate('palette/_fields/palette/input', [
+            'id' => $id,
+            'name' => $this->handle,
+            'value' => $value,
+            'field' => $this,
+        ]);
     }
 
     public function getInputPreviewHtml(): string
@@ -221,12 +211,9 @@ class PaletteField extends Field
 
         $view->registerAssetBundle(PaletteAssetBundle::class);
 
-        return $view->renderTemplate(
-            'palette/_fields/palette/preview',
-            [
-                'field' => $this,
-            ]
-        );
+        return $view->renderTemplate('palette/_fields/palette/preview', [
+            'field' => $this,
+        ]);
     }
 
     public function getPalette()
@@ -240,7 +227,6 @@ class PaletteField extends Field
                 $palette[$paletteColour['handle']] = $paletteColour;
             }
         }
-
         return $palette;
     }
 
@@ -252,7 +238,10 @@ class PaletteField extends Field
         if($this->fieldTemplateId)
         {
             $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
-            Craft::configure($this, $fieldTemplate->getSettings());
+            if($fieldTemplate)
+            {
+                Craft::configure($this, $fieldTemplate->getSettings());
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 
-{% if not field.isFieldTemplate %}
+{% if not field.fieldTemplateMode %}
 
     {{ forms.selectField({
         label: "Field Template"|t('palette'),
@@ -15,6 +15,8 @@
 
     <hr>
 
+    {% set selectedFieldTemplateExists = (fieldTemplates[field.fieldTemplateId] is defined) %}
+
     {% if fieldTemplates %}
 
         {% for fieldTemplate in fieldTemplates %}
@@ -28,7 +30,9 @@
 
 {% endif %}
 
-{% set showInlineSettings = field.isFieldTemplate or (not field.fieldTemplateId or field.fieldTemplateId == '') %}
+
+
+{% set showInlineSettings = field.fieldTemplateMode or (not selectedFieldTemplateExists or not field.fieldTemplateId or field.fieldTemplateId == '') %}
 
 <div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 

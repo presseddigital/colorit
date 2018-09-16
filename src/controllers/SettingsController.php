@@ -2,7 +2,6 @@
 namespace fruitstudios\palette\controllers;
 
 use fruitstudios\palette\Palette;
-use fruitstudios\palette\fields\PaletteFieldTemplate;
 
 use Craft;
 use craft\web\Controller;

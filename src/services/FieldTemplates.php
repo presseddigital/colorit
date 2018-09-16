@@ -5,7 +5,7 @@ use fruitstudios\palette\Palette;
 use fruitstudios\palette\models\FieldTemplate;
 use fruitstudios\palette\records\FieldTemplate as FieldTemplateRecord;
 
-use fruitstudios\palette\fields\PaletteFieldTemplate;
+use fruitstudios\palette\fields\PaletteField;
 
 use Craft;
 use craft\base\Component;
@@ -31,7 +31,7 @@ class FieldTemplates extends Component
     public function getAllFieldTemplateTypes(): array
     {
         return [
-            PaletteFieldTemplate::class,
+            PaletteField::class,
         ];
     }
 
@@ -138,7 +138,6 @@ class FieldTemplates extends Component
         }
         return $field;
     }
-
 
     public function createFieldTemplate($config): FieldTemplate
     {
