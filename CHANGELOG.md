@@ -1,7 +1,7 @@
 # Palette Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
-## [Unreleased]
+## 1.0.2 - 2018-09-17
 
 ### Added
 

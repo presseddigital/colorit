@@ -51,7 +51,7 @@ class Palette extends Plugin
     // Public Properties
     // =========================================================================
 
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.0.2';
 
     // Traits
     // =========================================================================
