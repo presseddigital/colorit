@@ -2,6 +2,7 @@
 namespace fruitstudios\palette\plugin;
 
 use fruitstudios\palette\services\Colours;
+use fruitstudios\palette\services\Fields;
 use fruitstudios\palette\services\FieldTemplates;
 
 trait Services
@@ -19,6 +20,11 @@ trait Services
         return $this->get('colours');
     }
 
+    public function getFields(): Fields
+    {
+        return $this->get('fields');
+    }
+
     // Private Methods
     // =========================================================================
 
@@ -28,6 +34,7 @@ trait Services
             'colours' => Colours::class,
             'colors' => Colours::class,
             'fieldTemplates' => FieldTemplates::class,
+            'fields' => Fields::class,
         ]);
     }
 }

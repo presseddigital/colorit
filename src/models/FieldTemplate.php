@@ -88,6 +88,11 @@ class FieldTemplate extends Model
         return is_string($settings) ? Json::decodeIfJson($settings) : ($settings ?? []);
     }
 
+    public function isInUse()
+    {
+        return $this->getFieldsUsing() ?? false;
+    }
+
     public function getFieldsUsing()
     {
         if(!is_null($this->_fieldsUsing))
@@ -95,10 +100,10 @@ class FieldTemplate extends Model
             return $this->_fieldsUsing;
         }
 
-        $fieldsOfType = FieldHelper::getFieldsByType($this->type);
+        $fieldsOfType = Palette::$plugin->getFields()->getFieldsByType($this->type);
         foreach ($fieldsOfType as $fieldOfType)
         {
-            if($this->id == ($this->normalizeSettings($fieldOfType['settings'])['fieldTemplateId'] ?? false))
+            if($this->id == $fieldOfType->fieldTemplateId)
             {
                 $this->_fieldsUsing[] = $fieldOfType;
             }
@@ -117,12 +122,20 @@ class FieldTemplate extends Model
         $links = [];
         foreach($fields as $field)
         {
-            $isPartOfMatrix = $field['context'] != 'global';
-            $_field = $isPartOfMatrix ? FieldHelper::getMatrixFieldByChildFieldId($field['id']) : FieldHelper::getFieldById($field['id']);
-            Craft::dd($field);
+            $isOwnedByMatrix = false;
+            if ($field['context'] != 'global')
+            {
+                $isOwnedByMatrix = true;
+                $_field = Palette::$plugin->getFields()->getMatrixFieldByChildFieldId($field['id']);
+            }
+            else
+            {
+                $_field = Palette::$plugin->getFields()->getFieldById($field['id']);
+            }
+
             if($_field)
             {
-                //$links[] = '<a href="'.UrlHelper::cpUrl('settings/fields/edit/'.$_field->id).'">'.$_field->name.($isPartOfMatrix ? ' ('.$field['name'].')' : '').'</a>';
+                $links[] = '<a href="'.UrlHelper::cpUrl('settings/fields/edit/'.$_field->id).'">'.$_field->name.($isOwnedByMatrix ? ' ('.$field['name'].')' : '').'</a>';
             }
         }
         return '<p>'.implode(', ', $links).'</p>';

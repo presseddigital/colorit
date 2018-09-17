@@ -28,7 +28,11 @@
                         <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
                         <td data-title="{{ 'Type'|t('palette') }}">{{ fieldTemplate.fieldType.displayName }}</td>
                         <td data-title="{{ 'Fields'|t('palette') }}">{{ fieldTemplate.getFieldsUsingHtml()|raw }}</td>
-                        <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a></td>
+                        <td class="thin">
+                            {% if not fieldTemplate.isInUse %}
+                                <a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
