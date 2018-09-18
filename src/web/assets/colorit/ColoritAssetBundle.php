@@ -1,31 +1,31 @@
 <?php
-namespace fruitstudios\palette\web\assets\palette;
+namespace fruitstudios\colorit\web\assets\colorit;
 
 use Craft;
 
 use yii\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-class PaletteAssetBundle extends AssetBundle
+class ColoritAssetBundle extends AssetBundle
 {
     // Public Methods
     // =========================================================================
 
     public function init()
     {
-        $this->sourcePath = "@fruitstudios/palette/web/assets/palette/build";
+        $this->sourcePath = "@fruitstudios/colorit/web/assets/colorit/build";
 
         $this->depends = [];
 
         $this->js = [
             'js/vendor/polyfill.js',
             'js/vendor/extend.js',
-            'js/Palette.js',
+            'js/Colorit.js',
         ];
 
         $this->css = [
             'css/cp.css',
-            'css/palette.css',
+            'css/colorit.css',
         ];
 
         parent::init();

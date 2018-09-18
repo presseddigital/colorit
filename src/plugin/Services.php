@@ -1,9 +1,9 @@
 <?php
-namespace fruitstudios\palette\plugin;
+namespace fruitstudios\colorit\plugin;
 
-use fruitstudios\palette\services\Colours;
-use fruitstudios\palette\services\Fields;
-use fruitstudios\palette\services\FieldTemplates;
+use fruitstudios\colorit\services\Colours;
+use fruitstudios\colorit\services\Fields;
+use fruitstudios\colorit\services\FieldTemplates;
 
 trait Services
 {

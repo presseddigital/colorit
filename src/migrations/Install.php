@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\palette\migrations;
+namespace fruitstudios\colorit\migrations;
 
-use fruitstudios\palette\Palette;
+use fruitstudios\colorit\Colorit;
 
 use Craft;
 use craft\config\DbConfig;
@@ -43,12 +43,12 @@ class Install extends Migration
     {
         $tablesCreated = false;
 
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%palette_fieldtemplates}}');
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%colorit_fieldtemplates}}');
         if($tableSchema === null)
         {
             $tablesCreated = true;
             $this->createTable(
-                '{{%palette_fieldtemplates}}',
+                '{{%colorit_fieldtemplates}}',
                 [
                     'id' => $this->primaryKey(),
                     'name' => $this->string()->notNull(),
@@ -67,8 +67,8 @@ class Install extends Migration
     protected function createIndexes()
     {
         $this->createIndex(
-            $this->db->getIndexName('{{%palette_fieldtemplates}}', 'name', true),
-            '{{%palette_fieldtemplates}}',
+            $this->db->getIndexName('{{%colorit_fieldtemplates}}', 'name', true),
+            '{{%colorit_fieldtemplates}}',
             ['name'],
             false
         );
@@ -89,6 +89,6 @@ class Install extends Migration
 
     protected function removeTables()
     {
-        $this->dropTableIfExists('{{%palette_fieldtemplates}}');
+        $this->dropTableIfExists('{{%colorit_fieldtemplates}}');
     }
 }

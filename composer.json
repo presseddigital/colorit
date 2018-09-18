@@ -1,5 +1,5 @@
 {
-    "name": "fruitstudios/palette",
+    "name": "fruitstudios/colorit",
     "description": "A palette fieldtype for Craft CMS.",
     "type": "craft-plugin",
     "version": "1.0.2",
@@ -15,8 +15,8 @@
         "colors"
     ],
     "support": {
-        "docs": "https://github.com/fruitstudios/craft-palette/blob/master/README.md",
-        "issues": "https://github.com/fruitstudios/craft-palette/issues"
+        "docs": "https://github.com/fruitstudios/craft-colorit/blob/master/README.md",
+        "issues": "https://github.com/fruitstudios/craft-colorit/issues"
     },
     "license": "proprietary",
     "authors": [
@@ -30,15 +30,15 @@
     },
     "autoload": {
         "psr-4": {
-          "fruitstudios\\palette\\": "src/"
+          "fruitstudios\\colorit\\": "src/"
         }
     },
     "extra": {
-        "name": "Palette",
-        "handle": "palette",
+        "name": "Colorit",
+        "handle": "colorit",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-palette/master/CHANGELOG.md",
-        "class": "fruitstudios\\palette\\Palette"
+        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-colorit/master/CHANGELOG.md",
+        "class": "fruitstudios\\colorit\\Colorit"
     }
 }

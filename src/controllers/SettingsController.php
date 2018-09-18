@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\palette\controllers;
+namespace fruitstudios\colorit\controllers;
 
-use fruitstudios\palette\Palette;
+use fruitstudios\colorit\Colorit;
 
 use Craft;
 use craft\web\Controller;
@@ -16,8 +16,8 @@ class SettingsController extends Controller
 
     public function actionGeneral()
     {
-        return $this->renderTemplate('palette/settings/general', [
-            'settings' => Palette::$settings,
+        return $this->renderTemplate('colorit/settings/general', [
+            'settings' => Colorit::$settings,
         ]);
     }
 }

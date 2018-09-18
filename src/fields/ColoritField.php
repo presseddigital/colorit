@@ -1,10 +1,10 @@
 <?php
-namespace fruitstudios\palette\fields;
+namespace fruitstudios\colorit\fields;
 
-use fruitstudios\palette\Palette;
-use fruitstudios\palette\models\Colour;
-use fruitstudios\palette\helpers\ColourHelper;
-use fruitstudios\palette\web\assets\palette\PaletteAssetBundle;
+use fruitstudios\colorit\Colorit;
+use fruitstudios\colorit\models\Colour;
+use fruitstudios\colorit\helpers\ColourHelper;
+use fruitstudios\colorit\web\assets\colorit\ColoritAssetBundle;
 
 use Craft;
 use craft\web\View;
@@ -23,7 +23,7 @@ use yii\db\Schema;
  * @package   Palette
  * @since     1.0.0
  */
-class PaletteField extends Field
+class ColoritField extends Field
 {
     // Public Properties
     // =========================================================================
@@ -42,7 +42,7 @@ class PaletteField extends Field
 
     public static function displayName(): string
     {
-        return Craft::t('palette', 'Palette');
+        return Craft::t('colorit', 'Colorit');
     }
 
     // Public Methods
@@ -160,7 +160,7 @@ class PaletteField extends Field
 
         if(!$this->fieldTemplateMode)
         {
-            $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(self::class);
+            $fieldTemplates = Colorit::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(self::class);
             if($fieldTemplates)
             {
                 foreach ($fieldTemplates as $fieldTemplate)
@@ -173,7 +173,7 @@ class PaletteField extends Field
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('palette/_fields/palette/settings', compact(
+        return Craft::$app->getView()->renderTemplate('colorit/_fields/colorit/settings', compact(
             'field',
             'fieldTemplates',
             'fieldTemplateOptions'
@@ -188,16 +188,16 @@ class PaletteField extends Field
         $id = $view->formatInputId($this->handle);
         $namespacedId = Craft::$app->view->namespaceInputId($id);
 
-        $view->registerAssetBundle(PaletteAssetBundle::class);
+        $view->registerAssetBundle(ColoritAssetBundle::class);
         $js = Json::encode([
             'id' => $id,
             'namespacedId' => $namespacedId,
             'name' => $this->handle,
             'debug' => Craft::$app->getConfig()->getGeneral()->devMode,
         ]);
-        $view->registerJs('new Palette('.$js.');', View::POS_END);
+        $view->registerJs('new Colorit('.$js.');', View::POS_END);
 
-        return $view->renderTemplate('palette/_fields/palette/input', [
+        return $view->renderTemplate('colorit/_fields/colorit/input', [
             'id' => $id,
             'name' => $this->handle,
             'value' => $value,
@@ -209,9 +209,9 @@ class PaletteField extends Field
     {
         $view = Craft::$app->getView();
 
-        $view->registerAssetBundle(PaletteAssetBundle::class);
+        $view->registerAssetBundle(ColoritAssetBundle::class);
 
-        return $view->renderTemplate('palette/_fields/palette/preview', [
+        return $view->renderTemplate('colorit/_fields/colorit/preview', [
             'field' => $this,
         ]);
     }
@@ -237,7 +237,7 @@ class PaletteField extends Field
     {
         if($this->fieldTemplateId)
         {
-            $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
+            $fieldTemplate = Colorit::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
             if($fieldTemplate)
             {
                 Craft::configure($this, $fieldTemplate->getSettings());

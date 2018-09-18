@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\palette\controllers;
+namespace fruitstudios\colorit\controllers;
 
-use fruitstudios\palette\Palette;
-use fruitstudios\palette\models\FieldTemplate;
+use fruitstudios\colorit\Colorit;
+use fruitstudios\colorit\models\FieldTemplate;
 
 use Craft;
 use craft\web\Controller;
@@ -17,9 +17,9 @@ class FieldTemplatesController extends Controller
 
     public function actionIndex(): Response
     {
-        $fieldTemplates = Palette::$plugin->getFieldTemplates()->getAllFieldTemplates();
+        $fieldTemplates = Colorit::$plugin->getFieldTemplates()->getAllFieldTemplates();
 
-        return $this->renderTemplate('palette/settings/fieldtemplates/index', compact('fieldTemplates'));
+        return $this->renderTemplate('colorit/settings/fieldtemplates/index', compact('fieldTemplates'));
     }
 
     public function actionEdit(int $fieldTemplateId = null, FieldTemplate $fieldTemplate = null): Response
@@ -28,7 +28,7 @@ class FieldTemplatesController extends Controller
         {
             if ($fieldTemplateId)
             {
-                $fieldTemplate = Palette::$plugin->getFieldTemplates()->getFieldTemplateById($fieldTemplateId);
+                $fieldTemplate = Colorit::$plugin->getFieldTemplates()->getFieldTemplateById($fieldTemplateId);
                 if (!$fieldTemplate)
                 {
                     throw new HttpException(404);
@@ -42,7 +42,7 @@ class FieldTemplatesController extends Controller
 
         $isNewFieldTemplate = !$fieldTemplate->id;
 
-        $allFieldTemplatesTypes = Palette::$plugin->getFieldTemplates()->getAllFieldTemplateTypes();
+        $allFieldTemplatesTypes = Colorit::$plugin->getFieldTemplates()->getAllFieldTemplateTypes();
         $fieldTemplateTypeOptions = [];
         foreach ($allFieldTemplatesTypes as $class) {
             $fieldTemplateTypeOptions[] = [
@@ -56,7 +56,7 @@ class FieldTemplatesController extends Controller
             $fieldTemplate->type = $allFieldTemplatesTypes[0];
         }
 
-        return $this->renderTemplate('palette/settings/fieldtemplates/_edit', [
+        return $this->renderTemplate('colorit/settings/fieldtemplates/_edit', [
             'isNewFieldTemplate' => $isNewFieldTemplate,
             'fieldTemplate' => $fieldTemplate,
             'allFieldTemplatesTypes' => $allFieldTemplatesTypes,
@@ -68,7 +68,7 @@ class FieldTemplatesController extends Controller
     {
         $this->requirePostRequest();
 
-        $fieldTemplatesService = Palette::$plugin->getFieldTemplates();
+        $fieldTemplatesService = Colorit::$plugin->getFieldTemplates();
         $request = Craft::$app->getRequest();
         $type = $request->getRequiredBodyParam('type');
 
@@ -79,8 +79,8 @@ class FieldTemplatesController extends Controller
             'settings' => $request->getBodyParam('types.'.$type),
         ]);
 
-        if (!Palette::$plugin->getFieldTemplates()->saveFieldTemplate($fieldTemplate)) {
-            Craft::$app->getSession()->setError(Craft::t('palette', 'Couldn’t save field template.'));
+        if (!Colorit::$plugin->getFieldTemplates()->saveFieldTemplate($fieldTemplate)) {
+            Craft::$app->getSession()->setError(Craft::t('colorit', 'Couldn’t save field template.'));
 
             // Send the plugin back to the template
             Craft::$app->getUrlManager()->setRouteParams([
@@ -90,7 +90,7 @@ class FieldTemplatesController extends Controller
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(Craft::t('palette', 'Field template saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('colorit', 'Field template saved.'));
 
         return $this->redirectToPostedUrl();
     }
@@ -102,11 +102,11 @@ class FieldTemplatesController extends Controller
 
         $id = Craft::$app->getRequest()->getRequiredBodyParam('id');
 
-        if (Palette::$plugin->getFieldTemplates()->deleteFieldTemplateById($id))
+        if (Colorit::$plugin->getFieldTemplates()->deleteFieldTemplateById($id))
         {
             return $this->asJson(['success' => true]);
         }
-        return $this->asErrorJson(Craft::t('palette', 'Could not delete field template'));
+        return $this->asErrorJson(Craft::t('colorit', 'Could not delete field template'));
     }
 
     // Private Methods

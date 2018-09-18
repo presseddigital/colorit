@@ -1,20 +1,20 @@
 <?php
-namespace fruitstudios\palette\web\twig;
+namespace fruitstudios\colorit\web\twig;
 
-use fruitstudios\palette\Palette;
+use fruitstudios\colorit\Colorit;
 
 use Craft;
 use yii\base\Behavior;
 
 class CraftVariableBehavior extends Behavior
 {
-    public $palette;
+    public $colorit;
 
     public function init()
     {
         parent::init();
-        // Point `craft.palette` to the craft\palette\Plugin instance
-        $this->palette = Palette::getInstance();
+        // Point `craft.colorit` to the craft\colorit\Plugin instance
+        $this->colorit = Colorit::getInstance();
     }
 
 }

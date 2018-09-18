@@ -1,14 +1,12 @@
-{% extends "palette/_layouts/main" %}
+{% extends "colorit/_layouts/main" %}
 {% import "_includes/forms" as forms %}
 
 {% block content %}
 
-    {# <h2>{{ "Field Templates"|t('palette') }}</h2> #}
-
-    <p>When you need to use the same palette field settings accross multiple fields you can use field templates to manage your field settings globally.</p>
+    <p>{{ 'When you need to use the same settings accross multiple fields you can use field templates to manage your field settings globally.'|t('colorit') }}</p>
 
     <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
-        <p>{{ "No field templates exist yet."|t('palette') }}</p>
+        <p>{{ "No field templates exist yet."|t('colorit') }}</p>
     </div>
 
     {% if fieldTemplates|length %}
@@ -16,21 +14,21 @@
         <table id="fieldTemplates" class="data fullwidth collapsible">
             <thead>
                 <tr>
-                    <th scope="col">{{ "Field Template"|t('palette') }}</th>
-                    <th scope="col">{{ "Type"|t('palette') }}</th>
-                    <th scope="col">{{ "Fields"|t('palette') }}</th>
+                    <th scope="col">{{ "Field Template"|t('colorit') }}</th>
+                    <th scope="col">{{ "Type"|t('colorit') }}</th>
+                    <th scope="col">{{ "Fields"|t('colorit') }}</th>
                     <td class="thin"></td>
                 </tr>
             </thead>
             <tbody>
                 {% for fieldTemplate in fieldTemplates %}
                     <tr data-id="{{ fieldTemplate.id }}" data-name="{{ fieldTemplate.name }}">
-                        <th scope="row" data-title="{{ 'Name'|t('palette') }}"><a href="{{ url('palette/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
-                        <td data-title="{{ 'Type'|t('palette') }}">{{ fieldTemplate.fieldType.displayName }}</td>
-                        <td data-title="{{ 'Fields'|t('palette') }}">{{ fieldTemplate.getFieldsUsingHtml()|raw }}</td>
+                        <th scope="row" data-title="{{ 'Name'|t('colorit') }}"><a href="{{ url('colorit/settings/fieldtemplates/'~fieldTemplate.id) }}">{{ fieldTemplate.name }}</a></th>
+                        <td data-title="{{ 'Type'|t('colorit') }}">{{ fieldTemplate.fieldType.displayName }}</td>
+                        <td data-title="{{ 'Fields'|t('colorit') }}">{{ fieldTemplate.getFieldsUsingHtml()|raw }}</td>
                         <td class="thin">
                             {% if not fieldTemplate.isInUse %}
-                                <a class="delete icon" title="{{ 'Delete'|t('palette') }}" role="button"></a>
+                                <a class="delete icon" title="{{ 'Delete'|t('colorit') }}" role="button"></a>
                             {% endif %}
                         </td>
                     </tr>
@@ -41,7 +39,7 @@
     {% endif %}
 
     <div class="buttons">
-        <a href="{{ url('palette/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New field template'|t('palette') }}</a>
+        <a href="{{ url('colorit/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New field template'|t('colorit') }}</a>
     </div>
 
 {% endblock %}
@@ -51,8 +49,8 @@
         tableSelector: '#fieldTemplates',
         noObjectsSelector: '#no-fieldTemplates',
         newObjectBtnSelector: '#newFieldTemplateButtonContainer',
-        deleteAction: 'palette/field-templates/delete',
-        confirmDeleteMessage: '{{ "Are you sure you want to delete the field template “{name}”?"|t('palette') }}'
+        deleteAction: 'colorit/field-templates/delete',
+        confirmDeleteMessage: '{{ "Are you sure you want to delete the field template “{name}”?"|t('colorit') }}'
     });
 {% endjs %}
 

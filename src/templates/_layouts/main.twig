@@ -1,12 +1,12 @@
-{% extends "palette/_layouts/base" %}
+{% extends "colorit/_layouts/base" %}
 
-{% set title = "Palette"|t('palette') %}
+{% set title = "Colorit"|t('colorit') %}
 
 {% set navItems = {
-    'about': { title: "About Palette"|t('palette') },
-    'settings': { heading: "Settings"|t('palette') },
-    'settings/general': { title: "General"|t('palette') },
-    'settings/fieldtemplates': { title: "Field Templates"|t('palette') },
+    'about': { title: "About"|t('colorit') },
+    'settings': { heading: "Settings"|t('colorit') },
+    'settings/general': { title: "General"|t('colorit') },
+    'settings/fieldtemplates': { title: "Field Templates"|t('colorit') },
 } %}
 
 {% set selectedItemHandle = selectedItem ?? craft.app.request.getSegment(2)~(craft.app.request.getSegment(3) ? '/'~craft.app.request.getSegment(3)) %}
@@ -20,7 +20,7 @@
                     <li class="heading"><span>{{ item.heading }}</span></li>
                 {% else %}
                     <li>
-                        <a href="{{ url('palette/'~handle) }}"{% if handle == selectedItemHandle %} class="sel"{% endif %}>{{ item.title }}</a>
+                        <a href="{{ url('colorit/'~handle) }}"{% if handle == selectedItemHandle %} class="sel"{% endif %}>{{ item.title }}</a>
                     </li>
                 {% endif %}
             {% endfor %}

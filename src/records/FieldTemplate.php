@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\palette\records;
+namespace fruitstudios\colorit\records;
 
 use craft\db\ActiveRecord;
 use yii\db\ActiveQueryInterface;
@@ -27,7 +27,7 @@ class FieldTemplate extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%palette_fieldtemplates}}';
+        return '{{%colorit_fieldtemplates}}';
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\palette\models;
+namespace fruitstudios\colorit\models;
 
-use fruitstudios\palette\fields\PaletteField;
+use fruitstudios\colorit\fields\ColoritField;
 
 use Craft;
 use craft\base\Model;
@@ -11,7 +11,7 @@ class Settings extends Model
     // Public Properties
     // =========================================================================
 
-    public $pluginNameOverride = 'Palette';
+    public $pluginNameOverride = 'Colorit';
 	public $hasCpSectionOverride = false;
 
     // Public Methods
@@ -21,7 +21,7 @@ class Settings extends Model
     {
         return [
             ['pluginNameOverride', 'string'],
-            ['pluginNameOverride', 'default', 'value' => 'Palette'],
+            ['pluginNameOverride', 'default', 'value' => 'Colorit'],
             ['hasCpSectionOverride', 'boolean'],
             ['hasCpSectionOverride', 'default', 'value' => false],
         ];

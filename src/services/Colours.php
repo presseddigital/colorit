@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\palette\services;
+namespace fruitstudios\colorit\services;
 
-use fruitstudios\palette\Palette;
-use fruitstudios\palette\helpers\ColourHelper;
+use fruitstudios\colorit\Colorit;
+use fruitstudios\colorit\helpers\ColourHelper;
 
 use Craft;
 use craft\base\Component;

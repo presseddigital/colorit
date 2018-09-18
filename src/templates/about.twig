@@ -1,26 +1,28 @@
-{% extends "palette/_layouts/main" %}
+{% extends "colorit/_layouts/main" %}
 
 {% set config = craft.app.plugins.getPluginInfo('linkit') %}
 
 {% block content %}
 
     <div class="fruit--abouticon">
-        {{ svg(craft.app.plugins.getPluginIconSvg('palette')) }}
+        {{ svg(craft.app.plugins.getPluginIconSvg('colorit')) }}
     </div>
 
-    <h2>{{ "Thanks for using Palette"|t('palette') }}</h2>
+    <h2>{{ "Thanks for using {name}"|t('colorit', {
+        name: craft.palette.displayName()
+    }) }}</h2>
 
     <p>Bit of useful info on palette, key features, what it does etc etc</p>
 
     <p>Some links to the docs and changelog:</p>
-    <a class="btn" href="{{ craft.palette.documentationUrl }}" target="_blank">{{ "Documentation" | t('palette') }}</a>
-    <a class="btn" href="{{ craft.palette.changelogUrl }}" target="_blank">{{ "Changelog" | t('palette') }}</a>
+    <a class="btn" href="{{ craft.palette.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
+    <a class="btn" href="{{ craft.palette.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
 
     <p>Please report any issues through github:</p>
-    <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('palette') }}</a>
+    <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('colorit') }}</a>
     <hr>
 
-    <h2>{{ "Licence"|t('palette') }}</h2>
+    <h2>{{ "Licence"|t('colorit') }}</h2>
 
     {% set showLicenseKey = config.licenseKey or config.licenseKeyStatus != 'unknown' %}
 

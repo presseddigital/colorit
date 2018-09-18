@@ -1,5 +1,5 @@
 {% extends '_layouts/cp' %}
-{% do view.registerAssetBundle("fruitstudios\\palette\\web\\assets\\palette\\PaletteAssetBundle") %}
+{% do view.registerAssetBundle("fruitstudios\\colorit\\web\\assets\\colorit\\ColoritAssetBundle") %}
 
 {#
 	Tabs
@@ -7,11 +7,11 @@
 	{% set hideTabs = hideTabs ?? false %}
 	{% if not hideTabs %}
 	    {% set tabs = {
-	        tools: { label: "Tools" | t('palette'), url: url('palette/tools') },
-	        logs: { label: "Logs" | t('palette'), url: url('palette/logs') },
-	        settings: { label: "Settings" | t('palette'), url: url('palette/settings') },
+	        tools: { label: "Tools" | t('colorit'), url: url('colorit/tools') },
+	        logs: { label: "Logs" | t('colorit'), url: url('colorit/logs') },
+	        settings: { label: "Settings" | t('colorit'), url: url('colorit/settings') },
 	    } %}
 	{% endif %}
 #}
 
-{% set title = ( title ?? 'Palette' ) ~ ' ' %}
+{% set title = ( title ?? 'Colorit' ) ~ ' ' %}

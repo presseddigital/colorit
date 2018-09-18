@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\palette\web\twig;
+namespace fruitstudios\colorit\web\twig;
 
-use fruitstudios\palette\Plugin;
+use fruitstudios\colorit\Plugin;
 
 use Craft;
 
@@ -12,7 +12,7 @@ class Extension extends \Twig_Extension
 
     public function getName(): string
     {
-        return 'Palette Twig Extension';
+        return 'Colorit Twig Extensions';
     }
 
     public function getFilters(): array

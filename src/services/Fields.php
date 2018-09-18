@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\palette\services;
+namespace fruitstudios\colorit\services;
 
 use Craft;
 use craft\base\Component;

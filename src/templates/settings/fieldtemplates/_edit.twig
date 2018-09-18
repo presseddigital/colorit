@@ -1,23 +1,23 @@
-{% extends "palette/_layouts/main" %}
+{% extends "colorit/_layouts/main" %}
 {% import "_includes/forms" as forms %}
 
 {% block content %}
 
  	<form action="" method="post" accept-charset="UTF-8">
 
-        <input type="hidden" name="action" value="palette/field-templates/save">
+        <input type="hidden" name="action" value="colorit/field-templates/save">
 
         {% if not isNewFieldTemplate %}
         	<input type="hidden" name="fieldTemplateId" value="{{ fieldTemplate.id }}">
             <input type="hidden" name="type" value="{{ fieldTemplate.type }}">
         {% endif %}
 
-        {{ redirectInput('palette/settings/fieldtemplates') }}
+        {{ redirectInput('colorit/settings/fieldtemplates') }}
         {{ csrfInput() }}
 
         {{ forms.textField({
-            label: 'Name'|t('palette'),
-            instructions: 'What this field template will be called in the CP.'|t('palette'),
+            label: 'Name'|t('colorit'),
+            instructions: 'What this field template will be called in the CP.'|t('colorit'),
             id: 'name',
             name: 'name',
             placeholder: '',
@@ -30,7 +30,7 @@
 
             {{ forms.selectField({
                 label: "Field Type"|t('app'),
-                instructions: "Which field do you want to create a template for?"|t('palette'),
+                instructions: "Which field do you want to create a template for?"|t('colorit'),
                 id: 'type',
                 name: 'type',
                 options: fieldTemplateTypeOptions,
@@ -67,7 +67,7 @@
 
         {% endif %}
 
-        <input type="submit" class="btn submit" value="{{ 'Save'|t('palette') }}">
+        <input type="submit" class="btn submit" value="{{ 'Save'|t('colorit') }}">
 
     </form>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Palette plugin for Craft CMS 3.x
+ * Colorit plugin for Craft CMS 3.x
  *
  * A super simple field type which allows you toggle existing field types.
  *
@@ -10,9 +10,9 @@
 
 /**
  * @author    Fruit Studios
- * @package   Palette
+ * @package   Colorit
  * @since     1.0.0
  */
 return [
-    'Palette plugin loaded' => 'Palette plugin loaded',
+    'Colorit plugin loaded' => 'Colorit plugin loaded',
 ];

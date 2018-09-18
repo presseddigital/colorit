@@ -1,6 +1,6 @@
 var palettes = {};
 
-var Palette = (function() {
+var Colorit = (function() {
 	"use strict";
 
 	var defaults = {
@@ -11,16 +11,16 @@ var Palette = (function() {
 	};
 
 	var selectors = {
-		palette: '[data-palette-palette]',
-		paletteColours: '[data-palette-palette-colours]',
-		paletteColour: '[data-palette-palette-colour]',
-		opacity: '[data-palette-palette-opacity]',
-		custom: '[data-palette-palette-custom]',
-		customColour: '[data-palette-palette-custom-colour]',
+		palette: '[data-colorit-palette]',
+		paletteColours: '[data-colorit-palette-colours]',
+		paletteColour: '[data-colorit-palette-colour]',
+		opacity: '[data-colorit-palette-opacity]',
+		custom: '[data-colorit-palette-custom]',
+		customColour: '[data-colorit-palette-custom-colour]',
 	};
 
 	var classes = {
-		selectedColour: 'palette--palette-colourIsSelected',
+		selectedColour: 'colorit--palette-colourIsSelected',
 	};
 
 	var constructor = function(options) {
@@ -175,7 +175,7 @@ var Palette = (function() {
 			settings = extend(defaults, options || {});
 
 			if (settings.debug) {
-				console.log("[PALETTE][" + settings.namespacedId + "]", settings);
+				console.log("[COLORIT][" + settings.namespacedId + "]", settings);
 			}
 
 			dom.field = document.getElementById(settings.namespacedId);

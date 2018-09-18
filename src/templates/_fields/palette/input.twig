@@ -4,25 +4,25 @@
 {% set custom = value.custom ?? '' %}
 {% set opacity = value.opacity ?? 100 %}
 
-<div id="{{ id }}" class="palette--palette flex">
+<div id="{{ id }}" class="colorit--palette flex">
 
 	{% if field.palette|length %}
 
 		<div>
 
-			<ul class="palette--palette-colours" data-palette-palette-colours>
+			<ul class="colorit--palette-colours" data-colorit-palette-colours>
 
 				{% for paletteColour in field.palette %}
 
 					{% set class = [
-						'palette--palette-colour',
-						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'palette--palette-colourIsTransparent' : null,
-						handle == paletteColour.handle ? 'palette--palette-colourIsSelected' : null,
+						'colorit--palette-colour',
+						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
+						handle == paletteColour.handle ? 'colorit--palette-colourIsSelected' : null,
 					]|filter|join(' ') %}
 
 					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
 
-					<li class="{{ class }}" data-handle="{{ paletteColour.handle }}" data-colour="{{ paletteColour.colour }}" style="background:{{ processedColour }} !important;" data-palette-palette-colour>
+					<li class="{{ class }}" data-handle="{{ paletteColour.handle }}" data-colour="{{ paletteColour.colour }}" style="background:{{ processedColour }} !important;" data-colorit-palette-colour>
 					</li>
 
 				{% endfor %}
@@ -44,14 +44,14 @@
 
 		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(custom, opacity) : custom %}
 
-		<div class="palette--palette-customColour{{ processedColour ? ' palette--palette-colourIsSelected' }}" data-palette-palette-custom>
+		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}" data-colorit-palette-custom>
 			{{ forms.text({
 				id: id~'-custom',
 				name: name~'[custom]',
 				placeholder: '#D65B4B',
 				value: custom
 			}) }}
-			<div class="palette--palette-customColourSwatch" data-colour="{{ custom }}" style="background:{{ processedColour }} !important;" data-palette-palette-custom-colour>
+			<div class="colorit--palette-customColourSwatch" data-colour="{{ custom }}" style="background:{{ processedColour }} !important;" data-colorit-palette-custom-colour>
 			</div>
 		</div>
 
@@ -64,7 +64,7 @@
 
 	{% if field.allowOpacity %}
 
-		<div class="palette--palette-opacity" data-palette-palette-opacity>
+		<div class="colorit--palette-opacity" data-colorit-palette-opacity>
 			<input id="{{ id }}-opacity" class="text" type="number" name="{{ name }}[opacity]" value="{{ opacity }}" min="1" max="100" novalidate/>
 		</div>
 

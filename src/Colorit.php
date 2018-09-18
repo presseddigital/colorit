@@ -1,6 +1,6 @@
 <?php
 /**
- * Palette plugin for Craft CMS 3.x
+ * Colorit plugin for Craft CMS 3.x
  *
  * A super simple field type which allows you toggle existing field types.
  *
@@ -8,13 +8,13 @@
  * @copyright Copyright (c) 2018 Fruit Studios
  */
 
-namespace fruitstudios\palette;
+namespace fruitstudios\colorit;
 
-use fruitstudios\palette\models\Settings;
-use fruitstudios\palette\fields\PaletteField;
-use fruitstudios\palette\plugin\Routes as PaletteRoutes;
-use fruitstudios\palette\plugin\Services as PaletteServices;
-use fruitstudios\palette\web\twig\CraftVariableBehavior;
+use fruitstudios\colorit\models\Settings;
+use fruitstudios\colorit\fields\ColoritField;
+use fruitstudios\colorit\plugin\Routes as ColoritRoutes;
+use fruitstudios\colorit\plugin\Services as ColoritServices;
+use fruitstudios\colorit\web\twig\CraftVariableBehavior;
 
 use Craft;
 use craft\base\Plugin;
@@ -30,14 +30,14 @@ use craft\commerce\Plugin as CommercePlugin;
 use yii\base\Event;
 
 /**
- * Class Palette
+ * Class Colorit
  *
  * @author    Fruit Studios
- * @package   Palette
+ * @package   Colorit
  * @since     1.0.0
  *
  */
-class Palette extends Plugin
+class Colorit extends Plugin
 {
     // Static Properties
     // =========================================================================
@@ -56,8 +56,8 @@ class Palette extends Plugin
     // Traits
     // =========================================================================
 
-    use PaletteServices;
-    use PaletteRoutes;
+    use ColoritServices;
+    use ColoritRoutes;
 
     // Public Methods
     // =========================================================================
@@ -70,13 +70,13 @@ class Palette extends Plugin
         parent::init();
 
         self::$plugin = $this;
-        self::$settings = Palette::$plugin->getSettings();
+        self::$settings = Colorit::$plugin->getSettings();
         self::$devMode = Craft::$app->getConfig()->getGeneral()->devMode;
         self::$view = Craft::$app->getView();
         self::$commerceInstalled = class_exists(CommercePlugin::class);
 
-        $this->name = Palette::$settings->pluginNameOverride;
-        $this->hasCpSection = Palette::$settings->hasCpSectionOverride;
+        $this->name = Colorit::$settings->pluginNameOverride;
+        $this->hasCpSection = Colorit::$settings->hasCpSectionOverride;
 
         $this->_setPluginComponents(); // See Trait
         $this->_registerCpRoutes(); // See Trait
@@ -88,7 +88,7 @@ class Palette extends Plugin
         $this->_registerVariables();
         $this->_registerElementTypes();
 
-        Craft::info(Craft::t('palette', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
+        Craft::info(Craft::t('colorit', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
     }
 
     public function beforeInstall(): bool
@@ -101,13 +101,13 @@ class Palette extends Plugin
         $isCpRequest = Craft::$app->getRequest()->isCpRequest;
         if ($event->plugin === $this && $isCpRequest)
         {
-            Craft::$app->controller->redirect(UrlHelper::cpUrl('palette/about'))->send();
+            Craft::$app->controller->redirect(UrlHelper::cpUrl('colorit/about'))->send();
         }
     }
 
     public function getSettingsResponse()
     {
-        return Craft::$app->controller->redirect(UrlHelper::cpUrl('palette/settings'));
+        return Craft::$app->controller->redirect(UrlHelper::cpUrl('colorit/settings'));
     }
 
     public function getGitHubUrl(string $append = '')
@@ -127,7 +127,7 @@ class Palette extends Plugin
     // {
     //     $settings = $this->getSettings();
 
-    //     return Craft::$app->getView()->renderTemplate('palette/settings', [
+    //     return Craft::$app->getView()->renderTemplate('colorit/settings', [
     //         'settings' => $settings,
     //     ]);
     // }
@@ -177,7 +177,7 @@ class Palette extends Plugin
     private function _registerFieldTypes()
     {
         Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = PaletteField::class;
+            $event->types[] = ColoritField::class;
         });
     }
 
@@ -193,7 +193,7 @@ class Palette extends Plugin
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
-            $variable->attachBehavior('palette', CraftVariableBehavior::class);
+            $variable->attachBehavior('colorit', CraftVariableBehavior::class);
         });
     }
 

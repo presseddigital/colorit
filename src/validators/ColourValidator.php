@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\palette\validators;
+namespace fruitstudios\colorit\validators;
 
 use Craft;
 

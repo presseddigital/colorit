@@ -1,4 +1,4 @@
-# Palette Changelog
+# Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
 ## 1.0.2 - 2018-09-17

@@ -3,20 +3,20 @@
 {% set custom = '#cccccc' %}
 {% set opacity = 100 %}
 
-<div class="palette--palette flex">
+<div class="colorit--palette flex">
 
 	{% if field.palette|length %}
 
 		<div>
 
-			<ul class="palette--palette-colours">
+			<ul class="colorit--palette-colours">
 
 				{% for paletteColour in field.palette %}
 
 					{% set class = [
-						'palette--palette-colour',
-						not field.allowCustomColour and loop.last ? 'palette--palette-colourIsSelected' : null,
-						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'palette--palette-colourIsTransparent' : null,
+						'colorit--palette-colour',
+						not field.allowCustomColour and loop.last ? 'colorit--palette-colourIsSelected' : null,
+						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
 					]|filter|join(' ') %}
 
 					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
@@ -36,9 +36,9 @@
 
 		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(custom, opacity) : custom %}
 
-		<div class="palette--palette-customColour{{ processedColour ? ' palette--palette-colourIsSelected' }}">
+		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}">
 			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
-			<div class="palette--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
+			<div class="colorit--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
 		</div>
 
 	{% endif %}
@@ -46,7 +46,7 @@
 
 	{% if field.allowOpacity %}
 
-		<div class="palette--palette-opacity">
+		<div class="colorit--palette-opacity">
 			<input class="text" type="number" value="{{ opacity }}" min="1" max="100" novalidate disabled/>
 		</div>
 

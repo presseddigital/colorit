@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\palette\models;
+namespace fruitstudios\colorit\models;
 
-use fruitstudios\palette\Palette;
-use fruitstudios\palette\helpers\FieldHelper;
+use fruitstudios\colorit\Colorit;
+use fruitstudios\colorit\helpers\FieldHelper;
 
 use Craft;
 use craft\base\Model;
@@ -100,7 +100,7 @@ class FieldTemplate extends Model
             return $this->_fieldsUsing;
         }
 
-        $fieldsOfType = Palette::$plugin->getFields()->getFieldsByType($this->type);
+        $fieldsOfType = Colorit::$plugin->getFields()->getFieldsByType($this->type);
         foreach ($fieldsOfType as $fieldOfType)
         {
             if($this->id == $fieldOfType->fieldTemplateId)
@@ -116,7 +116,7 @@ class FieldTemplate extends Model
         $fields = $this->getFieldsUsing();
         if(!$fields)
         {
-            return Craft::t('palette', 'Not In Use');
+            return Craft::t('colorit', 'Not In Use');
         }
 
         $links = [];
@@ -126,11 +126,11 @@ class FieldTemplate extends Model
             if ($field['context'] != 'global')
             {
                 $isOwnedByMatrix = true;
-                $_field = Palette::$plugin->getFields()->getMatrixFieldByChildFieldId($field['id']);
+                $_field = Colorit::$plugin->getFields()->getMatrixFieldByChildFieldId($field['id']);
             }
             else
             {
-                $_field = Palette::$plugin->getFields()->getFieldById($field['id']);
+                $_field = Colorit::$plugin->getFields()->getFieldById($field['id']);
             }
 
             if($_field)

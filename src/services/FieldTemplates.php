@@ -1,11 +1,11 @@
 <?php
-namespace fruitstudios\palette\services;
+namespace fruitstudios\colorit\services;
 
-use fruitstudios\palette\Palette;
-use fruitstudios\palette\models\FieldTemplate;
-use fruitstudios\palette\records\FieldTemplate as FieldTemplateRecord;
+use fruitstudios\colorit\Colorit;
+use fruitstudios\colorit\models\FieldTemplate;
+use fruitstudios\colorit\records\FieldTemplate as FieldTemplateRecord;
 
-use fruitstudios\palette\fields\PaletteField;
+use fruitstudios\colorit\fields\ColoritField;
 
 use Craft;
 use craft\base\Component;
@@ -13,7 +13,6 @@ use craft\db\Query;
 
 class FieldTemplates extends Component
 {
-
     // Properties
     // =========================================================================
 
@@ -31,7 +30,7 @@ class FieldTemplates extends Component
     public function getAllFieldTemplateTypes(): array
     {
         return [
-            PaletteField::class,
+            ColoritField::class,
         ];
     }
 
@@ -92,7 +91,7 @@ class FieldTemplates extends Component
             $record = FieldTemplateRecord::findOne($model->id);
             if (!$record)
             {
-                throw new Exception(Craft::t('palette', 'No field template exists with the ID “{id}”', ['id' => $model->id]));
+                throw new Exception(Craft::t('colorit', 'No field template exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
         else
@@ -185,6 +184,6 @@ class FieldTemplates extends Component
                 'type',
                 'settings',
             ])
-            ->from(['{{%palette_fieldtemplates}}']);
+            ->from(['{{%colorit_fieldtemplates}}']);
     }
 }
