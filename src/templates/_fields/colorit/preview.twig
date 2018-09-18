@@ -16,10 +16,10 @@
 					{% set class = [
 						'colorit--palette-colour',
 						not field.allowCustomColour and loop.last ? 'colorit--palette-colourIsSelected' : null,
-						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
+						craft.colorit.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
 
 					<li class="{{ class }}" style="background:{{ processedColour }} !important;"></li>
 
@@ -34,7 +34,7 @@
 
 	{% if field.allowCustomColour %}
 
-		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(custom, opacity) : custom %}
+		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(custom, opacity) : custom %}
 
 		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}">
 			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>

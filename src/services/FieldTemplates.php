@@ -16,13 +16,9 @@ class FieldTemplates extends Component
     // Properties
     // =========================================================================
 
+    private $_fieldTemplatesById = [];
+    private $_fieldTemplatesByType = [];
     private $_fetchedAllFieldTemplates = false;
-
-    private $_allFieldTemplates = [];
-    private $_allFieldTemplatesByType = [];
-
-    private $_allFieldsUsingTemplates;
-    private $_allFieldsUsingTemplatesById;
 
     // Public Methods
     // =========================================================================
@@ -38,39 +34,51 @@ class FieldTemplates extends Component
     {
         if($this->_fetchedAllFieldTemplates)
         {
-            return $this->_allFieldTemplates;
+            return $this->_fieldTemplatesById;
         }
 
         $results = $this->_createFieldTemplatesQuery()->all();
-        foreach($results as $result)
+        if($results)
         {
-            $fieldTemplate = $this->createFieldTemplate($result);
-            $this->_allFieldTemplates[$result['id']] = $fieldTemplate;
-            $this->_allFieldTemplatesByType[$result['type']][$result['id']] = $fieldTemplate;
+            foreach($results as $result)
+            {
+                $fieldTemplate = $this->createFieldTemplate($result);
+                $this->_fieldTemplatesById[$result['id']] = $fieldTemplate;
+                $this->_fieldTemplatesByType[$result['type']][$result['id']] = $fieldTemplate;
+            }
         }
         $this->_fetchedAllFieldTemplates = true;
-        return $this->_allFieldTemplates;
+        return $this->_fieldTemplatesById;
     }
 
     public function getAllFieldTemplatesByType(string $type): array
     {
-        if(!$this->_fetchedAllFieldTemplates)
+        if($this->_fetchedAllFieldTemplates || isset($this->_fieldTemplatesByType[$type]))
         {
-            $this->getAllFieldTemplates();
+            return $this->_fieldTemplatesByType[$type];
         }
-        return $this->_allFieldTemplatesByType[$type] ?? [];
+
+        $results = $this->_createFieldTemplatesQuery()
+            ->where(['type' => $type])
+            ->all();
+
+        if($results)
+        {
+            foreach($results as $result)
+            {
+                $fieldTemplate = $this->createFieldTemplate($result);
+                $this->_fieldTemplatesByType[$result['type']][$result['id']] = $fieldTemplate;
+            }
+        }
+
+        return $this->_fieldTemplatesByType[$type] ?? [];
     }
 
     public function getFieldTemplateById($id)
     {
-        if(isset($this->_allFieldTemplates[$id]))
+        if($this->_fetchedAllFieldTemplates || isset($this->_fieldTemplatesById[$id]))
         {
-            return $this->_allFieldTemplates[$id];
-        }
-
-        if ($this->_fetchedAllFieldTemplates)
-        {
-            return null;
+            return $this->_fieldTemplatesById[$id] ?? null;
         }
 
         $result = $this->_createFieldTemplatesQuery()
@@ -81,7 +89,7 @@ class FieldTemplates extends Component
         {
             return null;
         }
-        return $this->_allFieldTemplates[$id] = $this->createFieldTemplate($result);
+        return $this->_fieldTemplatesById[$id] = $this->createFieldTemplate($result);
     }
 
     public function saveFieldTemplate(FieldTemplate $model, bool $runValidation = true): bool
@@ -149,29 +157,6 @@ class FieldTemplates extends Component
         return new FieldTemplate($config);
     }
 
-    // public function getAllFieldsUsingTemplate(): array
-    // {
-    //     if(is_null($this->_allFieldsUsingTemplates))
-    //     {
-    //         $fields = [];
-    //         if($fields)
-    //         {
-    //             foreach($fields as $field)
-    //             {
-    //                 $this->_allFieldsUsingTemplates[] = $field;
-    //                 $this->_allFieldsUsingTemplatesById[$field['id']][] = $field;
-    //             }
-    //         }
-    //     }
-    //     return $this->_allFieldTemplates;
-    // }
-
-    // public function getFieldsUsingTemplateById(int $id)
-    // {
-    //     $this->getAllFieldsUsingTemplates();
-    //     return $this->_allFieldsUsingTemplatesById[$id] ?? [];
-    // }
-
     // Private Methods
     // =========================================================================
 
@@ -184,6 +169,6 @@ class FieldTemplates extends Component
                 'type',
                 'settings',
             ])
-            ->from(['{{%colorit_fieldtemplates}}']);
+            ->from(['{{%fieldtemplates_colorit}}']);
     }
 }

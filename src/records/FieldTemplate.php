@@ -27,7 +27,7 @@ class FieldTemplate extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%colorit_fieldtemplates}}';
+        return '{{%fieldtemplates_colorit}}';
     }
 
 }

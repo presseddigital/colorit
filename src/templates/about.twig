@@ -9,17 +9,17 @@
     </div>
 
     <h2>{{ "Thanks for using {name}"|t('colorit', {
-        name: craft.palette.displayName()
+        name: craft.colorit.name
     }) }}</h2>
 
     <p>Bit of useful info on palette, key features, what it does etc etc</p>
 
     <p>Some links to the docs and changelog:</p>
-    <a class="btn" href="{{ craft.palette.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
-    <a class="btn" href="{{ craft.palette.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
+    <a class="btn" href="{{ craft.colorit.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
+    <a class="btn" href="{{ craft.colorit.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
 
     <p>Please report any issues through github:</p>
-    <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('colorit') }}</a>
+    <a class="btn" href="{{ craft.colorit.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('colorit') }}</a>
     <hr>
 
     <h2>{{ "Licence"|t('colorit') }}</h2>

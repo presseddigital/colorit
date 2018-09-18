@@ -16,11 +16,11 @@
 
 					{% set class = [
 						'colorit--palette-colour',
-						craft.palette.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
+						craft.colorit.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
 						handle == paletteColour.handle ? 'colorit--palette-colourIsSelected' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
 
 					<li class="{{ class }}" data-handle="{{ paletteColour.handle }}" data-colour="{{ paletteColour.colour }}" style="background:{{ processedColour }} !important;" data-colorit-palette-colour>
 					</li>
@@ -42,7 +42,7 @@
 
 	{% if field.allowCustomColour %}
 
-		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.palette.colours.hexToRgba(custom, opacity) : custom %}
+		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(custom, opacity) : custom %}
 
 		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}" data-colorit-palette-custom>
 			{{ forms.text({

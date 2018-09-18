@@ -3,7 +3,8 @@
 
 {% block content %}
 
-    <p>{{ 'When you need to use the same settings accross multiple fields you can use field templates to manage your field settings globally.'|t('colorit') }}</p>
+    {# <h3>{{ 'Field Templates'|t('colorit') }}</h3> #}
+    <p>{{ 'Use the same settings accross multiple fields and manage your field settings globally.'|t('colorit') }}</p>
 
     <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
         <p>{{ "No field templates exist yet."|t('colorit') }}</p>

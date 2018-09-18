@@ -14,7 +14,6 @@ class FieldTemplate extends Model
 {
     private $_fieldType;
     private $_fieldTypeTemplate;
-
     private $_fieldsUsing;
 
     // Public Properties
@@ -101,13 +100,17 @@ class FieldTemplate extends Model
         }
 
         $fieldsOfType = Colorit::$plugin->getFields()->getFieldsByType($this->type);
-        foreach ($fieldsOfType as $fieldOfType)
+        if($fieldsOfType)
         {
-            if($this->id == $fieldOfType->fieldTemplateId)
+            foreach ($fieldsOfType as $fieldOfType)
             {
-                $this->_fieldsUsing[] = $fieldOfType;
+                if($this->id == $fieldOfType->fieldTemplateId)
+                {
+                    $this->_fieldsUsing[] = $fieldOfType;
+                }
             }
         }
+
         return $this->_fieldsUsing;
     }
 
