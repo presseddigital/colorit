@@ -4,7 +4,7 @@ namespace fruitstudios\colorit\records;
 use craft\db\ActiveRecord;
 use yii\db\ActiveQueryInterface;
 
-class FieldTemplate extends ActiveRecord
+class Preset extends ActiveRecord
 {
     // Public Methods
     // =========================================================================
@@ -27,7 +27,7 @@ class FieldTemplate extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%fieldtemplates_colorit}}';
+        return '{{%colorit_presets}}';
     }
 
 }

@@ -1,28 +1,30 @@
 {% import "_includes/forms" as forms %}
 
-{% if not field.fieldTemplateMode %}
+{{ d(field.getErrors()) }}
+
+{% if not field.presetMode %}
 
     {{ forms.selectField({
         label: "Presets"|t('colorit'),
         instructions: "Select a preset to define the field colors."|t('colorit'),
-        id: 'fieldTemplateId',
-        name: 'fieldTemplateId',
-        options: fieldTemplateOptions,
-        value: field.fieldTemplateId ?? '',
-        errors: field.getErrors('fieldTemplateId'),
+        id: 'presetId',
+        name: 'presetId',
+        options: presetOptions,
+        value: field.presetId ?? '',
+        errors: field.getErrors('presetId'),
         toggle: true,
     }) }}
 
     <hr>
 
-    {% set selectedFieldTemplateExists = (fieldTemplates[field.fieldTemplateId] is defined) %}
+    {% set selectedPresetExists = (presets[field.presetId] is defined) %}
 
-    {% if fieldTemplates %}
+    {% if presets %}
 
-        {% for fieldTemplate in fieldTemplates %}
-            {% set currentFieldTemplate = field.fieldTemplateId == fieldTemplate.id %}
-            <div id="{{ fieldTemplate.id|id }}"{% if not currentFieldTemplate %} class="hidden"{% endif %}>
-                {{ fieldTemplate.getFieldInputPreviewHtml()|raw }}
+        {% for preset in presets %}
+            {% set currentPreset = field.presetId == preset.id %}
+            <div id="{{ preset.id|id }}"{% if not currentPreset %} class="hidden"{% endif %}>
+                {{ preset.getFieldInputPreviewHtml()|raw }}
             </div>
         {% endfor %}
 
@@ -32,7 +34,7 @@
 
 
 
-{% set showInlineSettings = field.fieldTemplateMode or (not selectedFieldTemplateExists or not field.fieldTemplateId or field.fieldTemplateId == '') %}
+{% set showInlineSettings = field.presetMode or (not selectedPresetExists or not field.presetId or field.presetId == '') %}
 
 <div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
@@ -40,7 +42,6 @@
         label: 'Colors',
         instructions : 'Set the color palette. These can be changed at any time.'|t('colorit'),
         id: 'paletteColours',
-        rows: 4,
         textual: false,
         name: 'paletteColours',
         addRowLabel: 'Add color',
@@ -58,8 +59,8 @@
                 'type'   : 'singleline'
             }
         },
-        rows: field.paletteColours ?? false,
-        errors: []
+        rows: field.paletteColours,
+        errors: field.getErrors('paletteColours')
     }) }}
 
     {#

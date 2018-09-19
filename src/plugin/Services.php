@@ -3,16 +3,16 @@ namespace fruitstudios\colorit\plugin;
 
 use fruitstudios\colorit\services\Colours;
 use fruitstudios\colorit\services\Fields;
-use fruitstudios\colorit\services\FieldTemplates;
+use fruitstudios\colorit\services\Presets;
 
 trait Services
 {
     // Public Methods
     // =========================================================================
 
-    public function getFieldTemplates(): FieldTemplates
+    public function getPresets(): Presets
     {
-        return $this->get('fieldTemplates');
+        return $this->get('presets');
     }
 
     public function getColours(): Colours
@@ -33,7 +33,7 @@ trait Services
         $this->setComponents([
             'colours' => Colours::class,
             'colors' => Colours::class,
-            'fieldTemplates' => FieldTemplates::class,
+            'presets' => Presets::class,
             'fields' => Fields::class,
         ]);
     }

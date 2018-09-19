@@ -2,8 +2,9 @@
 namespace fruitstudios\colorit\validators;
 
 use Craft;
+use yii\validators\Validator;
 
-class ColourValidator extends YiiValidator
+class ColourValidator extends Validator
 {
     public $format = 'hex';
 

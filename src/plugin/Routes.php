@@ -18,9 +18,9 @@ trait Routes
 
             $event->rules['colorit/settings/general'] = 'colorit/settings/general';
 
-            $event->rules['colorit/settings/fieldtemplates'] = 'colorit/field-templates/index';
-            $event->rules['colorit/settings/fieldtemplates/<fieldTemplateId:\d+>'] = 'colorit/field-templates/edit';
-            $event->rules['colorit/settings/fieldtemplates/new'] = 'colorit/field-templates/edit';
+            $event->rules['colorit/settings/presets'] = 'colorit/presets/index';
+            $event->rules['colorit/settings/presets/<presetId:\d+>'] = 'colorit/presets/edit';
+            $event->rules['colorit/settings/presets/new'] = 'colorit/presets/edit';
 
         });
     }

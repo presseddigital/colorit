@@ -10,7 +10,7 @@ use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\db\Query;
 
-class FieldTemplate extends Model
+class Preset extends Model
 {
     private $_fieldType;
     private $_fieldTypeTemplate;
@@ -39,10 +39,11 @@ class FieldTemplate extends Model
     public function validateFieldTypeSettings()
     {
         $fieldType = $this->getFieldTypeTemplate();
-        if($fieldType && !$fieldType->validate())
-        {
-            $this->addError('settings', $fieldType->getErrors());
-        }
+        $fieldType->validate();
+        // if($fieldType && !)
+        // {
+        //     $this->addError('settings', $fieldType->getErrors());
+        // }
     }
 
     public function getFieldSettingsHtml()
@@ -104,7 +105,7 @@ class FieldTemplate extends Model
         {
             foreach ($fieldsOfType as $fieldOfType)
             {
-                if($this->id == $fieldOfType->fieldTemplateId)
+                if($this->id == $fieldOfType->presetId)
                 {
                     $this->_fieldsUsing[] = $fieldOfType;
                 }
@@ -177,7 +178,7 @@ class FieldTemplate extends Model
 
         $this->_fieldTypeTemplate = Craft::$app->getFields()->createField([
             'type' => $this->type,
-            'settings' => array_merge($this->getSettings(), [ 'fieldTemplateMode' => true ]),
+            'settings' => array_merge($this->getSettings(), [ 'presetMode' => true ]),
         ]);
         return $this->_fieldTypeTemplate;
     }

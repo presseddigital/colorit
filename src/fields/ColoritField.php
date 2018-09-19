@@ -3,6 +3,7 @@ namespace fruitstudios\colorit\fields;
 
 use fruitstudios\colorit\Colorit;
 use fruitstudios\colorit\models\Colour;
+use fruitstudios\colorit\models\PaletteColour;
 use fruitstudios\colorit\helpers\ColourHelper;
 use fruitstudios\colorit\web\assets\colorit\ColoritAssetBundle;
 
@@ -28,9 +29,9 @@ class ColoritField extends Field
     // Public Properties
     // =========================================================================
 
-    public $fieldTemplateMode = false;
+    public $presetMode = false;
 
-    public $fieldTemplateId;
+    public $presetId;
     public $paletteColours;
     public $paletteBaseColours;
     public $allowCustomColour = false;
@@ -53,9 +54,9 @@ class ColoritField extends Field
         parent::init();
     }
 
-    public function setFieldTemplateMode(bool $on)
+    public function setPresetMode(bool $on)
     {
-        $this->fieldTemplateMode = $on;
+        $this->presetMode = $on;
     }
 
     public function rules()
@@ -68,18 +69,45 @@ class ColoritField extends Field
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
         $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
 
-        if($this->fieldTemplateMode)
+        if($this->presetMode)
         {
             return $rules;
         }
-
         return array_merge(parent::rules(), $rules);
     }
 
     public function validatePaletteColours()
     {
-        return true;
+        foreach ($this->paletteColours as $i => $paletteColour)
+        {
+            $_paletteColour = new PaletteColour($paletteColour);
+            if(!$_paletteColour->validate())
+            {
+                $this->paletteColours[$i] = [
+                    'label' => [
+                        'value' => $_paletteColour->label ?? '',
+                        'hasErrors' => $_paletteColour->hasErrors('label') ?? '',
+                    ],
+                    'handle' => [
+                        'value' => $_paletteColour->handle ?? '',
+                        'hasErrors' => $_paletteColour->hasErrors('handle') ?? '',
+                    ],
+                    'colour' => [
+                        'value' => $_paletteColour->colour ?? '',
+                        'hasErrors' => $_paletteColour->hasErrors('colour') ?? '',
+                    ],
+                ];
+                foreach ($_paletteColour->getErrors() as $error)
+                {
+                    $this->addError('paletteColours', Craft::t('colorit', 'Row {row} {error}', [
+                        'row' => ($i + 1),
+                        'error' => lcfirst($error[0]),
+                    ]));
+                }
+            }
+        }
     }
+
 
     public function getType(): string
     {
@@ -152,22 +180,22 @@ class ColoritField extends Field
     public function getSettingsHtml()
     {
         $field = $this;
-        $fieldTemplates = [];
-        $fieldTemplateOptions[] =  [
+        $presets = [];
+        $presetOptions[] =  [
             'value' => '',
             'label' => 'No Template'
         ];
 
-        if(!$this->fieldTemplateMode)
+        if(!$this->presetMode)
         {
-            $fieldTemplates = Colorit::$plugin->getFieldTemplates()->getAllFieldTemplatesByType(self::class);
-            if($fieldTemplates)
+            $presets = Colorit::$plugin->getPresets()->getAllPresetsByType(self::class);
+            if($presets)
             {
-                foreach ($fieldTemplates as $fieldTemplate)
+                foreach ($presets as $preset)
                 {
-                    $fieldTemplateOptions[] = [
-                        'value' => $fieldTemplate->id,
-                        'label' => $fieldTemplate->name,
+                    $presetOptions[] = [
+                        'value' => $preset->id,
+                        'label' => $preset->name,
                     ];
                 }
             }
@@ -175,14 +203,14 @@ class ColoritField extends Field
 
         return Craft::$app->getView()->renderTemplate('colorit/_fields/colorit/settings', compact(
             'field',
-            'fieldTemplates',
-            'fieldTemplateOptions'
+            'presets',
+            'presetOptions'
         ));
     }
 
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        $this->_populateWithFieldTemplate();
+        $this->_populateWithPreset();
 
         $view = Craft::$app->getView();
         $id = $view->formatInputId($this->handle);
@@ -220,7 +248,7 @@ class ColoritField extends Field
     {
         $palette = ColourHelper::baseColours($this->paletteBaseColours);
 
-        if ($this->paletteColours)
+        if($this->paletteColours)
         {
             foreach($this->paletteColours as $paletteColour)
             {
@@ -233,15 +261,16 @@ class ColoritField extends Field
     // Static Methods
     // =========================================================================
 
-    private function _populateWithFieldTemplate()
+    private function _populateWithPreset()
     {
-        if($this->fieldTemplateId)
+        if($this->presetId)
         {
-            $fieldTemplate = Colorit::$plugin->getFieldTemplates()->getFieldTemplateById($this->fieldTemplateId);
-            if($fieldTemplate)
+            $preset = Colorit::$plugin->getPresets()->getPresetById($this->presetId);
+            if($preset)
             {
-                Craft::configure($this, $fieldTemplate->getSettings());
+                Craft::configure($this, $preset->getSettings());
             }
         }
     }
+
 }
