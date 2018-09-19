@@ -16,11 +16,11 @@
         {{ csrfInput() }}
 
         {{ forms.textField({
-            label: 'Name'|t('colorit'),
-            instructions: 'What this field template will be called in the CP.'|t('colorit'),
+            label: 'Preset Name'|t('colorit'),
+            instructions: 'What the preset will be called in the field creation.'|t('colorit'),
             id: 'name',
             name: 'name',
-            placeholder: '',
+            placeholder: 'e.g. Brand Colors',
             value: fieldTemplate.name ?? '',
             errors: fieldTemplate.getErrors('name') ?? false,
             first: true
@@ -28,17 +28,25 @@
 
         {% if isNewFieldTemplate %}
 
-            {{ forms.selectField({
-                label: "Field Type"|t('app'),
-                instructions: "Which field do you want to create a template for?"|t('colorit'),
-                id: 'type',
-                name: 'type',
-                options: fieldTemplateTypeOptions,
-                value: fieldTemplate.type,
-                toggle: true
-            }) }}
+            {% if allFieldTemplatesTypes|length > 1 %}
 
-            <hr>
+                {{ forms.selectField({
+                    label: "Field Type"|t('app'),
+                    instructions: "Which field do you want to create a template for?"|t('colorit'),
+                    id: 'type',
+                    name: 'type',
+                    options: fieldTemplateTypeOptions,
+                    value: fieldTemplate.type,
+                    toggle: true
+                }) }}
+
+                <hr>
+
+            {% else %}
+
+                <input type="hidden" name="type" value="{{ allFieldTemplatesTypes[0] }}">
+
+            {% endif %}
 
             {% for type in allFieldTemplatesTypes %}
 

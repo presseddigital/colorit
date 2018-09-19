@@ -1,6 +1,6 @@
 {% extends "colorit/_layouts/main" %}
 
-{% set config = craft.app.plugins.getPluginInfo('linkit') %}
+{% set config = craft.app.plugins.getPluginInfo('colorit') %}
 
 {% block content %}
 
@@ -27,7 +27,7 @@
         <div class="pane fruit-licencekey">
             <input class="text code{% if config.hasIssues %} error{% endif %}" size="29" maxlength="29" value="{{ config.licenseKey|replace('/.{4}/', '$0-')|trim('-') }}" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" readonly>
         </div>
-        <a class="btn{% if config.hasIssues %} submit{% endif %}{% if not (showLicenseKey and not config.licenseKey) %} hidden{% endif %}" href="{{ url('plugin-store/buy/palette')}}">{{ "Buy now"|t('app') }}</a>
+        <a class="btn{% if config.hasIssues %} submit{% endif %}{% if not (showLicenseKey and not config.licenseKey) %} hidden{% endif %}" href="{{ url('plugin-store/buy/colorit')}}">{{ "Buy now"|t('app') }}</a>
         <div class="spinner hidden"></div>
     </div>
 

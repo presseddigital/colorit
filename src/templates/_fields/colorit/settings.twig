@@ -3,8 +3,8 @@
 {% if not field.fieldTemplateMode %}
 
     {{ forms.selectField({
-        label: "Field Template"|t('colorit'),
-        instructions: "Use a field template to define this fields settings."|t('colorit'),
+        label: "Presets"|t('colorit'),
+        instructions: "Select a preset to define the field colors."|t('colorit'),
         id: 'fieldTemplateId',
         name: 'fieldTemplateId',
         options: fieldTemplateOptions,
@@ -37,13 +37,13 @@
 <div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
     {{ forms.editableTableField({
-        label: 'Palette Colours',
-        instructions : 'Set the palette colours, these can be changed at any time.'|t('colorit'),
+        label: 'Colors',
+        instructions : 'Set the color palette. These can be changed at any time.'|t('colorit'),
         id: 'paletteColours',
         rows: 4,
         textual: false,
         name: 'paletteColours',
-        addRowLabel: 'Add colour',
+        addRowLabel: 'Add color',
         cols: {
             'label' : {
                 'heading' : 'Label',
@@ -54,7 +54,7 @@
                 'type'   : 'singleline'
             },
             'colour' : {
-                'heading' : 'Colour',
+                'heading' : 'Color #HEX',
                 'type'   : 'singleline'
             }
         },
@@ -69,8 +69,8 @@
     #}
 
     {{ forms.checkboxSelectField({
-        label: "Base Colours"|t('colorit'),
-        instructions: "Select the base colours that you would like to include."|t('colorit'),
+        label: "Base Colors"|t('colorit'),
+        instructions: "Select the base colors that you would like to include."|t('colorit'),
         id: 'paletteBaseColours',
         name: 'paletteBaseColours',
         options: craft.colorit.colours.baseColoursAsOptions,
@@ -80,7 +80,7 @@
 
     {{ forms.lightswitchField({
         label: "Opacity"|t('colorit'),
-        instructions: "Allow the user to set opacty."|t('colorit'),
+        instructions: "Allow the user to set opacity."|t('colorit'),
         id: 'allowOpacity',
         name: 'allowOpacity',
         on: field.allowOpacity,
@@ -89,7 +89,7 @@
 
     {{ forms.lightswitchField({
         label: "Custom Colour"|t('colorit'),
-        instructions: "Allow the user to set a custom colour hex."|t('colorit'),
+        instructions: "Allow the user to set a custom color hex."|t('colorit'),
         id: 'allowCustomColour',
         name: 'allowCustomColour',
         on: field.allowCustomColour,
@@ -97,8 +97,8 @@
     }) }}
 
     {{ forms.selectField({
-        label: "Colour Output"|t('colorit'),
-        instructions: "Select the default colour output you would like to return."|t('colorit'),
+        label: "Color Output"|t('colorit'),
+        instructions: "Select the default color output you would like to return."|t('colorit'),
         id: 'colourFormat',
         name: 'colourFormat',
         options: {

@@ -12,7 +12,8 @@
         "colour",
         "colours",
         "color",
-        "colors"
+        "colors",
+        "swatch"
     ],
     "support": {
         "docs": "https://github.com/fruitstudios/craft-colorit/blob/master/README.md",

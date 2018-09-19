@@ -3,8 +3,8 @@
 
 {% block content %}
 
-    <h2>{{ 'Field Templates'|t('colorit') }}</h2>
-    <p>{{ 'Set up default colour palettes that can be selected when creating a colorit field.'|t('colorit') }}</p>
+    <h2>{{ 'Presets'|t('colorit') }}</h2>
+    <p>{{ 'Define custom presets that can be selected when creating a colorit field.'|t('colorit') }}</p>
     {# <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
         <p>{{ "No field templates exist yet."|t('colorit') }}</p>
     </div> #}
@@ -39,7 +39,7 @@
     {% endif %}
 
     <div class="buttons">
-        <a href="{{ url('colorit/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New field template'|t('colorit') }}</a>
+        <a href="{{ url('colorit/settings/fieldtemplates/new') }}" class="btn submit add icon">{{ 'New preset'|t('colorit') }}</a>
     </div>
 
 {% endblock %}
