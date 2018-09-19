@@ -3,12 +3,11 @@
 
 {% block content %}
 
-    {# <h3>{{ 'Field Templates'|t('colorit') }}</h3> #}
-    <p>{{ 'Use the same settings accross multiple fields and manage your field settings globally.'|t('colorit') }}</p>
-
-    <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
+    <h2>{{ 'Field Templates'|t('colorit') }}</h2>
+    <p>{{ 'Set up default colour palettes that can be selected when creating a colorit field.'|t('colorit') }}</p>
+    {# <div id="no-fieldTemplates"{% if fieldTemplates|length %} class="hidden"{% endif %}>
         <p>{{ "No field templates exist yet."|t('colorit') }}</p>
-    </div>
+    </div> #}
 
     {% if fieldTemplates|length %}
 

@@ -9,6 +9,7 @@
     padding: 3px !important;
     background: #fbfcfd !important;
     border-radius: 2px !important;
+    margin-bottom: 7px !important;
 }
 
 .fruit-licencekey input.text {
@@ -16,4 +17,8 @@
     font-size: 11px !important;
     padding: 3px 7px 1px;
     width: 19em;
+}
+
+.btn-docs {
+    margin-right: 7px !important;
 }
