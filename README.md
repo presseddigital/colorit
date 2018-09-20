@@ -2,54 +2,86 @@
 
 # Colorit plugin for Craft 3
 
-Plugin under development, not for production, docs coming soon...
+Descripton
 
-## Template Variables
 
-Each Colorit fieldtype returns a Colour model.
+### Presets
 
-    {{ entry.coloritField }} - Returns the colour string in the format.
+Colorit lets you create custom presets that can be selected when creating colorit fields. For example, you might want to create a "Brand" preset and another for "Secondary" colors. If you make changes to the preset, it will update any fields where it is in use.
 
-    {{ entry.coloritField.colour }} - (string) gets the colour
-    {{ entry.coloritField.colour(format) }} - (string) with an optinal foramt (hex, rgb, rgba)
-    {{ entry.coloritField.opacity }} - (int) the opacity value
-    {{ entry.coloritField.handle }} - (string) the colour handle
+<p align="left"><img width="800px" src="resources/img/colorit-preset-settings.png" alt="Preset Setting"></a></p>
 
-    {{ entry.coloritField.isCustomColour }} - (bool) whether this is a custom colour
-    {{ entry.coloritField.isTransparent }} - (bool) whether this is transparent
-    {{ entry.coloritField.hasColour }} - (bool) whether the field has a colour set
+When creating a new Colorit field you'll have the option to choose one of your presets or create custom field settings for that field. Settings include defining your color palette, appending transparent, black and white. Allowsing custom colours to be created, and opacity settings.
 
-    {{ entry.coloritField.palette }} - (array) get all available colours in this fields palette
+<p align="left"><img width="590px" src="resources/img/colorit-choose-preset.png" alt="Preset Choice"></a></p>
 
-    {{ entry.coloritField.hex }} - (string) get the hex value
-    {{ entry.coloritField.rgb }} - (string) get the rgb value
-    {{ entry.coloritField.rgba }} - (string) get the rgba value
-    {{ entry.coloritField.r }} or {{ entry.coloritField.red }} - (string) get the red value
-    {{ entry.coloritField.g }} or {{ entry.coloritField.green }} - (string) get the gredd value
-    {{ entry.coloritField.b }} or {{ entry.coloritField.blue }} - (string) get the blue value
-    {{ entry.coloritField.a }} or {{ entry.coloritField.alpha }} - (string) get the alpha value
+### In Use
+
+Select a color from the palette...
+
+<p align="left"><img width="590px" src="resources/img/colorit-field.png" alt="Field Setting"></a></p>
+
+Get a live preview when setting opacity...
+
+<p align="left"><img width="590px" src="resources/img/colorit-field-opacity.png" alt="Opacity Setting"></a></p>
+
+Define a custom color...
+
+<p align="left"><img width="590px" src="resources/img/colorit-field-custom.png" alt="Custom Setting"></a></p>
+
+
+## Templating
+
+Each Colorit fieldtype returns a Color model.
+
+```php
+{{ entry.myColoritFieldName }}                - (string)  // Color in format as per field settings)
+{{ entry.myColoritFieldName.color }}          - (string)  // Returns the color
+{{ entry.myColoritFieldName.color(format) }}  - (string)  // Optional format (hex, rgb, rgba)
+{{ entry.myColoritFieldName.opacity }}        - (integer) // The opacity value
+{{ entry.myColoritFieldName.handle }}         - (string)  // The color handle
+{{ entry.myColoritFieldName.isCustomColor }}  - (bool)    // Is this a custom colour
+{{ entry.myColoritFieldName.isTransparent }}  - (bool)    // Is this transparent
+{{ entry.myColoritFieldName.hasColor }}       - (bool)    // Does the field have a color set
+{{ entry.myColoritFieldName.palette }}        - (array)   // All available colours in the palette
+{{ entry.myColoritFieldName.hex }}            - (string)  // Get the hex value
+{{ entry.myColoritFieldName.rgb }}            - (string)  // Get the rgb value
+{{ entry.myColoritFieldName.rgba }}           - (string)  // Get the rgba value
+
+{{ entry.myColoritFieldName.r }}              - (string) // Get the red value
+{{ entry.myColoritFieldName.g }}              - (string) // Get the green value
+{{ entry.myColoritFieldName.b }}              - (string) // Get the blue value
+{{ entry.myColoritFieldName.a }}              - (string) // Get the alpha value
+
+{{ entry.myColoritFieldName.red }}            - (string) // Get the red value
+{{ entry.myColoritFieldName.green }}          - (string) // Get the green value
+{{ entry.myColoritFieldName.blue }}           - (string) // Get the blue value
+{{ entry.myColoritFieldName.alpha }}          - (string) // Get the alpha value
+```
+
 
 ## Utilities
 
 Colorit makes a few utilities avaiable in your templates.
 
-	{{ craft.colorit.colours.baseColours }} - (array)
-	{{ craft.colorit.colours.baseColoursAsOptions }} - (array)
-
-	{{ craft.colorit.colours.hexIsWhite(hex) }} - (bool)
-	{{ craft.colorit.colours.hexIsBlack(hex) }} - (bool)
-	{{ craft.colorit.colours.hexIsTransparent(hex) }} - (bool)
-	{{ craft.colorit.colours.hexToRgb(hex) }} - (string)
-	{{ craft.colorit.colours.hexToRgba(hex, opacity) }} - (string)
+```php
+{{ craft.colorit.colours.baseColours }}                - (array)
+{{ craft.colorit.colours.baseColoursAsOptions }}       - (array)
+{{ craft.colorit.colours.hexIsWhite(hex) }}            - (bool)
+{{ craft.colorit.colours.hexIsBlack(hex) }}            - (bool)
+{{ craft.colorit.colours.hexIsTransparent(hex) }}      - (bool)
+{{ craft.colorit.colours.hexToRgb(hex) }}              - (string)
+{{ craft.colorit.colours.hexToRgba(hex, opacity) }}    - (string)
+```
 
 
 ## Twig Extensions
 
-	{{ ('#555')|hexIsWhite }} - (bool)
-	{{ ('#555')|hexIsBlack }} - (bool)
-	{{ ('#555')|hexIsTransparent }} - (bool)
-
-	{{ ('#555')|hexToRgb }} - (string)
-	{{ ('#555')|hexToRgba(opacity = 100) }} - (string)
-
+```php
+{{ ('#555')|hexIsWhite }}                  - (bool)
+{{ ('#555')|hexIsBlack }}                  - (bool)
+{{ ('#555')|hexIsTransparent }}            - (bool)
+{{ ('#555')|hexToRgb }}                    - (string)
+{{ ('#555')|hexToRgba(opacity = 100) }}    - (string)
+```
 Brought to you by [Fruit Studios](https://fruitstudios.co.uk)
