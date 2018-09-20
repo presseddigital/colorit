@@ -1,15 +1,14 @@
 <?php
 namespace fruitstudios\colorit\models;
 
-use fruitstudios\colorit\helpers\ColourHelper;
+use fruitstudios\colorit\helpers\ColorHelper;
 
 use Craft;
 use craft\base\Model;
-use craft\validators\ColorValidator as ColourValidator;
+use craft\validators\ColorValidator as ColorValidator;
 
-class Colour extends Model
+class Color extends Model
 {
-
     // Constants
     // =========================================================================
 
@@ -40,14 +39,14 @@ class Colour extends Model
 
     public function __toString(): string
     {
-        return $this->getColour();
+        return $this->getColor();
     }
 
     public function rules()
     {
         $rules = parent::rules();
         $rules[] = ['handle', 'string'];
-        $rules[] = ['custom', ColourValidator::class, 'when' => [$this, 'isCustomColour'], 'message' => Craft::t('colorit', 'A valid custom colour hex is required')];
+        $rules[] = ['custom', ColorValidator::class, 'when' => [$this, 'isCustomColor'], 'message' => Craft::t('colorit', 'A valid custom color hex is required')];
         $rules[] = ['opacity', 'required'];
         $rules[] = ['opacity', 'default', 'value' => 100];
         $rules[] = ['opacity', 'integer', 'min' => 0, 'max' => 100];
@@ -63,7 +62,7 @@ class Colour extends Model
         return $this->_palette;
     }
 
-    public function isCustomColour(): bool
+    public function isCustomColor(): bool
     {
         return $this->handle == '_custom_';
     }
@@ -73,36 +72,36 @@ class Colour extends Model
         return $this->handle == self::TRANSPARENT_STRING;
     }
 
-    public function getColour(string $format = null)
+    public function getColor(string $format = null)
     {
-        $colour = '';
+        $color = '';
         if ($this->isTransparent())
         {
             return self::TRANSPARENT_STRING;
         }
 
-        $format = $format ?? $this->field->colourFormat;
+        $format = $format ?? $this->field->colorFormat;
         switch ($format)
         {
             case 'hex':
-                $colour = $this->getHex();
+                $color = $this->getHex();
                 break;
             case 'rgb':
-                $colour = $this->getRgb();
+                $color = $this->getRgb();
                 break;
             case 'rgba':
-                $colour = $this->getRgba();
+                $color = $this->getRgba();
                 break;
             default:
-                $colour = $this->opacity < 100 ? $this->getRgba() : $this->getHex();
+                $color = $this->opacity < 100 ? $this->getRgba() : $this->getHex();
                 break;
         }
-        return $colour ? $colour : '';
+        return $color ? $color : '';
     }
 
-    public function hasColour()
+    public function hasColor()
     {
-        return !empty($this->getColour());
+        return !empty($this->getColor());
     }
 
     public function getHex()
@@ -124,12 +123,12 @@ class Colour extends Model
                         break;
 
                     default:
-                        $hex = $this->_inPalette($this->handle) ? $this->_palette[$this->handle]['colour'] : '';
+                        $hex = $this->_inPalette($this->handle) ? $this->_palette[$this->handle]['color'] : '';
                         break;
                 }
             }
 
-            if(empty($hex) || !ColourHelper::isValidHex($hex))
+            if(empty($hex) || !ColorHelper::isValidHex($hex))
             {
                 return '';
             }
@@ -149,7 +148,7 @@ class Colour extends Model
         $hex = $this->getHex();
         if($hex)
         {
-            $rgb = ColourHelper::hexToRgb($hex);
+            $rgb = ColorHelper::hexToRgb($hex);
             if($rgb)
             {
                 return $rgb;
@@ -168,7 +167,7 @@ class Colour extends Model
         $hex = $this->getHex();
         if($hex)
         {
-            $rgba = ColourHelper::hexToRgba($hex, $this->opacity);
+            $rgba = ColorHelper::hexToRgba($hex, $this->opacity);
             if($rgba)
             {
                 return $rgba;
@@ -182,7 +181,7 @@ class Colour extends Model
         $hex = $this->getHex();
         if($hex)
         {
-            $rgb = ColourHelper::hexToRgb($hex, true);
+            $rgb = ColorHelper::hexToRgb($hex, true);
             if($rgb)
             {
                 return $rgb['r'];
@@ -201,7 +200,7 @@ class Colour extends Model
         $hex = $this->getHex();
         if($hex)
         {
-            $rgb = ColourHelper::hexToRgb($hex, true);
+            $rgb = ColorHelper::hexToRgb($hex, true);
             if($rgb)
             {
                 return $rgb['g'];
@@ -220,7 +219,7 @@ class Colour extends Model
         $hex = $this->getHex();
         if($hex)
         {
-            $rgb = ColourHelper::hexToRgb($hex, true);
+            $rgb = ColorHelper::hexToRgb($hex, true);
             if($rgb)
             {
                 return $rgb['b'];
@@ -249,17 +248,22 @@ class Colour extends Model
         return $this->getA();
     }
 
-    // US Versions
+    // UK Versions
     // =========================================================================
 
-    public function getColor(string $format = null)
+    public function getColour(string $format = null)
     {
-        return $this->getColour($format);
+        return $this->getColor($format);
     }
 
-    public function hasColor(string $format = null)
+    public function hasColour(string $format = null)
     {
-        return $this->hasColour($format);
+        return $this->hasColor($format);
+    }
+
+    public function isCustomColour(): bool
+    {
+        return $this->isCustomColor();
     }
 
     // Private Methods

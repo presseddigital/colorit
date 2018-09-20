@@ -39,9 +39,9 @@
     {{ forms.editableTableField({
         label: 'Colors',
         instructions : 'Set the color palette. These can be changed at any time.'|t('colorit'),
-        id: 'paletteColours',
+        id: 'paletteColors',
         textual: false,
-        name: 'paletteColours',
+        name: 'paletteColors',
         addRowLabel: 'Add color',
         cols: {
             'label' : {
@@ -52,18 +52,18 @@
                 'heading' : 'Handle',
                 'type'   : 'singleline'
             },
-            'colour' : {
+            'color' : {
                 'heading' : 'Color #HEX',
                 'type'   : 'color'
             }
         },
-        rows: field.paletteColours,
-        errors: (field.getErrors('paletteColours') ?? [])|unique
+        rows: field.paletteColors,
+        errors: (field.getErrors('paletteColors') ?? [])|unique
     }) }}
 
 
     {% js %}
-        $('body').on('focus', '#{{ 'paletteColours'|namespaceInputId }} textarea[name$="[label]"]', function(event) {
+        $('body').on('focus', '#{{ 'paletteColors'|namespaceInputId }} textarea[name$="[label]"]', function(event) {
             var $label = $(this),
                 $row = $label.closest('tr'),
                 $handle = $row.find('textarea[name$="[handle]"]'),
@@ -82,11 +82,11 @@
     {{ forms.checkboxSelectField({
         label: "Base Colors"|t('colorit'),
         instructions: "Select the base colors that you would like to include."|t('colorit'),
-        id: 'paletteBaseColours',
-        name: 'paletteBaseColours',
-        options: craft.colorit.colours.baseColoursAsOptions,
-        values: field.paletteBaseColours,
-        errors: field.getErrors('paletteBaseColours')
+        id: 'paletteBaseColors',
+        name: 'paletteBaseColors',
+        options: craft.colorit.colors.baseColorsAsOptions,
+        values: field.paletteBaseColors,
+        errors: field.getErrors('paletteBaseColors')
     })}}
 
     {{ forms.lightswitchField({
@@ -99,27 +99,27 @@
     }) }}
 
     {{ forms.lightswitchField({
-        label: "Custom Colour"|t('colorit'),
+        label: "Custom Color"|t('colorit'),
         instructions: "Allow the user to set a custom color hex."|t('colorit'),
-        id: 'allowCustomColour',
-        name: 'allowCustomColour',
-        on: field.allowCustomColour,
-        errors: field.getErrors('allowCustomColour')
+        id: 'allowCustomColor',
+        name: 'allowCustomColor',
+        on: field.allowCustomColor,
+        errors: field.getErrors('allowCustomColor')
     }) }}
 
     {{ forms.selectField({
         label: "Color Output"|t('colorit'),
         instructions: "Select the default color format you would like to return."|t('colorit'),
-        id: 'colourFormat',
-        name: 'colourFormat',
+        id: 'colorFormat',
+        name: 'colorFormat',
         options: {
             'auto' : 'Auto (Best Guess)',
             'hex' : '#454545',
             'rgb' : 'rgb(255,255,255)',
             'rgba' : 'rgb(255,255,255,0.5)'
         },
-        value: field.colourFormat,
-        errors: field.getErrors('colourFormat')
+        value: field.colorFormat,
+        errors: field.getErrors('colorFormat')
     }) }}
 
 </div>

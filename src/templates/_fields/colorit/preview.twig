@@ -9,19 +9,19 @@
 
 		<div>
 
-			<ul class="colorit--palette-colours">
+			<ul class="colorit--palette-colors">
 
-				{% for paletteColour in field.palette %}
+				{% for paletteColor in field.palette %}
 
 					{% set class = [
-						'colorit--palette-colour',
-						not field.allowCustomColour and loop.last ? 'colorit--palette-colourIsSelected' : null,
-						craft.colorit.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
+						'colorit--palette-color',
+						not field.allowCustomColor and loop.last ? 'colorit--palette-colorIsSelected' : null,
+						craft.colorit.colors.hexIsTransparent(paletteColor.color) ? 'colorit--palette-colorIsTransparent' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
 
-					<li class="{{ class }}" style="background:{{ processedColour }} !important;"></li>
+					<li class="{{ class }}" style="background:{{ processedColor }} !important;"></li>
 
 				{% endfor %}
 
@@ -32,13 +32,13 @@
 	{% endif %}
 
 
-	{% if field.allowCustomColour %}
+	{% if field.allowCustomColor %}
 
-		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(custom, opacity) : custom %}
+		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
 
-		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}">
+		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}">
 			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
-			<div class="colorit--palette-customColourSwatch" style="background:{{ processedColour }} !important;"></div>
+			<div class="colorit--palette-customColorSwatch" style="background:{{ processedColor }} !important;"></div>
 		</div>
 
 	{% endif %}

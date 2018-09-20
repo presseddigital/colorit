@@ -7,14 +7,14 @@ use Craft;
 
 class Extension extends \Twig_Extension
 {
-    protected $colours;
+    protected $colors;
 
     // Public Methods
     // =========================================================================
 
     public function __construct()
     {
-        $this->colours = Colorit::$plugin->getColours();
+        $this->colors = Colorit::$plugin->getColors();
     }
 
     public function getName(): string
@@ -25,11 +25,11 @@ class Extension extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('hexIsWhite', [$this->colours, 'hexIsWhite']),
-            new \Twig_SimpleFilter('hexIsBlack', [$this->colours, 'hexIsBlack']),
-            new \Twig_SimpleFilter('hexIsTransparent', [$this->colours, 'hexIsTransparent']),
-            new \Twig_SimpleFilter('hexToRgb', [$this->colours, 'hexToRgb']),
-            new \Twig_SimpleFilter('hexToRgba', [$this->colours, 'hexToRgba']),
+            new \Twig_SimpleFilter('hexIsWhite', [$this->colors, 'hexIsWhite']),
+            new \Twig_SimpleFilter('hexIsBlack', [$this->colors, 'hexIsBlack']),
+            new \Twig_SimpleFilter('hexIsTransparent', [$this->colors, 'hexIsTransparent']),
+            new \Twig_SimpleFilter('hexToRgb', [$this->colors, 'hexToRgb']),
+            new \Twig_SimpleFilter('hexToRgba', [$this->colors, 'hexToRgba']),
         ];
     }
 }

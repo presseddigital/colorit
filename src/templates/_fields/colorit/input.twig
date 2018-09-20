@@ -10,19 +10,19 @@
 
 		<div>
 
-			<ul class="colorit--palette-colours" data-colorit-palette-colours>
+			<ul class="colorit--palette-colors" data-colorit-palette-colors>
 
-				{% for paletteColour in field.palette %}
+				{% for paletteColor in field.palette %}
 
 					{% set class = [
-						'colorit--palette-colour',
-						craft.colorit.colours.hexIsTransparent(paletteColour.colour) ? 'colorit--palette-colourIsTransparent' : null,
-						handle == paletteColour.handle ? 'colorit--palette-colourIsSelected' : null,
+						'colorit--palette-color',
+						craft.colorit.colors.hexIsTransparent(paletteColor.color) ? 'colorit--palette-colorIsTransparent' : null,
+						handle == paletteColor.handle ? 'colorit--palette-colorIsSelected' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColour = field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(paletteColour.colour, opacity) : paletteColour.colour %}
+					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
 
-					<li class="{{ class }}" data-handle="{{ paletteColour.handle }}" data-colour="{{ paletteColour.colour }}" style="background:{{ processedColour }} !important;" data-colorit-palette-colour>
+					<li class="{{ class }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }} !important;" data-colorit-palette-color>
 					</li>
 
 				{% endfor %}
@@ -40,18 +40,18 @@
 	{% endif %}
 
 
-	{% if field.allowCustomColour %}
+	{% if field.allowCustomColor %}
 
-		{% set processedColour = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colours.hexToRgba(custom, opacity) : custom %}
+		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
 
-		<div class="colorit--palette-customColour{{ processedColour ? ' colorit--palette-colourIsSelected' }}" data-colorit-palette-custom>
+		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}" data-colorit-palette-custom>
 			{{ forms.text({
 				id: id~'-custom',
 				name: name~'[custom]',
 				placeholder: '#D65B4B',
 				value: custom
 			}) }}
-			<div class="colorit--palette-customColourSwatch" data-colour="{{ custom }}" style="background:{{ processedColour }} !important;" data-colorit-palette-custom-colour>
+			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }} !important;" data-colorit-palette-custom-color>
 			</div>
 		</div>
 

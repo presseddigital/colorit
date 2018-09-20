@@ -1,7 +1,7 @@
 <?php
 namespace fruitstudios\colorit\plugin;
 
-use fruitstudios\colorit\services\Colours;
+use fruitstudios\colorit\services\Colors;
 use fruitstudios\colorit\services\Fields;
 use fruitstudios\colorit\services\Presets;
 
@@ -15,9 +15,14 @@ trait Services
         return $this->get('presets');
     }
 
-    public function getColours(): Colours
+    public function getColors(): Colors
     {
-        return $this->get('colours');
+        return $this->get('colors');
+    }
+
+    public function getColours(): Colors
+    {
+        return $this->getColors();
     }
 
     public function getFields(): Fields
@@ -31,8 +36,8 @@ trait Services
     private function _setPluginComponents()
     {
         $this->setComponents([
-            'colours' => Colours::class,
-            'colors' => Colours::class,
+            'colors' => Colors::class,
+            'colours' => Colors::class,
             'presets' => Presets::class,
             'fields' => Fields::class,
         ]);

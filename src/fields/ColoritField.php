@@ -2,9 +2,9 @@
 namespace fruitstudios\colorit\fields;
 
 use fruitstudios\colorit\Colorit;
-use fruitstudios\colorit\models\Colour;
-use fruitstudios\colorit\models\PaletteColour;
-use fruitstudios\colorit\helpers\ColourHelper;
+use fruitstudios\colorit\models\Color;
+use fruitstudios\colorit\models\PaletteColor;
+use fruitstudios\colorit\helpers\ColorHelper;
 use fruitstudios\colorit\web\assets\colorit\ColoritAssetBundle;
 
 use Craft;
@@ -14,7 +14,7 @@ use craft\base\Element;
 use craft\base\Field;
 use craft\helpers\Db;
 use craft\helpers\Json;
-use craft\validators\ColourValidator;
+use craft\validators\ColorValidator;
 use craft\validators\ArrayValidator;
 
 use yii\db\Schema;
@@ -32,11 +32,11 @@ class ColoritField extends Field
     public $presetMode = false;
 
     public $presetId;
-    public $paletteColours;
-    public $paletteBaseColours;
-    public $allowCustomColour = false;
+    public $paletteColors;
+    public $paletteBaseColors;
+    public $allowCustomColor = false;
     public $allowOpacity = false;
-    public $colourFormat = 'auto';
+    public $colorFormat = 'auto';
 
     // Static Methods
     // =========================================================================
@@ -62,12 +62,12 @@ class ColoritField extends Field
     public function rules()
     {
         $rules = [];
-        $rules[] = ['paletteColours', 'validatePaletteColours'];
-        $rules[] = ['paletteBaseColours', ArrayValidator::class];
-        $rules[] = ['colourFormat', 'string'];
-        $rules[] = ['colourFormat', 'default', 'value' => 'auto'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'boolean'];
-        $rules[] = [['allowCustomColour', 'allowOpacity'], 'default', 'value' => false];
+        $rules[] = ['paletteColors', 'validatePaletteColors'];
+        $rules[] = ['paletteBaseColors', ArrayValidator::class];
+        $rules[] = ['colorFormat', 'string'];
+        $rules[] = ['colorFormat', 'default', 'value' => 'auto'];
+        $rules[] = [['allowCustomColor', 'allowOpacity'], 'boolean'];
+        $rules[] = [['allowCustomColor', 'allowOpacity'], 'default', 'value' => false];
 
         if($this->presetMode)
         {
@@ -76,30 +76,30 @@ class ColoritField extends Field
         return array_merge(parent::rules(), $rules);
     }
 
-    public function validatePaletteColours()
+    public function validatePaletteColors()
     {
-        foreach ($this->paletteColours as $i => $paletteColour)
+        foreach ($this->paletteColors as $i => $paletteColor)
         {
-            $_paletteColour = new PaletteColour($paletteColour);
-            if(!$_paletteColour->validate())
+            $_paletteColor = new PaletteColor($paletteColor);
+            if(!$_paletteColor->validate())
             {
-                $this->paletteColours[$i] = [
+                $this->paletteColors[$i] = [
                     'label' => [
-                        'value' => $_paletteColour->label ?? '',
-                        'hasErrors' => $_paletteColour->hasErrors('label') ?? '',
+                        'value' => $_paletteColor->label ?? '',
+                        'hasErrors' => $_paletteColor->hasErrors('label') ?? '',
                     ],
                     'handle' => [
-                        'value' => $_paletteColour->handle ?? '',
-                        'hasErrors' => $_paletteColour->hasErrors('handle') ?? '',
+                        'value' => $_paletteColor->handle ?? '',
+                        'hasErrors' => $_paletteColor->hasErrors('handle') ?? '',
                     ],
-                    'colour' => [
-                        'value' => $_paletteColour->colour ?? '',
-                        'hasErrors' => $_paletteColour->hasErrors('colour') ?? '',
+                    'color' => [
+                        'value' => $_paletteColor->color ?? '',
+                        'hasErrors' => $_paletteColor->hasErrors('color') ?? '',
                     ],
                 ];
-                foreach ($_paletteColour->getErrors() as $error)
+                foreach ($_paletteColor->getErrors() as $error)
                 {
-                    $this->addError('paletteColours', Craft::t('colorit', 'Row {row} {error}', [
+                    $this->addError('paletteColors', Craft::t('colorit', 'Row {row} {error}', [
                         'row' => ($i + 1),
                         'error' => lcfirst($error[0]),
                     ]));
@@ -116,10 +116,10 @@ class ColoritField extends Field
 
     public function getElementValidationRules(): array
     {
-        return ['validateColourValue'];
+        return ['validateColorValue'];
     }
 
-    public function validateColourValue(ElementInterface $element)
+    public function validateColorValue(ElementInterface $element)
     {
         if ($element->getScenario() === Element::SCENARIO_LIVE)
         {
@@ -143,7 +143,7 @@ class ColoritField extends Field
 
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if($value instanceof Colour)
+        if($value instanceof Color)
         {
             return $value;
         }
@@ -155,10 +155,10 @@ class ColoritField extends Field
 
         if (isset($value['handle']))
         {
-            $colour = new Colour();
-            $colour = Craft::configure($colour, $value);
-            $colour->field = $this;
-            return $colour;
+            $color = new Color();
+            $color = Craft::configure($color, $value);
+            $color->field = $this;
+            return $color;
         }
         return $value;
     }
@@ -166,7 +166,7 @@ class ColoritField extends Field
     public function serializeValue($value, ElementInterface $element = null)
     {
         $serialized = [];
-        if($value instanceof Colour)
+        if($value instanceof Color)
         {
             $serialized = [
                 'handle' => $value->handle,
@@ -246,13 +246,13 @@ class ColoritField extends Field
 
     public function getPalette()
     {
-        $palette = ColourHelper::baseColours($this->paletteBaseColours);
+        $palette = ColorHelper::baseColors($this->paletteBaseColors);
 
-        if($this->paletteColours)
+        if($this->paletteColors)
         {
-            foreach($this->paletteColours as $paletteColour)
+            foreach($this->paletteColors as $paletteColor)
             {
-                $palette[$paletteColour['handle']] = $paletteColour;
+                $palette[$paletteColor['handle']] = $paletteColor;
             }
         }
         return $palette;

@@ -5,14 +5,14 @@ use Craft;
 use craft\base\Model;
 use craft\validators\ColorValidator;
 
-class PaletteColour extends Model
+class PaletteColor extends Model
 {
     // Public Properties
     // =========================================================================
 
     public $label;
 	public $handle;
-    public $colour;
+    public $color;
 
     // Public Methods
     // =========================================================================
@@ -21,8 +21,8 @@ class PaletteColour extends Model
     {
         return [
             [['label', 'handle'], 'string'],
-            [['label', 'handle', 'colour'], 'required'],
-            [['colour'], ColorValidator::class],
+            [['label', 'handle', 'color'], 'required'],
+            [['color'], ColorValidator::class],
         ];
     }
 }

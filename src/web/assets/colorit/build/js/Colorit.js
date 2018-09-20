@@ -12,15 +12,15 @@ var Colorit = (function() {
 
 	var selectors = {
 		palette: '[data-colorit-palette]',
-		paletteColours: '[data-colorit-palette-colours]',
-		paletteColour: '[data-colorit-palette-colour]',
+		paletteColors: '[data-colorit-palette-colors]',
+		paletteColor: '[data-colorit-palette-color]',
 		opacity: '[data-colorit-palette-opacity]',
 		custom: '[data-colorit-palette-custom]',
-		customColour: '[data-colorit-palette-custom-colour]',
+		customColor: '[data-colorit-palette-custom-color]',
 	};
 
 	var classes = {
-		selectedColour: 'colorit--palette-colourIsSelected',
+		selectedColor: 'colorit--palette-colorIsSelected',
 	};
 
 	var constructor = function(options) {
@@ -36,11 +36,11 @@ var Colorit = (function() {
 		var dom = {
 			field: null,
 			palette: null,
-			paleteColours: null,
-			customColour: null,
+			paleteColors: null,
+			customColor: null,
 			handleInput: null,
 			opacityInput: null,
-			customColourInput: null,
+			customColorInput: null,
 		};
 
 		// Private Methods
@@ -68,32 +68,32 @@ var Colorit = (function() {
 		    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 		};
 
-		var setOpacity = function(colour) {
+		var setOpacity = function(color) {
 			var opacity = dom.opacityInput.value / 100;
-			var hex = colour.getAttribute('data-colour');
+			var hex = color.getAttribute('data-color');
 			if(isValidHex(hex)) {
 				var rgb = hexToRgb(hex);
-				colour.style.backgroundColor = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + (opacity || 1) + ')';
+				color.style.backgroundColor = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + (opacity || 1) + ')';
 			}
 		};
 
-		var clearPaletteColourSelection = function() {
-			dom.paletteColours.forEach(function (colour, index) {
-				colour.classList.remove(classes.selectedColour);
+		var clearPaletteColorSelection = function() {
+			dom.paletteColors.forEach(function (color, index) {
+				color.classList.remove(classes.selectedColor);
 	        });
 	        dom.handleInput.value = '';
 		};
 
-		var clearCustomColourSelection = function(clearValue) {
+		var clearCustomColorSelection = function(clearValue) {
 	        if(clearValue) {
-	        	dom.customColourInput.value = '';
+	        	dom.customColorInput.value = '';
 	        }
-	        if(dom.customColour) {
-	        	dom.customColour.setAttribute('data-colour', '');
-	        	dom.customColour.style.backgroundColor = null;
+	        if(dom.customColor) {
+	        	dom.customColor.setAttribute('data-color', '');
+	        	dom.customColor.style.backgroundColor = null;
 	        }
 	        if (dom.custom) {
-		        dom.custom.classList.remove(classes.selectedColour);
+		        dom.custom.classList.remove(classes.selectedColor);
 	        }
 
 		};
@@ -101,56 +101,56 @@ var Colorit = (function() {
 		// Event Handlers
 		// =========================================================================
 
-		var colourHandler = function(event) {
+		var colorHandler = function(event) {
 
-			var colour = event.target.closest(selectors.paletteColour);
-			if (!colour) return;
+			var color = event.target.closest(selectors.paletteColor);
+			if (!color) return;
 
 			event.preventDefault();
 			event.stopPropagation();
 
-			var isSelected = colour.classList.contains(classes.selectedColour);
+			var isSelected = color.classList.contains(classes.selectedColor);
 
-			clearPaletteColourSelection();
-			clearCustomColourSelection(true);
+			clearPaletteColorSelection();
+			clearCustomColorSelection(true);
 
 			if(!isSelected) {
-				colour.classList.add(classes.selectedColour);
-				dom.handleInput.value = colour.getAttribute('data-handle');
+				color.classList.add(classes.selectedColor);
+				dom.handleInput.value = color.getAttribute('data-handle');
 			}
 		};
 
-		var customColourHandler = function(event) {
+		var customColorHandler = function(event) {
 
 			event.preventDefault();
 			event.stopPropagation();
 
-			clearPaletteColourSelection();
+			clearPaletteColorSelection();
 
-			var colour = dom.customColourInput.value;
+			var color = dom.customColorInput.value;
 
 			dom.handleInput.value = '_custom_';
-			if(colour == '')
+			if(color == '')
 			{
 				dom.handleInput.value = '';
 			}
 
-			if(!colour.match('^#') && colour != '#' && colour != '')
+			if(!color.match('^#') && color != '#' && color != '')
 			{
-				colour = '#' + colour;
-				dom.customColourInput.value = colour;
+				color = '#' + color;
+				dom.customColorInput.value = color;
 			}
 
-			if(isValidHex(colour)) {
+			if(isValidHex(color)) {
 
-				dom.customColour.setAttribute('data-colour', colour);
-				setOpacity(dom.customColour);
+				dom.customColor.setAttribute('data-color', color);
+				setOpacity(dom.customColor);
 
-				dom.custom.classList.add(classes.selectedColour);
+				dom.custom.classList.add(classes.selectedColor);
 			}
 			else
 			{
-				clearCustomColourSelection();
+				clearCustomColorSelection();
 			}
 		};
 
@@ -159,11 +159,11 @@ var Colorit = (function() {
 			event.preventDefault();
 			event.stopPropagation();
 
-			dom.paletteColours.forEach(function (colour, index) {
-				setOpacity(colour);
+			dom.paletteColors.forEach(function (color, index) {
+				setOpacity(color);
 	        });
 
-			setOpacity(dom.customColour);
+			setOpacity(dom.customColor);
 
 		};
 
@@ -181,10 +181,10 @@ var Colorit = (function() {
 			dom.field = document.getElementById(settings.namespacedId);
 			if(dom.field) {
 
-				dom.palette = dom.field.querySelector(selectors.paletteColours);
-				dom.paletteColours = dom.field.querySelectorAll(selectors.paletteColour);
-				if(dom.paletteColours) {
-					dom.palette.addEventListener("click", colourHandler, false);
+				dom.palette = dom.field.querySelector(selectors.paletteColors);
+				dom.paletteColors = dom.field.querySelectorAll(selectors.paletteColor);
+				if(dom.paletteColors) {
+					dom.palette.addEventListener("click", colorHandler, false);
 				}
 
 
@@ -197,11 +197,11 @@ var Colorit = (function() {
 				}
 
 				dom.custom = dom.field.querySelector(selectors.custom);
-				dom.customColour = dom.field.querySelector(selectors.customColour);
-				dom.customColourInput = document.getElementById(settings.namespacedId + '-custom');
-				if(dom.customColourInput) {
-					dom.customColourInput.addEventListener("keyup", customColourHandler, false);
-					dom.customColourInput.addEventListener("focus", customColourHandler, false);
+				dom.customColor = dom.field.querySelector(selectors.customColor);
+				dom.customColorInput = document.getElementById(settings.namespacedId + '-custom');
+				if(dom.customColorInput) {
+					dom.customColorInput.addEventListener("keyup", customColorHandler, false);
+					dom.customColorInput.addEventListener("focus", customColorHandler, false);
 				}
 
 			}
