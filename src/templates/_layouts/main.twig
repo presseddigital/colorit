@@ -4,9 +4,10 @@
 
 {% set navItems = {
     'about': { title: "About"|t('colorit') },
+    'fieldtype': { heading: "Fieldtype"|t('colorit') },
+    'settings/presets': { title: "Presets"|t('colorit') },
     'settings': { heading: "Settings"|t('colorit') },
     'settings/general': { title: "General"|t('colorit') },
-    'settings/presets': { title: "Presets"|t('colorit') },
 } %}
 
 {% set selectedItemHandle = selectedItem ?? craft.app.request.getSegment(2)~(craft.app.request.getSegment(3) ? '/'~craft.app.request.getSegment(3)) %}

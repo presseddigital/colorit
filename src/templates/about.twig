@@ -12,11 +12,12 @@
         name: craft.colorit.name
     }) }}</h2>
 
-    <a class="btn btn-docs" href="{{ craft.colorit.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
-    <a class="btn" href="{{ craft.colorit.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
+    <p>{{ 'Please report any issues through Github'|t('colorit') }}</p>
 
-    <p>Please report any issues through Github:</p>
-    <a class="btn" href="{{ craft.colorit.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.GitHubUrl('/issues') }}" target="_blank">{{ "Issues" | t('colorit') }}</a>
+
     <hr>
 
     <h2>{{ "Licence"|t('colorit') }}</h2>

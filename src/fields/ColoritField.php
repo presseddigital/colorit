@@ -183,7 +183,7 @@ class ColoritField extends Field
         $presets = [];
         $presetOptions[] =  [
             'value' => '',
-            'label' => 'No Template'
+            'label' => 'No Preset'
         ];
 
         if(!$this->presetMode)

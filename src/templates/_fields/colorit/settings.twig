@@ -1,7 +1,5 @@
 {% import "_includes/forms" as forms %}
 
-{{ d(field.getErrors()) }}
-
 {% if not field.presetMode %}
 
     {{ forms.selectField({
@@ -56,18 +54,30 @@
             },
             'colour' : {
                 'heading' : 'Color #HEX',
-                'type'   : 'singleline'
+                'type'   : 'color'
             }
         },
         rows: field.paletteColours,
-        errors: field.getErrors('paletteColours')
+        errors: (field.getErrors('paletteColours') ?? [])|unique
     }) }}
 
-    {#
+
     {% js %}
-        new Craft.HandleGenerator('#label', '#handle');
+        $('body').on('focus', '#{{ 'paletteColours'|namespaceInputId }} textarea[name$="[label]"]', function(event) {
+            var $label = $(this),
+                $row = $label.closest('tr'),
+                $handle = $row.find('textarea[name$="[handle]"]'),
+                handleGeneratorRequired = $label.val() == '' && $handle.val() == '' && !$row[0].hasAttribute('handle-generated');
+
+            console.log(handleGeneratorRequired);
+            if(handleGeneratorRequired) {
+                $rowId = $row.data('id');
+                new Craft.HandleGenerator($label, $handle);
+                $row.data('handle-generated', '');
+            }
+       });
     {% endjs %}
-    #}
+
 
     {{ forms.checkboxSelectField({
         label: "Base Colors"|t('colorit'),
@@ -99,14 +109,14 @@
 
     {{ forms.selectField({
         label: "Color Output"|t('colorit'),
-        instructions: "Select the default color output you would like to return."|t('colorit'),
+        instructions: "Select the default color format you would like to return."|t('colorit'),
         id: 'colourFormat',
         name: 'colourFormat',
         options: {
-            'auto' : 'Auto: Best Guess',
-            'hex' : 'HEX: #454545',
-            'rgb' : 'RGB: rgb(255,255,255)',
-            'rgba' : 'RGBA: rgb(255,255,255,0.5)'
+            'auto' : 'Auto (Best Guess)',
+            'hex' : '#454545',
+            'rgb' : 'rgb(255,255,255)',
+            'rgba' : 'rgb(255,255,255,0.5)'
         },
         value: field.colourFormat,
         errors: field.getErrors('colourFormat')

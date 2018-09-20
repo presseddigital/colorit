@@ -22,11 +22,7 @@ class PaletteColour extends Model
         return [
             [['label', 'handle'], 'string'],
             [['label', 'handle', 'colour'], 'required'],
-            [
-                ['colour'],
-                ColorValidator::class,
-                // 'message' => Craft::t('colorit', 'Invalid HEX Colour')
-            ],
+            [['colour'], ColorValidator::class],
         ];
     }
 }

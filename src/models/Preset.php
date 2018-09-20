@@ -39,11 +39,10 @@ class Preset extends Model
     public function validateFieldTypeSettings()
     {
         $fieldType = $this->getFieldTypeTemplate();
-        $fieldType->validate();
-        // if($fieldType && !)
-        // {
-        //     $this->addError('settings', $fieldType->getErrors());
-        // }
+        if($fieldType && !$fieldType->validate())
+        {
+            $this->addError('settings', $fieldType->getErrors());
+        }
     }
 
     public function getFieldSettingsHtml()
