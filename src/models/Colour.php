@@ -54,6 +54,15 @@ class Colour extends Model
         return $rules;
     }
 
+    public function getPalette()
+    {
+        if(is_null($this->_palette))
+        {
+            $this->_palette = $this->field->getPalette() ?? [];
+        }
+        return $this->_palette;
+    }
+
     public function isCustomColour(): bool
     {
         return $this->handle == '_custom_';
@@ -182,6 +191,11 @@ class Colour extends Model
         return false;
     }
 
+    public function getRed()
+    {
+        return $this->getR();
+    }
+
     public function getG()
     {
         $hex = $this->getHex();
@@ -194,6 +208,11 @@ class Colour extends Model
             }
         }
         return false;
+    }
+
+    public function getGreen()
+    {
+        return $this->getG();
     }
 
     public function getB()
@@ -210,6 +229,11 @@ class Colour extends Model
         return false;
     }
 
+    public function getBlue()
+    {
+        return $this->getB();
+    }
+
     public function getA()
     {
         if ($this->isTransparent())
@@ -218,6 +242,11 @@ class Colour extends Model
         }
 
         return $this->opacity / 100;
+    }
+
+    public function getAlpha()
+    {
+        return $this->getA();
     }
 
     // US Versions
@@ -236,18 +265,10 @@ class Colour extends Model
     // Private Methods
     // =========================================================================
 
-    private function _getPalette()
-    {
-        if(is_null($this->_palette))
-        {
-            $this->_palette = $this->field->getPalette() ?? [];
-        }
-        return $this->_palette;
-    }
 
     private function _inPalette(string $handle)
     {
-        return array_key_exists($handle, $this->_getPalette());
+        return array_key_exists($handle, $this->getPalette());
     }
 
 }

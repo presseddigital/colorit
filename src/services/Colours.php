@@ -37,7 +37,7 @@ class Colours extends Component
         return ColourHelper::hexIsTransparent($colour);
     }
 
-    public function hexToRgba($colour, $opacity = false, $asArray = false)
+    public function hexToRgba($colour, $opacity = 100, $asArray = false)
     {
         return ColourHelper::hexToRgba($colour, $opacity, $asArray);
     }

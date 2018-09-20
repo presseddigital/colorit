@@ -6,6 +6,7 @@
 ### Added
 
 *   Wrap up ready for release to the store
+*   Added validation for palette colours
 
 ## 1.0.3 - 2018-09-18
 
