@@ -3,28 +3,28 @@ namespace fruitstudios\colorit\helpers;
 
 use Craft;
 
-class ColourHelper
+class ColorHelper
 {
     // Public Methods
     // =========================================================================
 
-    public static function baseColours(array $include = null)
+    public static function baseColors(array $include = null)
     {
-        $baseColours = [
+        $baseColors = [
             'transparent' => [
                 'label' => Craft::t('colorit', 'Transparent'),
                 'handle' => 'transparent',
-                'colour' => 'transparent'
+                'color' => 'transparent'
             ],
             'white' => [
                 'label' => Craft::t('colorit', 'White'),
                 'handle' => 'white',
-                'colour' => '#FFFFFF'
+                'color' => '#FFFFFF'
             ],
             'black' => [
                 'label' => Craft::t('colorit', 'Black'),
                 'handle' => 'black',
-                'colour' => '#000000'
+                'color' => '#000000'
             ],
         ];
 
@@ -33,28 +33,28 @@ class ColourHelper
             $included = [];
             foreach ($include as $handle)
             {
-                if(array_key_exists($handle, $baseColours))
+                if(array_key_exists($handle, $baseColors))
                 {
-                    $included[$handle] = $baseColours[$handle];
+                    $included[$handle] = $baseColors[$handle];
                 }
             }
             return $included;
         }
 
-        return $baseColours;
+        return $baseColors;
     }
 
-    public static function baseColoursAsOptions()
+    public static function baseColorsAsOptions()
     {
         $options = [];
-        $baseColours = static::baseColours();
-        if($baseColours)
+        $baseColors = static::baseColors();
+        if($baseColors)
         {
-            foreach ($baseColours as $baseColour)
+            foreach ($baseColors as $baseColor)
             {
                 $options[] = [
-                    'label' => $baseColour['label'],
-                    'value' => $baseColour['handle'],
+                    'label' => $baseColor['label'],
+                    'value' => $baseColor['handle'],
                 ];
             }
         }
@@ -62,11 +62,11 @@ class ColourHelper
         return $options;
     }
 
-    public static function hexIsWhite(string $colour)
+    public static function hexIsWhite(string $color)
     {
         $isWhite = false;
-        $colour = strtoupper($colour);
-        switch($colour)
+        $color = strtoupper($color);
+        switch($color)
         {
             case 'WHITE':
             case '#FFF':
@@ -77,11 +77,11 @@ class ColourHelper
         return $isWhite;
     }
 
-    public static function hexIsTransparent(string $colour)
+    public static function hexIsTransparent(string $color)
     {
         $isTransparent = false;
-        $colour = strtoupper($colour);
-        switch($colour)
+        $color = strtoupper($color);
+        switch($color)
         {
             case 'TRANSPARENT':
                 $isTransparent = true;
@@ -90,11 +90,11 @@ class ColourHelper
         return $isTransparent;
     }
 
-    public static function hexIsBlack(string $colour)
+    public static function hexIsBlack(string $color)
     {
         $isBlack = false;
-        $colour = strtoupper($colour);
-        switch($colour)
+        $color = strtoupper($color);
+        switch($color)
         {
             case 'BLACK':
             case '#000':
@@ -105,31 +105,31 @@ class ColourHelper
         return $isBlack;
     }
 
-    public static function isValidHex($colour)
+    public static function isValidHex($color)
     {
-        return preg_match('/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i', $colour) ? true : false;
+        return preg_match('/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i', $color) ? true : false;
     }
 
-    public static function hexToRgba($colour, $opacity = false, $asArray = false)
+    public static function hexToRgba($color, $opacity = false, $asArray = false)
     {
 
-        if( empty($colour) )
+        if( empty($color) )
         {
             return false;
         }
 
-        if( $colour[0] == '#' )
+        if( $color[0] == '#' )
         {
-            $colour = substr( $colour, 1 );
+            $color = substr( $color, 1 );
         }
 
-        if( strlen($colour) == 6 )
+        if( strlen($color) == 6 )
         {
-            $hex = array( $colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5] );
+            $hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
         }
-        elseif( strlen( $colour ) == 3 )
+        elseif( strlen( $color ) == 3 )
         {
-            $hex = array( $colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2] );
+            $hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
         }
         else
         {
@@ -162,9 +162,23 @@ class ColourHelper
     }
 
 
-    public static function hexToRgb($colour, $asArray = false)
+    public static function hexToRgb($color, $asArray = false)
     {
-        return static::hexToRgba($colour, false, $asArray);
+        return static::hexToRgba($color, false, $asArray);
     }
+
+
+    // UK Versions
+    public static function baseColours(array $include = null)
+    {
+        return self::baseColors($include);
+    }
+
+    public static function baseColoursAsOptions(array $include = null)
+    {
+        return self::baseColorsAsOptions($include);
+    }
+
+
 
 }

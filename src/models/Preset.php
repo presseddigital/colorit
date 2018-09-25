@@ -10,11 +10,10 @@ use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\db\Query;
 
-class FieldTemplate extends Model
+class Preset extends Model
 {
     private $_fieldType;
     private $_fieldTypeTemplate;
-
     private $_fieldsUsing;
 
     // Public Properties
@@ -101,13 +100,17 @@ class FieldTemplate extends Model
         }
 
         $fieldsOfType = Colorit::$plugin->getFields()->getFieldsByType($this->type);
-        foreach ($fieldsOfType as $fieldOfType)
+        if($fieldsOfType)
         {
-            if($this->id == $fieldOfType->fieldTemplateId)
+            foreach ($fieldsOfType as $fieldOfType)
             {
-                $this->_fieldsUsing[] = $fieldOfType;
+                if($this->id == $fieldOfType->presetId)
+                {
+                    $this->_fieldsUsing[] = $fieldOfType;
+                }
             }
         }
+
         return $this->_fieldsUsing;
     }
 
@@ -174,7 +177,7 @@ class FieldTemplate extends Model
 
         $this->_fieldTypeTemplate = Craft::$app->getFields()->createField([
             'type' => $this->type,
-            'settings' => array_merge($this->getSettings(), [ 'fieldTemplateMode' => true ]),
+            'settings' => array_merge($this->getSettings(), [ 'presetMode' => true ]),
         ]);
         return $this->_fieldTypeTemplate;
     }

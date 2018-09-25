@@ -15,6 +15,7 @@ use fruitstudios\colorit\fields\ColoritField;
 use fruitstudios\colorit\plugin\Routes as ColoritRoutes;
 use fruitstudios\colorit\plugin\Services as ColoritServices;
 use fruitstudios\colorit\web\twig\CraftVariableBehavior;
+use fruitstudios\colorit\web\twig\Extension;
 
 use Craft;
 use craft\base\Plugin;
@@ -51,7 +52,7 @@ class Colorit extends Plugin
     // Public Properties
     // =========================================================================
 
-    public $schemaVersion = '1.0.2';
+    public $schemaVersion = '1.0.3';
 
     // Traits
     // =========================================================================
@@ -123,22 +124,12 @@ class Colorit extends Plugin
         return new Settings();
     }
 
-    // protected function settingsHtml()
-    // {
-    //     $settings = $this->getSettings();
-
-    //     return Craft::$app->getView()->renderTemplate('colorit/settings', [
-    //         'settings' => $settings,
-    //     ]);
-    // }
-
-
     // Private Methods
     // =========================================================================
 
     private function _addTwigExtensions()
     {
-        // Craft::$app->view->registerTwigExtension(new Extension);
+        Craft::$app->view->registerTwigExtension(new Extension);
     }
 
     private function _registerPermissions()

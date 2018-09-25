@@ -1,42 +1,40 @@
 {% extends "colorit/_layouts/main" %}
 {% import "_includes/forms" as forms %}
 
+{% set fullPageForm = true %}
+
 {% block content %}
 
- 	<form action="" method="post" accept-charset="UTF-8">
+    <input type="hidden" name="action" value="plugins/save-plugin-settings">
+	<input type="hidden" name="pluginHandle" value="colorit">
+    {{ redirectInput('colorit/settings/general') }}
+    {{ csrfInput() }}
 
-        <input type="hidden" name="action" value="plugins/save-plugin-settings">
-		<input type="hidden" name="pluginHandle" value="colorit">
-        {{ redirectInput('colorit/settings/general') }}
-        {{ csrfInput() }}
+    {% namespace 'settings' %}
 
-        {% namespace 'settings' %}
+        {{ forms.textField({
+            label: 'Plugin Name'|t('colorit'),
+            instructions: 'Override the plugin name for this install'|t('colorit'),
+            id: 'pluginNameOverride',
+            name: 'pluginNameOverride',
+            placeholder: 'Colorit'|t('colorit'),
+            value: settings.pluginNameOverride,
+            errors: settings.getErrors('pluginNameOverride'),
+            first: true
+        }) }}
 
-	        {{ forms.textField({
-	            label: 'Plugin Name'|t('colorit'),
-	            instructions: 'Override the plugin name for this install'|t('colorit'),
-	            id: 'pluginNameOverride',
-	            name: 'pluginNameOverride',
-	            placeholder: 'Colorit'|t('colorit'),
-	            value: settings.pluginNameOverride,
-	            errors: settings.getErrors('pluginNameOverride'),
-	            first: true
-	        }) }}
+     	{{ forms.lightswitchField({
+            label: 'Show in CP Nav'|t('colorit'),
+            instructions: 'Display a link to this plugin in the main navigation'|t('colorit'),
+            id: 'hasCpSectionOverride',
+            name: 'hasCpSectionOverride',
+            on: settings.hasCpSectionOverride,
+            errors: settings.getErrors('hasCpSectionOverride'),
+        }) }}
 
-	     	{{ forms.lightswitchField({
-	            label: 'Show in CP Nav'|t('colorit'),
-	            instructions: 'Display a link to this plugin in the main cp navigation'|t('colorit'),
-	            id: 'hasCpSectionOverride',
-	            name: 'hasCpSectionOverride',
-	            on: settings.hasCpSectionOverride,
-	            errors: settings.getErrors('hasCpSectionOverride'),
-	        }) }}
+        <input type="submit" class="btn submit" value="{{ 'Save'|t('colorit') }}">
 
-	        <input type="submit" class="btn submit" value="{{ 'Save'|t('colorit') }}">
-
-		{% endnamespace %}
-
-    </form>
+	{% endnamespace %}
 
 {% endblock %}
 

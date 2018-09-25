@@ -43,12 +43,12 @@ class Install extends Migration
     {
         $tablesCreated = false;
 
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%colorit_fieldtemplates}}');
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%colorit_presets}}');
         if($tableSchema === null)
         {
             $tablesCreated = true;
             $this->createTable(
-                '{{%colorit_fieldtemplates}}',
+                '{{%colorit_presets}}',
                 [
                     'id' => $this->primaryKey(),
                     'name' => $this->string()->notNull(),
@@ -67,8 +67,8 @@ class Install extends Migration
     protected function createIndexes()
     {
         $this->createIndex(
-            $this->db->getIndexName('{{%colorit_fieldtemplates}}', 'name', true),
-            '{{%colorit_fieldtemplates}}',
+            $this->db->getIndexName('{{%colorit_presets}}', 'name', true),
+            '{{%colorit_presets}}',
             ['name'],
             false
         );
@@ -89,6 +89,6 @@ class Install extends Migration
 
     protected function removeTables()
     {
-        $this->dropTableIfExists('{{%colorit_fieldtemplates}}');
+        $this->dropTableIfExists('{{%colorit_presets}}');
     }
 }

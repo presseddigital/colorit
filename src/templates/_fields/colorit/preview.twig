@@ -1,0 +1,55 @@
+{% import "_includes/forms" as forms %}
+
+{% set custom = '#cccccc' %}
+{% set opacity = 100 %}
+
+<div class="colorit--palette flex">
+
+	{% if field.palette|length %}
+
+		<div>
+
+			<ul class="colorit--palette-colors">
+
+				{% for paletteColor in field.palette %}
+
+					{% set class = [
+						'colorit--palette-color',
+						not field.allowCustomColor and loop.last ? 'colorit--palette-colorIsSelected' : null,
+						craft.colorit.colors.hexIsTransparent(paletteColor.color) ? 'colorit--palette-colorIsTransparent' : null,
+					]|filter|join(' ') %}
+
+					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
+
+					<li class="{{ class }}" style="background:{{ processedColor }} !important;"></li>
+
+				{% endfor %}
+
+			</ul>
+
+		</div>
+
+	{% endif %}
+
+
+	{% if field.allowCustomColor %}
+
+		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
+
+		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}">
+			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
+			<div class="colorit--palette-customColorSwatch" style="background:{{ processedColor }} !important;"></div>
+		</div>
+
+	{% endif %}
+
+
+	{% if field.allowOpacity %}
+
+		<div class="colorit--palette-opacity">
+			<input class="text" type="number" value="{{ opacity }}" min="1" max="100" novalidate disabled/>
+		</div>
+
+	{% endif %}
+
+</div>

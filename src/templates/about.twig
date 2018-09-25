@@ -1,6 +1,6 @@
 {% extends "colorit/_layouts/main" %}
 
-{% set config = craft.app.plugins.getPluginInfo('linkit') %}
+{% set config = craft.app.plugins.getPluginInfo('colorit') %}
 
 {% block content %}
 
@@ -9,17 +9,15 @@
     </div>
 
     <h2>{{ "Thanks for using {name}"|t('colorit', {
-        name: craft.palette.displayName()
+        name: craft.colorit.name
     }) }}</h2>
 
-    <p>Bit of useful info on palette, key features, what it does etc etc</p>
+    <p>{{ 'Please report any issues through Github'|t('colorit') }}</p>
 
-    <p>Some links to the docs and changelog:</p>
-    <a class="btn" href="{{ craft.palette.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
-    <a class="btn" href="{{ craft.palette.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.documentationUrl }}" target="_blank">{{ "Documentation" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.changelogUrl }}" target="_blank">{{ "Changelog" | t('colorit') }}</a>
+    <a class="btn btn-docs" href="{{ craft.colorit.GitHubUrl('/issues') }}" target="_blank">{{ "Issues" | t('colorit') }}</a>
 
-    <p>Please report any issues through github:</p>
-    <a class="btn" href="{{ craft.palette.GitHubUrl('/issues') }}" target="_blank">{{ "Report an issue" | t('colorit') }}</a>
     <hr>
 
     <h2>{{ "Licence"|t('colorit') }}</h2>
@@ -30,7 +28,7 @@
         <div class="pane fruit-licencekey">
             <input class="text code{% if config.hasIssues %} error{% endif %}" size="29" maxlength="29" value="{{ config.licenseKey|replace('/.{4}/', '$0-')|trim('-') }}" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" readonly>
         </div>
-        <a class="btn{% if config.hasIssues %} submit{% endif %}{% if not (showLicenseKey and not config.licenseKey) %} hidden{% endif %}" href="{{ url('plugin-store/buy/palette')}}">{{ "Buy now"|t('app') }}</a>
+        <a class="btn{% if config.hasIssues %} submit{% endif %}{% if not (showLicenseKey and not config.licenseKey) %} hidden{% endif %}" href="{{ url('plugin-store/buy/colorit')}}">{{ "Buy now"|t('app') }}</a>
         <div class="spinner hidden"></div>
     </div>
 
