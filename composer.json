@@ -1,6 +1,6 @@
 {
     "name": "fruitstudios/colorit",
-    "description": "A palette fieldtype for Craft CMS.",
+    "description": "A slick color picker fieldtype plugin for the Craft CMS 3 control panel.",
     "type": "craft-plugin",
     "version": "1.0.4",
     "keywords": [
