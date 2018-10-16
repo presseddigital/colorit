@@ -19,7 +19,7 @@ class PresetsController extends Controller
     {
         $presets = Colorit::$plugin->getPresets()->getAllPresets();
 
-        return $this->renderTemplate('colorit/settings/presets/index', compact('presets'));
+        return $this->renderTemplate('colorit/presets/index', compact('presets'));
     }
 
     public function actionEdit(int $presetId = null, Preset $preset = null): Response
@@ -56,7 +56,7 @@ class PresetsController extends Controller
             $preset->type = $allPresetsTypes[0];
         }
 
-        return $this->renderTemplate('colorit/settings/presets/_edit', [
+        return $this->renderTemplate('colorit/presets/_edit', [
             'isNewPreset' => $isNewPreset,
             'preset' => $preset,
             'allPresetsTypes' => $allPresetsTypes,

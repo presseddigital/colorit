@@ -14,9 +14,9 @@ class SettingsController extends Controller
     // Public Methods
     // =========================================================================
 
-    public function actionGeneral()
+    public function actionIndex()
     {
-        return $this->renderTemplate('colorit/settings/general', [
+        return $this->renderTemplate('colorit/settings', [
             'settings' => Colorit::$settings,
         ]);
     }

@@ -1,17 +1,4 @@
 {% extends '_layouts/cp' %}
 {% do view.registerAssetBundle("fruitstudios\\colorit\\web\\assets\\colorit\\ColoritAssetBundle") %}
 
-{#
-	Tabs
-
-	{% set hideTabs = hideTabs ?? false %}
-	{% if not hideTabs %}
-	    {% set tabs = {
-	        tools: { label: "Tools" | t('colorit'), url: url('colorit/tools') },
-	        logs: { label: "Logs" | t('colorit'), url: url('colorit/logs') },
-	        settings: { label: "Settings" | t('colorit'), url: url('colorit/settings') },
-	    } %}
-	{% endif %}
-#}
-
 {% set title = ( title ?? 'Colorit' ) ~ ' ' %}

@@ -1,6 +1,20 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
+## 1.0.5 - 2018-10-16
+
+### Added
+
+*   Added  - Improved validation of color palette handles (must be unique)
+
+### Fixed
+
+*   Fixed  - Issue with preset value outputting empty string when set to a preset color
+
+### Changed
+
+*   Changed - Updated plugin sidenav structure to match our other plugins
+
 ## 1.0.4 - 2018-09-20
 
 ### Added

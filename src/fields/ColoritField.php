@@ -78,10 +78,25 @@ class ColoritField extends Field
 
     public function validatePaletteColors()
     {
+        $usedHandles = [];
         foreach ($this->paletteColors as $i => $paletteColor)
         {
             $_paletteColor = new PaletteColor($paletteColor);
-            if(!$_paletteColor->validate())
+
+            if($_paletteColor->handle ?? false)
+            {
+                $isHandleUnique = !in_array($_paletteColor->handle, $usedHandles);
+                if(!$isHandleUnique)
+                {
+                    $this->addError('paletteColors', Craft::t('colorit', 'Row {row} {error}', [
+                        'row' => ($i + 1),
+                        'error' => Craft::t('colorit', 'handle must be unique'),
+                    ]));
+                }
+                $usedHandles[] = $_paletteColor->handle;
+            }
+
+            if(!$_paletteColor->validate() || !$isHandleUnique)
             {
                 $this->paletteColors[$i] = [
                     'label' => [
@@ -90,7 +105,7 @@ class ColoritField extends Field
                     ],
                     'handle' => [
                         'value' => $_paletteColor->handle ?? '',
-                        'hasErrors' => $_paletteColor->hasErrors('handle') ?? '',
+                        'hasErrors' => !$isHandleUnique ? true : $_paletteColor->hasErrors('handle') ?? '',
                     ],
                     'color' => [
                         'value' => $_paletteColor->color ?? '',
@@ -157,6 +172,7 @@ class ColoritField extends Field
         {
             $color = new Color();
             $color = Craft::configure($color, $value);
+            $this->_populateWithPreset();
             $color->field = $this;
             return $color;
         }

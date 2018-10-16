@@ -5,9 +5,6 @@
 
     <h2>{{ 'Presets'|t('colorit') }}</h2>
     <p>{{ 'Define custom presets that can be selected when creating a colorit field.'|t('colorit') }}</p>
-    {# <div id="no-presets"{% if presets|length %} class="hidden"{% endif %}>
-        <p>{{ "No presets exist yet."|t('colorit') }}</p>
-    </div> #}
 
     {% if presets|length %}
 
@@ -23,7 +20,7 @@
             <tbody>
                 {% for preset in presets %}
                     <tr data-id="{{ preset.id }}" data-name="{{ preset.name }}">
-                        <th scope="row" data-title="{{ 'Name'|t('colorit') }}"><a href="{{ url('colorit/settings/presets/'~preset.id) }}">{{ preset.name }}</a></th>
+                        <th scope="row" data-title="{{ 'Name'|t('colorit') }}"><a href="{{ url('colorit/presets/'~preset.id) }}">{{ preset.name }}</a></th>
                         <td data-title="{{ 'Type'|t('colorit') }}">{{ preset.fieldType.displayName }}</td>
                         <td data-title="{{ 'Fields'|t('colorit') }}">{{ preset.getFieldsUsingHtml()|raw }}</td>
                         <td class="thin">
@@ -39,7 +36,7 @@
     {% endif %}
 
     <div class="buttons">
-        <a href="{{ url('colorit/settings/presets/new') }}" class="btn submit add icon">{{ 'New preset'|t('colorit') }}</a>
+        <a href="{{ url('colorit/presets/new') }}" class="btn submit add icon">{{ 'New preset'|t('colorit') }}</a>
     </div>
 
 {% endblock %}
