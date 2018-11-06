@@ -1,6 +1,20 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
+## 1.0.6 - 2018-11-06
+
+### Added
+
+*   Added  - Added the color label as a title attribute on the cp inputs
+
+### Changed
+
+*   Changed  - Removed `!important` from the inline styles
+
+### Fixed
+
+*   Fixed  - Fixed bug where default color options displayed when all unchecked
+
 ## 1.0.5 - 2018-10-16
 
 ### Added

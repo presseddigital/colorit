@@ -21,7 +21,7 @@
 
 					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
 
-					<li class="{{ class }}" style="background:{{ processedColor }} !important;"></li>
+					<li class="{{ class }}" title="{{ paletteColor.label }}" style="background:{{ processedColor }};"></li>
 
 				{% endfor %}
 
@@ -38,7 +38,7 @@
 
 		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}">
 			<input class="text" type="text" value="{{ custom }}" placeholder="#D65B4B" novalidate disabled/>
-			<div class="colorit--palette-customColorSwatch" style="background:{{ processedColor }} !important;"></div>
+			<div class="colorit--palette-customColorSwatch" style="background:{{ processedColor }};"></div>
 		</div>
 
 	{% endif %}

@@ -262,7 +262,11 @@ class ColoritField extends Field
 
     public function getPalette()
     {
-        $palette = ColorHelper::baseColors($this->paletteBaseColors);
+        $palette = [];
+        if($this->paletteBaseColors)
+        {
+            $palette = ColorHelper::baseColors($this->paletteBaseColors);
+        }
 
         if($this->paletteColors)
         {

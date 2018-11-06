@@ -22,7 +22,7 @@
 
 					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
 
-					<li class="{{ class }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }} !important;" data-colorit-palette-color>
+					<li class="{{ class }}" title="{{ paletteColor.label }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }};" data-colorit-palette-color>
 					</li>
 
 				{% endfor %}
@@ -51,7 +51,7 @@
 				placeholder: '#D65B4B',
 				value: custom
 			}) }}
-			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }} !important;" data-colorit-palette-custom-color>
+			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }};" data-colorit-palette-custom-color>
 			</div>
 		</div>
 

@@ -112,7 +112,6 @@ class ColorHelper
 
     public static function hexToRgba($color, $opacity = false, $asArray = false)
     {
-
         if( empty($color) )
         {
             return false;
@@ -178,7 +177,4 @@ class ColorHelper
     {
         return self::baseColorsAsOptions($include);
     }
-
-
-
 }
