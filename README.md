@@ -6,7 +6,26 @@ A slick color picker fieldtype plugin for the Craft CMS 3 control panel. [That's
 
 This fieldtype plugin gives your content editors a simple tool for selecting from a color palette. Colorit also lets you create custom presets that can be selected when creating colorit fields.
 
-### In Use
+## Requirements
+
+This plugin requires Craft CMS 3.0.0, or later.
+
+## Installation
+
+### Plugin Store
+
+Log into your control panel, hit up the 'Plugin Store', search for this plugin and install.
+
+### Composer
+
+Open terminal, go to your Craft project folder and use composer to load this plugin. Once loaded you can install via the Craft Control Panel, go to Settings → Plugins, locate the plugin and hit “Install”.
+
+```bash
+cd /path/to/project
+composer require fruitstudios/colorit
+```
+
+## In Use
 
 Select a color from the palette.
 
@@ -48,6 +67,7 @@ Each Colorit fieldtype returns a Color model.
 {{ entry.myColoritFieldName.green }}          - (string) // Get the green value
 {{ entry.myColoritFieldName.blue }}           - (string) // Get the blue value
 {{ entry.myColoritFieldName.alpha }}          - (string) // Get the alpha value
+```
 
 ## Utilities
 
@@ -71,7 +91,7 @@ Colorit makes a few utilities avaiable in your templates.
 {{ ('#555')|hexToRgb }}                    - (string)
 {{ ('#555')|hexToRgba(opacity = 100) }}    - (string)
 ```
-### Presets
+## Presets
 
 Colorit lets you create custom presets that can be selected when creating colorit fields. For example, you might want to create a "Brand" preset and another for "Secondary" colors. If you make changes to the preset, it will update any fields where it is in use.
 
@@ -81,5 +101,4 @@ When creating a new Colorit field you'll have the option to choose one of your p
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-preset.png" alt="Preset Choice"></a></p>
 
-```
-Brought to you by [Fruit Studios](https://fruitstudios.co.uk)
+Brought to you by [Fruit Studios](https://fruitstudios.co.uk).
