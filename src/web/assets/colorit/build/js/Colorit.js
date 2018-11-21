@@ -183,10 +183,9 @@ var Colorit = (function() {
 
 				dom.palette = dom.field.querySelector(selectors.paletteColors);
 				dom.paletteColors = dom.field.querySelectorAll(selectors.paletteColor);
-				if(dom.paletteColors) {
+				if(dom.palette && dom.paletteColors) {
 					dom.palette.addEventListener("click", colorHandler, false);
 				}
-
 
 				dom.handleInput = document.getElementById(settings.namespacedId + '-handle');
 
