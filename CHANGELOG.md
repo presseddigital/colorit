@@ -1,13 +1,11 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
-## 1.0.7 - 2018-11-21
+## 1.0.7 - 2018-12-03
 
 ### Fixed
 
-*   Fixed  -
-*   Fixed  -
-
+*   Fixed  - Javascript error when only custom color used
 
 ## 1.0.6.1 - 2018-11-08
 

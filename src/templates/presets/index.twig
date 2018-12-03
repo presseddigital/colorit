@@ -11,6 +11,7 @@
         <table id="presets" class="data fullwidth collapsible">
             <thead>
                 <tr>
+                    <th scope="col">{{ "ID"|t('colorit') }}</th>
                     <th scope="col">{{ "Preset"|t('colorit') }}</th>
                     <th scope="col">{{ "Type"|t('colorit') }}</th>
                     <th scope="col">{{ "Fields"|t('colorit') }}</th>
@@ -20,6 +21,7 @@
             <tbody>
                 {% for preset in presets %}
                     <tr data-id="{{ preset.id }}" data-name="{{ preset.name }}">
+                        <th scope="row" data-title="{{ 'Name'|t('colorit') }}"><a href="{{ url('colorit/presets/'~preset.id) }}">{{ preset.id }}</a></th>
                         <th scope="row" data-title="{{ 'Name'|t('colorit') }}"><a href="{{ url('colorit/presets/'~preset.id) }}">{{ preset.name }}</a></th>
                         <td data-title="{{ 'Type'|t('colorit') }}">{{ preset.fieldType.displayName }}</td>
                         <td data-title="{{ 'Fields'|t('colorit') }}">{{ preset.getFieldsUsingHtml()|raw }}</td>
