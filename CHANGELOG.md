@@ -6,6 +6,7 @@
 ### Fixed
 
 *   Fixed  - Javascript error when only custom color used
+*   Added  - Added an ID column to preset list
 
 ## 1.0.6.1 - 2018-11-08
 
