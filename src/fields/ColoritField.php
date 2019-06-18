@@ -37,6 +37,7 @@ class ColoritField extends Field
     public $allowCustomColor = false;
     public $allowOpacity = false;
     public $colorFormat = 'auto';
+    public $siteSettings = [];
 
     // Static Methods
     // =========================================================================
@@ -193,6 +194,33 @@ class ColoritField extends Field
         return parent::serializeValue($serialized, $element);
     }
 
+    /**
+     * Creates a copy of the field settings and stores them in a site specific array
+     * @author Josh Smith <me@joshsmith.dev>
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        $data = parent::getSettings();
+        $currentSite = Craft::$app->sites->getCurrentSite();
+
+        // Create a site specific copy of the settings
+        $settings = $data; unset($settings['siteSettings']);
+        $data['siteSettings'][$currentSite->id] = $settings;
+
+        // Get the existing field settings if this isn't a new field
+        $fieldSettings = [];
+        if( !$this->getIsNew() ){
+            $field = Craft::$app->getFields()->getFieldById($this->id);
+            $fieldSettings = $field->siteSettings ?? [];
+        }
+
+        // Merge the site settings
+        $data['siteSettings'] = ($fieldSettings + $data['siteSettings']);
+
+        return $data;
+    }
+
     public function getSettingsHtml()
     {
         $field = $this;
@@ -201,6 +229,9 @@ class ColoritField extends Field
             'value' => '',
             'label' => 'No Preset'
         ];
+
+        // Apply multi-site settinsg
+        $this->_populateWithSiteSettings();
 
         if(!$this->presetMode)
         {
@@ -226,8 +257,8 @@ class ColoritField extends Field
 
     public function getInputHtml($value, ElementInterface $element = null): string
     {
+        $this->_populateWithSiteSettings();
         $this->_populateWithPreset();
-
         $view = Craft::$app->getView();
         $id = $view->formatInputId($this->handle);
         $namespacedId = Craft::$app->view->namespaceInputId($id);
@@ -280,6 +311,25 @@ class ColoritField extends Field
 
     // Static Methods
     // =========================================================================
+
+    /**
+     * Populates this field object with site specific settings
+     * @author Josh Smith <me@joshsmith.dev>
+     * @return void
+     */
+    private function _populateWithSiteSettings()
+    {
+        if( empty($this->siteSettings) ) return;
+
+        $currentSite = Craft::$app->sites->getCurrentSite();
+        $settings = $this->siteSettings[$currentSite->id] ?? [];
+
+        foreach ($settings as $key => $value) {
+            if( property_exists($this, $key) ){
+                $this->$key = $value;
+            }
+        }
+    }
 
     private function _populateWithPreset()
     {
