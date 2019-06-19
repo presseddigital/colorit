@@ -37,6 +37,8 @@ class ColoritField extends Field
     public $allowCustomColor = false;
     public $allowOpacity = false;
     public $colorFormat = 'auto';
+    public $multiSiteSupport = false;
+    public $siteSettings = [];
 
     // Static Methods
     // =========================================================================
@@ -193,6 +195,48 @@ class ColoritField extends Field
         return parent::serializeValue($serialized, $element);
     }
 
+    public static function supportedTranslationMethods(): array
+    {
+        return [self::TRANSLATION_METHOD_NONE];
+    }
+
+    /**
+     * Creates a copy of the field settings and stores them in a site specific array
+     * @author Josh Smith <me@joshsmith.dev>
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        $data = parent::getSettings();
+        if( empty($this->multiSiteSupport) ) return $data;
+
+        $currentSite = Craft::$app->sites->getCurrentSite();
+        unset($data['siteSettings']);
+
+        $newSettings = [];
+        $newSettings[$currentSite->id] = $data;
+
+        // Get the existing field settings if this isn't a new field
+        $fieldSettings = [];
+        if( !$this->getIsNew() ){
+
+            // Fetch the current field settings
+            $field = Craft::$app->getFields()->getFieldById($this->id);
+            $fieldSettings = $field->siteSettings ?? [];
+
+            // Restore the current field settings at the top level, ignoring any changes.
+            // This smooths the UX when toggling from multi vs. standard sites.
+            $data = $field->getAttributes($field->settingsAttributes());
+        }
+
+        // We need to explicity set this flag in case it was overriden above.
+        // Then, merge together the site settings.
+        $data['multiSiteSupport'] = true;
+        $data['siteSettings'] = ($newSettings + $fieldSettings);
+
+        return $data;
+    }
+
     public function getSettingsHtml()
     {
         $field = $this;
@@ -201,6 +245,9 @@ class ColoritField extends Field
             'value' => '',
             'label' => 'No Preset'
         ];
+
+        // Apply multi-site settinsg
+        $this->_populateWithSiteSettings();
 
         if(!$this->presetMode)
         {
@@ -226,8 +273,8 @@ class ColoritField extends Field
 
     public function getInputHtml($value, ElementInterface $element = null): string
     {
+        $this->_populateWithSiteSettings();
         $this->_populateWithPreset();
-
         $view = Craft::$app->getView();
         $id = $view->formatInputId($this->handle);
         $namespacedId = Craft::$app->view->namespaceInputId($id);
@@ -280,6 +327,25 @@ class ColoritField extends Field
 
     // Static Methods
     // =========================================================================
+
+    /**
+     * Populates this field object with site specific settings
+     * @author Josh Smith <me@joshsmith.dev>
+     * @return void
+     */
+    private function _populateWithSiteSettings()
+    {
+        if( empty($this->siteSettings) || empty($this->multiSiteSupport) ) return;
+
+        $currentSite = Craft::$app->sites->getCurrentSite();
+        $settings = $this->siteSettings[$currentSite->id] ?? [];
+
+        foreach ($settings as $key => $value) {
+            if( property_exists($this, $key) ){
+                $this->$key = $value;
+            }
+        }
+    }
 
     private function _populateWithPreset()
     {
