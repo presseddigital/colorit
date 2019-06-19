@@ -123,3 +123,14 @@
     }) }}
 
 </div>
+
+{% if not field.presetMode and craft.app.sites.getTotalSites() > 1 %}
+    {{ forms.lightswitchField({
+        label: "Multi-Site Support"|t('colorit'),
+        instructions: "Keep this field's settings specific to each site."|t('colorit'),
+        id: 'multiSiteSupport',
+        name: 'multiSiteSupport',
+        on: field.multiSiteSupport,
+        errors: field.getErrors('multiSiteSupport')
+    }) }}
+{% endif %}
