@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\colorit\controllers;
+namespace presseddigital\colorit\controllers;
 
-use fruitstudios\colorit\Colorit;
+use presseddigital\colorit\Colorit;
 
 use Craft;
 use craft\web\Controller;

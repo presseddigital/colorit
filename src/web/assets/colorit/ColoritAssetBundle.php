@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\web\assets\colorit;
+namespace presseddigital\colorit\web\assets\colorit;
 
 use Craft;
 
@@ -13,7 +13,7 @@ class ColoritAssetBundle extends AssetBundle
 
     public function init()
     {
-        $this->sourcePath = "@fruitstudios/colorit/web/assets/colorit/build";
+        $this->sourcePath = "@presseddigital/colorit/web/assets/colorit/build";
 
         $this->depends = [];
 

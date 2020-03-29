@@ -1,9 +1,9 @@
 <?php
-namespace fruitstudios\colorit\plugin;
+namespace presseddigital\colorit\plugin;
 
-use fruitstudios\colorit\services\Colors;
-use fruitstudios\colorit\services\Fields;
-use fruitstudios\colorit\services\Presets;
+use presseddigital\colorit\services\Colors;
+use presseddigital\colorit\services\Fields;
+use presseddigital\colorit\services\Presets;
 
 trait Services
 {

@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\models;
+namespace presseddigital\colorit\models;
 
 use Craft;
 use craft\base\Model;

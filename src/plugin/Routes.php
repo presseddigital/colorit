@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\plugin;
+namespace presseddigital\colorit\plugin;
 
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;

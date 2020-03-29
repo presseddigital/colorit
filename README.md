@@ -1,4 +1,4 @@
-<p align="left"><a href="https://github.com/fruitstudios/craft-colorit" target="_blank"><img width="100" height="100" src="resources/img/colorit.svg" alt="Colorit"></a></p>
+<p align="left"><a href="https://github.com/presseddigital/colorit" target="_blank"><img width="100" height="100" src="resources/img/colorit.svg" alt="Colorit"></a></p>
 
 # Colorit plugin for Craft CMS 3
 
@@ -22,7 +22,7 @@ Open terminal, go to your Craft project folder and use composer to load this plu
 
 ```bash
 cd /path/to/project
-composer require fruitstudios/colorit
+composer require presseddigital/colorit
 ```
 
 ## In Use
@@ -101,4 +101,4 @@ When creating a new Colorit field you'll have the option to choose one of your p
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-preset.png" alt="Preset Choice"></a></p>
 
-Brought to you by [Fruit Studios](https://fruitstudios.co.uk).
+Brought to you by [Pressed Digital](https://presseddigital.co.uk).

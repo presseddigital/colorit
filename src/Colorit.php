@@ -4,18 +4,18 @@
  *
  * A super simple field type which allows you toggle existing field types.
  *
- * @link      https://fruitstudios.co.uk
- * @copyright Copyright (c) 2018 Fruit Studios
+ * @link      https://presseddigital.co.uk
+ * @copyright Copyright (c) 2020 Pressed Digital
  */
 
-namespace fruitstudios\colorit;
+namespace presseddigital\colorit;
 
-use fruitstudios\colorit\models\Settings;
-use fruitstudios\colorit\fields\ColoritField;
-use fruitstudios\colorit\plugin\Routes as ColoritRoutes;
-use fruitstudios\colorit\plugin\Services as ColoritServices;
-use fruitstudios\colorit\web\twig\CraftVariableBehavior;
-use fruitstudios\colorit\web\twig\Extension;
+use presseddigital\colorit\models\Settings;
+use presseddigital\colorit\fields\ColoritField;
+use presseddigital\colorit\plugin\Routes as ColoritRoutes;
+use presseddigital\colorit\plugin\Services as ColoritServices;
+use presseddigital\colorit\web\twig\CraftVariableBehavior;
+use presseddigital\colorit\web\twig\Extension;
 
 use Craft;
 use craft\base\Plugin;
@@ -33,7 +33,7 @@ use yii\base\Event;
 /**
  * Class Colorit
  *
- * @author    Fruit Studios
+ * @author    Pressed Digital
  * @package   Colorit
  * @since     1.0.0
  *
@@ -113,7 +113,7 @@ class Colorit extends Plugin
 
     public function getGitHubUrl(string $append = '')
     {
-        return 'https://github.com/fruitstudios/craft-'.$this->handle.$append;
+        return 'https://github.com/presseddigital/craft-'.$this->handle.$append;
     }
 
     // Protected Methods

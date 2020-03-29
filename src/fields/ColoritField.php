@@ -1,11 +1,11 @@
 <?php
-namespace fruitstudios\colorit\fields;
+namespace presseddigital\colorit\fields;
 
-use fruitstudios\colorit\Colorit;
-use fruitstudios\colorit\models\Color;
-use fruitstudios\colorit\models\PaletteColor;
-use fruitstudios\colorit\helpers\ColorHelper;
-use fruitstudios\colorit\web\assets\colorit\ColoritAssetBundle;
+use presseddigital\colorit\Colorit;
+use presseddigital\colorit\models\Color;
+use presseddigital\colorit\models\PaletteColor;
+use presseddigital\colorit\helpers\ColorHelper;
+use presseddigital\colorit\web\assets\colorit\ColoritAssetBundle;
 
 use Craft;
 use craft\web\View;
@@ -20,7 +20,7 @@ use craft\validators\ArrayValidator;
 use yii\db\Schema;
 
 /**
- * @author    Fruit Studios
+ * @author    Pressed Digital
  * @package   Palette
  * @since     1.0.0
  */
@@ -37,6 +37,10 @@ class ColoritField extends Field
     public $allowCustomColor = false;
     public $allowOpacity = false;
     public $colorFormat = 'auto';
+
+    public $defaultHandle;
+    public $defaultOpacity;
+    public $defaultCustomColor;
 
     // Static Methods
     // =========================================================================
@@ -176,6 +180,7 @@ class ColoritField extends Field
             $color->field = $this;
             return $color;
         }
+
         return $value;
     }
 

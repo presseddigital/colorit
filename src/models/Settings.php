@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\colorit\models;
+namespace presseddigital\colorit\models;
 
-use fruitstudios\colorit\fields\ColoritField;
+use presseddigital\colorit\fields\ColoritField;
 
 use Craft;
 use craft\base\Model;

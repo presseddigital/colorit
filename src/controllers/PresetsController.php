@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\colorit\controllers;
+namespace presseddigital\colorit\controllers;
 
-use fruitstudios\colorit\Colorit;
-use fruitstudios\colorit\models\Preset;
+use presseddigital\colorit\Colorit;
+use presseddigital\colorit\models\Preset;
 
 use Craft;
 use craft\web\Controller;

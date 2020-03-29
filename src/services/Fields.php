@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\services;
+namespace presseddigital\colorit\services;
 
 use Craft;
 use craft\base\Component;

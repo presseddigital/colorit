@@ -1,5 +1,5 @@
 {
-    "name": "fruitstudios/colorit",
+    "name": "presseddigital/colorit",
     "description": "A slick color picker fieldtype plugin for the Craft CMS 3 control panel.",
     "type": "craft-plugin",
     "version": "1.0.8",
@@ -16,14 +16,14 @@
         "swatch"
     ],
     "support": {
-        "docs": "https://github.com/fruitstudios/craft-colorit/blob/master/README.md",
-        "issues": "https://github.com/fruitstudios/craft-colorit/issues"
+        "docs": "https://github.com/presseddigital/colorit/blob/master/README.md",
+        "issues": "https://github.com/presseddigital/colorit/issues"
     },
     "license": "proprietary",
     "authors": [
         {
-            "name": "Fruit Studios",
-            "homepage": "https://fruitstudios.co.uk"
+            "name": "Pressed Digital",
+            "homepage": "https://presseddigital.co.uk"
         }
     ],
     "require": {
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-          "fruitstudios\\colorit\\": "src/"
+          "presseddigital\\colorit\\": "src/"
         }
     },
     "extra": {
@@ -39,7 +39,7 @@
         "handle": "colorit",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-colorit/master/CHANGELOG.md",
-        "class": "fruitstudios\\colorit\\Colorit"
+        "changelogUrl": "https://raw.githubusercontent.com/presseddigital/colorit/master/CHANGELOG.md",
+        "class": "presseddigital\\colorit\\Colorit"
     }
 }

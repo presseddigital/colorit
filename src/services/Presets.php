@@ -1,11 +1,11 @@
 <?php
-namespace fruitstudios\colorit\services;
+namespace presseddigital\colorit\services;
 
-use fruitstudios\colorit\Colorit;
-use fruitstudios\colorit\models\Preset;
-use fruitstudios\colorit\records\Preset as PresetRecord;
+use presseddigital\colorit\Colorit;
+use presseddigital\colorit\models\Preset;
+use presseddigital\colorit\records\Preset as PresetRecord;
 
-use fruitstudios\colorit\fields\ColoritField;
+use presseddigital\colorit\fields\ColoritField;
 
 use Craft;
 use craft\base\Component;

@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\colorit\models;
+namespace presseddigital\colorit\models;
 
-use fruitstudios\colorit\helpers\ColorHelper;
+use presseddigital\colorit\helpers\ColorHelper;
 
 use Craft;
 use craft\base\Model;

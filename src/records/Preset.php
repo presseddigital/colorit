@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\records;
+namespace presseddigital\colorit\records;
 
 use craft\db\ActiveRecord;
 use yii\db\ActiveQueryInterface;

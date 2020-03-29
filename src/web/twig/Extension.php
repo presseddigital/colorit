@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\colorit\web\twig;
+namespace presseddigital\colorit\web\twig;
 
-use fruitstudios\colorit\Colorit;
+use presseddigital\colorit\Colorit;
 
 use Craft;
 

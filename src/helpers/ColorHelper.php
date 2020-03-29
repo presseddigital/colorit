@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\colorit\helpers;
+namespace presseddigital\colorit\helpers;
 
 use Craft;
 

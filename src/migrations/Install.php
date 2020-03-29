@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\colorit\migrations;
+namespace presseddigital\colorit\migrations;
 
-use fruitstudios\colorit\Colorit;
+use presseddigital\colorit\Colorit;
 
 use Craft;
 use craft\config\DbConfig;

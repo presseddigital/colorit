@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\colorit\services;
+namespace presseddigital\colorit\services;
 
-use fruitstudios\colorit\Colorit;
-use fruitstudios\colorit\helpers\ColorHelper;
+use presseddigital\colorit\Colorit;
+use presseddigital\colorit\helpers\ColorHelper;
 
 use Craft;
 use craft\base\Component;
