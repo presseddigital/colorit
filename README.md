@@ -6,7 +6,7 @@ A slick color picker fieldtype plugin for the Craft CMS 3 control panel. [That's
 
 This fieldtype plugin gives your content editors a simple tool for selecting from a color palette. Colorit also lets you create custom presets that can be selected when creating colorit fields.
 
-> :loudspeaker: **A note from the new (well sort of new) owners Pressed Digital:**: At the end of 2019 Fruit Studios Ltd was sold to allow it's founders to shift 100% of their focus to the, now not so side project, findarace.com. As a part of the deal we retained ownership of all Craft plugins and are committed to make them even more awesome, with findarace.com being all Craft, this aligns really nicely. As a little silver lining we should now finally have some time to launch some of our unreleased plugins!
+> :mega: **A note from the new (well sort of new) owners Pressed Digital:** At the end of 2019 Fruit Studios Ltd was sold to allow it's founders to shift 100% of their focus to the, now not so side project, findarace.com. As a part of the deal we retained ownership of all Craft plugins and are committed to make them even more awesome. With findarace.com being all Craft, this aligns really nicely, and as a little silver lining we should now finally have some time to launch some of our unreleased plugins!
 
 ## Requirements
 
