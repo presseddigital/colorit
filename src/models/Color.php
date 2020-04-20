@@ -14,7 +14,7 @@ class Color extends Model
 
     const TRANSPARENT_STRING = 'transparent';
 
-    // Public Properties
+    // Private Properties
     // =========================================================================
 
     private $_palette;

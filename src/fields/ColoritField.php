@@ -12,6 +12,7 @@ use craft\web\View;
 use craft\base\ElementInterface;
 use craft\base\Element;
 use craft\base\Field;
+use craft\base\PreviewableFieldInterface;
 use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\validators\ColorValidator;
@@ -24,7 +25,7 @@ use yii\db\Schema;
  * @package   Palette
  * @since     1.0.0
  */
-class ColoritField extends Field
+class ColoritField extends Field implements PreviewableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -38,9 +39,8 @@ class ColoritField extends Field
     public $allowOpacity = false;
     public $colorFormat = 'auto';
 
-    public $defaultHandle;
-    public $defaultOpacity;
-    public $defaultCustomColor;
+    public $defaultColorHandle;
+    public $defaultOpacity = 100;
 
     // Static Methods
     // =========================================================================
@@ -66,18 +66,29 @@ class ColoritField extends Field
     public function rules()
     {
         $rules = [];
-        $rules[] = ['paletteColors', 'validatePaletteColors'];
-        $rules[] = ['paletteBaseColors', ArrayValidator::class];
-        $rules[] = ['colorFormat', 'string'];
-        $rules[] = ['colorFormat', 'default', 'value' => 'auto'];
+        $rules[] = [['paletteColors'], 'validatePaletteColors'];
+        $rules[] = [['paletteBaseColors'], ArrayValidator::class];
+        $rules[] = [['colorFormat', 'defaultColorHandle'], 'string'];
+        $rules[] = [['defaultColorHandle'], 'validateDefaultColorHandle'];
+        $rules[] = [['colorFormat'], 'default', 'value' => 'auto'];
         $rules[] = [['allowCustomColor', 'allowOpacity'], 'boolean'];
         $rules[] = [['allowCustomColor', 'allowOpacity'], 'default', 'value' => false];
+        $rules[] = [['defaultOpacity'], 'integer', 'min' => 0, 'max' => 100];
+        $rules[] = [['defaultOpacity'], 'default', 'value' => 100];
 
         if($this->presetMode)
         {
             return $rules;
         }
         return array_merge(parent::rules(), $rules);
+    }
+
+    public function validateDefaultColorHandle()
+    {
+        if(!in_array($this->defaultColorHandle, array_keys($this->getPalette())))
+        {
+            $this->addError('defaultColorHandle', Craft::t('colorit', 'Color handle not in use'));
+        }
     }
 
     public function validatePaletteColors()
@@ -174,14 +185,14 @@ class ColoritField extends Field
 
         if (isset($value['handle']))
         {
-            $color = new Color();
-            $color = Craft::configure($color, $value);
-            $this->_populateWithPreset();
-            $color->field = $this;
-            return $color;
+            return $this->_createColor($value);
+        }
+        else
+        {
+            return $this->defaultColor();
         }
 
-        return $value;
+        return null;
     }
 
     public function serializeValue($value, ElementInterface $element = null)
@@ -254,12 +265,21 @@ class ColoritField extends Field
         ]);
     }
 
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        if (!$value)
+        {
+            return '<div class="color small static"><div class="color-preview"></div></div>';
+        }
+
+        return '<div class="color small static"><div class="color-preview" style="background-color: '.$value->getColor().';"></div></div>
+            <div class="colorhex code">'.$value->getColor().'</div>';
+    }
+
     public function getInputPreviewHtml(): string
     {
         $view = Craft::$app->getView();
-
         $view->registerAssetBundle(ColoritAssetBundle::class);
-
         return $view->renderTemplate('colorit/_fields/colorit/preview', [
             'field' => $this,
         ]);
@@ -277,14 +297,38 @@ class ColoritField extends Field
         {
             foreach($this->paletteColors as $paletteColor)
             {
-                $palette[$paletteColor['handle']] = $paletteColor;
+                if(is_string($paletteColor['handle']))
+                {
+                    $palette[$paletteColor['handle']] = $paletteColor;
+                }
             }
         }
         return $palette;
     }
 
-    // Static Methods
+    protected function defaultColor()
+    {
+        $this->_populateWithPreset();
+        if($this->defaultColorHandle)
+        {
+            return $this->_createColor([
+                'handle' => $this->defaultColorHandle,
+                'opacity' => $this->defaultOpacity,
+            ]);
+        }
+        return null;
+    }
+
+    // Private Methods
     // =========================================================================
+
+    private function _createColor($value)
+    {
+        $color = Craft::configure(new Color(), $value);
+        $this->_populateWithPreset();
+        $color->field = $this;
+        return $color;
+    }
 
     private function _populateWithPreset()
     {

@@ -13,6 +13,7 @@ class PaletteColor extends Model
     public $label;
 	public $handle;
     public $color;
+    public $default = false;
 
     // Public Methods
     // =========================================================================
@@ -23,6 +24,8 @@ class PaletteColor extends Model
             [['label', 'handle'], 'string'],
             [['label', 'handle', 'color'], 'required'],
             [['color'], ColorValidator::class],
+            [['default'], 'boolean'],
+            [['default'], 'default', 'value' => false],
         ];
     }
 }

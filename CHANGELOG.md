@@ -6,6 +6,8 @@
 ### Fixed
 
 *   Fixed  - Template error
+*   Added  - Support for setting default colors
+*   Added  - Table attribute support
 
 ## 1.0.8 - 2019-01-18
 

@@ -69,7 +69,6 @@
                 $handle = $row.find('textarea[name$="[handle]"]'),
                 handleGeneratorRequired = $label.val() == '' && $handle.val() == '' && !$row[0].hasAttribute('handle-generated');
 
-            console.log(handleGeneratorRequired);
             if(handleGeneratorRequired) {
                 $rowId = $row.data('id');
                 new Craft.HandleGenerator($label, $handle);
@@ -77,7 +76,6 @@
             }
        });
     {% endjs %}
-
 
     {{ forms.checkboxSelectField({
         label: "Base Colors"|t('colorit'),
@@ -89,13 +87,36 @@
         errors: field.getErrors('paletteBaseColors')
     })}}
 
+    {{ forms.textField({
+        label: "Default Color"|t('colorit'),
+        instructions: "Set a default color using a valid color handle, this can be one of the base colors or your own colors."|t('colorit'),
+        id: 'defaultColorHandle',
+        name: 'defaultColorHandle',
+        placeholder: 'transparent, white, black, custom',
+        value: field.defaultColorHandle,
+        errors: field.getErrors('defaultColorHandle')|unique,
+    }) }}
+
+    {{ forms.textField({
+        type: 'number',
+        label: "Default Opacity"|t('colorit'),
+        instructions: "Set a default opacity."|t('colorit'),
+        id: 'defaultOpacity',
+        name: 'defaultOpacity',
+        placeholder: '100',
+        value: field.defaultOpacity,
+        min: 0,
+        max: 100,
+        errors: field.getErrors('defaultOpacity'),
+    }) }}
+
     {{ forms.lightswitchField({
         label: "Opacity"|t('colorit'),
         instructions: "Allow the user to set opacity."|t('colorit'),
         id: 'allowOpacity',
         name: 'allowOpacity',
         on: field.allowOpacity,
-        errors: field.getErrors('allowOpacity')
+        errors: field.getErrors('allowOpacity'),
     }) }}
 
     {{ forms.lightswitchField({
@@ -104,7 +125,7 @@
         id: 'allowCustomColor',
         name: 'allowCustomColor',
         on: field.allowCustomColor,
-        errors: field.getErrors('allowCustomColor')
+        errors: field.getErrors('allowCustomColor'),
     }) }}
 
     {{ forms.selectField({
