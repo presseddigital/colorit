@@ -1,13 +1,13 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
-## 1.0.9 - Unreleased
+## 1.0.9 - 2020-04-22
 
 ### Fixed
 
-*   Fixed  - Template error
 *   Added  - Support for setting default colors
 *   Added  - Table attribute support
+*   Fixed  - Template error
 
 ## 1.0.8 - 2019-01-18
 
