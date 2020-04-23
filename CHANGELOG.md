@@ -4,7 +4,7 @@
 ## 1.0.9.1 - 2020-04-23
 
 ### Fixed
-- Fixed update error after chnaged namespace, fixes https://github.com/presseddigital/colorit/issues/19 thanks to @brandonkelly
+- Fixed update error after changed namespace, thanks @brandonkelly. ([#19](https://github.com/presseddigital/colorit/issues/19))
 
 ## 1.0.9 - 2020-04-22
 
