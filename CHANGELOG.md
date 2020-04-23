@@ -1,6 +1,11 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
+## 1.0.9.1 - 2020-04-23
+
+### Fixed
+- Fixed update error after chnaged namespace, fixes https://github.com/presseddigital/colorit/issues/19 thanks to @brandonkelly
+
 ## 1.0.9 - 2020-04-22
 
 ### Added

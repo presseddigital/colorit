@@ -343,3 +343,5 @@ class ColoritField extends Field implements PreviewableFieldInterface
     }
 
 }
+
+class_alias(ColoritField::class, \fruitstudios\colorit\fields\ColoritField::class);

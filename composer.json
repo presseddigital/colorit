@@ -2,7 +2,7 @@
     "name": "presseddigital/colorit",
     "description": "A slick color picker fieldtype plugin for the Craft CMS 3 control panel.",
     "type": "craft-plugin",
-    "version": "1.0.9",
+    "version": "1.0.9.1",
     "keywords": [
         "craft",
         "cms",
@@ -31,7 +31,8 @@
     },
     "autoload": {
         "psr-4": {
-          "presseddigital\\colorit\\": "src/"
+          "presseddigital\\colorit\\": "src/",
+          "fruitstudios\\colorit\\": "src_legacy/"
         }
     },
     "extra": {
