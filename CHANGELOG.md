@@ -1,6 +1,11 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
+## 1.0.9.2 - 2020-04-27
+
+### Fixed
+- Fixed update error related to the preset field map. ([#21](https://github.com/presseddigital/colorit/issues/21))
+
 ## 1.0.9.1 - 2020-04-23
 
 ### Fixed

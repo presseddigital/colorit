@@ -4,6 +4,7 @@ namespace presseddigital\colorit\services;
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
+use presseddigital\colorit\fields\ColoritField;
 
 class Fields extends Component
 {
@@ -50,8 +51,15 @@ class Fields extends Component
             return $this->_fieldsByType[$type];
         }
 
+        // TODO: @sam - Remove this temporary fix when new preset logic in place.
+        $types = [$type];
+        if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField']))
+        {
+            $types = ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'];
+        }
+
         $fields = $this->_createFieldQuery()
-            ->where(['type' => $type])
+            ->where(['type' => $types])
             ->all();
 
         if(!$fields)
