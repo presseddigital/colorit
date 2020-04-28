@@ -55,6 +55,7 @@ class Fields extends Component
         $types = [$type];
         if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField']))
         {
+            $type = 'presseddigital\\colorit\\fields\\ColoritField';
             $types = ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'];
         }
 
