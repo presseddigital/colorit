@@ -20,7 +20,7 @@
 					]|filter|join(' ') %}
 
 					{% set color = paletteColor.color %}
-					{% if not (color starts with '#') %}
+					{% if not (color starts with '#' or color starts with 'rgb') %}
 						{% set color = '#' ~ color %}
 					{% endif %}
 
@@ -40,7 +40,7 @@
 	{% if field.allowCustomColor %}
 
 		{% set color = custom %}
-		{% if not (color starts with '#') %}
+		{% if not (color starts with '#' or color starts with 'rgb') %}
 			{% set color = '#' ~ color %}
 		{% endif %}
 
