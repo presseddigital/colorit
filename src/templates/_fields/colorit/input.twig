@@ -20,7 +20,12 @@
 						handle == paletteColor.handle ? 'colorit--palette-colorIsSelected' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
+					{% set color = paletteColor.color %}
+					{% if not (color starts with '#' or color starts with 'rgb') %}
+						{% set color = '#' ~ color %}
+					{% endif %}
+
+					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : color %}
 
 					<li class="{{ class }}" title="{{ paletteColor.label }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }};" data-colorit-palette-color>
 					</li>
@@ -42,7 +47,12 @@
 
 	{% if field.allowCustomColor %}
 
-		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
+		{% set color = custom %}
+		{% if not (color starts with '#' or color starts with 'rgb') %}
+			{% set color = '#' ~ color %}
+		{% endif %}
+
+		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : color %}
 
 		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}" data-colorit-palette-custom>
 			{{ forms.text({
