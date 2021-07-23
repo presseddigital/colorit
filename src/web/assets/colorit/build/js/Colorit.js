@@ -47,7 +47,7 @@ var Colorit = (function() {
 		// =========================================================================
 
 		var isValidHex = function(value) {
-			return /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(value);
+			return /^#?[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(value);
 		};
 
 		var hexToRgb = function(hex) {
