@@ -19,12 +19,12 @@ class ColorHelper
             'white' => [
                 'label' => Craft::t('colorit', 'White'),
                 'handle' => 'white',
-                'color' => '#FFFFFF'
+                'color' => 'FFFFFF'
             ],
             'black' => [
                 'label' => Craft::t('colorit', 'Black'),
                 'handle' => 'black',
-                'color' => '#000000'
+                'color' => '000000'
             ],
         ];
 
@@ -107,7 +107,7 @@ class ColorHelper
 
     public static function isValidHex($color)
     {
-        return preg_match('/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i', $color) ? true : false;
+        return preg_match('/^#?[0-9a-f]{3}(?:[0-9a-f]{3})?$/i', $color) ? true : false;
     }
 
     public static function hexToRgba($color, $opacity = false, $asArray = false)
