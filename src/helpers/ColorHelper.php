@@ -71,6 +71,8 @@ class ColorHelper
             case 'WHITE':
             case '#FFF':
             case '#FFFFFF':
+            case 'FFF':
+            case 'FFFFFF':
                 $isWhite = true;
                 break;
         }
@@ -99,6 +101,8 @@ class ColorHelper
             case 'BLACK':
             case '#000':
             case '#000000':
+            case '000':
+            case '000000':
                 $isBlack = true;
                 break;
         }
