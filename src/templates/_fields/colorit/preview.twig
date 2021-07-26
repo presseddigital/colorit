@@ -8,6 +8,9 @@
 	{% if field.palette|length %}
 
 		<div>
+			{% if field.fieldDescriptions %}
+				<p class="colorit--palette-description">{{ 'Palette'|t('colorit') }}</p>
+			{% endif %}
 
 			<ul class="colorit--palette-colors">
 
@@ -37,6 +40,9 @@
 		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
 
 		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}">
+			{% if field.fieldDescriptions %}
+				<p class="colorit--custom-description">{{ 'Custom HEX'|t('colorit') }}</p>
+			{% endif %}
 			<input class="text" type="text" value="{{ custom }}" placeholder="#HEX" novalidate disabled/>
 			<div class="colorit--palette-customColorSwatch" style="background:{{ processedColor }};"></div>
 		</div>
@@ -47,6 +53,9 @@
 	{% if field.allowOpacity %}
 
 		<div class="colorit--palette-opacity">
+			{% if field.fieldDescriptions %}
+				<p class="colorit--opacity-description">{{ 'Opacity'|t('colorit') }}</p>
+			{% endif %}
 			<input class="text" type="number" value="{{ opacity }}" min="1" max="100" novalidate disabled/>
 		</div>
 

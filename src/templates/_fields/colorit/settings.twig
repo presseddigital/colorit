@@ -128,6 +128,16 @@
         errors: field.getErrors('allowCustomColor'),
     }) }}
 
+
+    {{ forms.lightswitchField({
+        label: "Field Descriptions"|t('colorit'),
+        instructions: "Display field descriptions to the user."|t('colorit'),
+        id: 'fieldDescriptions',
+        name: 'fieldDescriptions',
+        on: field.fieldDescriptions,
+        errors: field.getErrors('fieldDescriptions'),
+    }) }}
+
     {{ forms.selectField({
         label: "Color Output"|t('colorit'),
         instructions: "Select the default color format you would like to return."|t('colorit'),
