@@ -1,10 +1,18 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](http://craftcms.com)
 
+## 1.1.1 - 2021-07-26
+
+### Added
+- Option to display field labels ([#17](https://github.com/presseddigital/colorit/issues/17))
+
+### Changed
+- Slight UI improvements
+
 ## 1.1.0 - 2021-07-23
 
 ### Fixed
-- Fixed some UI issues ([#32](https://github.com/presseddigital/colorit/issues/32) Credit to @hinderson
+- Fixed some UI issues ([#32](https://github.com/presseddigital/colorit/issues/32) Credit to @hinderson)
 
 ## 1.0.9.3 - 2020-04-28
 
