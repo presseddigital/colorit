@@ -39,6 +39,10 @@ Define a custom color.
 
 <p align="left"><img width="590px" src="resources/img/colorit-field-custom.png" alt="Custom Setting"></a></p>
 
+Option field descriptions.
+
+<p align="left"><img width="590px" src="resources/img/colorit-field-desc.png" alt="Field Descriptions"></a></p>
+
 
 ## Templating
 
@@ -100,5 +104,15 @@ Colorit lets you create custom presets that can be selected when creating colori
 When creating a new Colorit field you'll have the option to choose one of your presets or create custom field settings for that field. Settings include defining your color palette, appending transparent, black and white. Allowsing custom colours to be created, opacity and label settings.
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-preset.png" alt="Preset Choice"></a></p>
+
+## Tailwind CSS
+
+You can easily use Colorit with Tailwind CSS by outputting the Colorit field handle to the class attribute.
+
+<p align="left"><img width="590px" src="resources/img/colorit-choose-tailwind.png" alt="Tailwind"></a></p>
+
+<p align="left"><img width="590px" src="colorit-choose-tailwind-palette.png" alt="Tailwind Palette"></a></p>
+
+<p align="left"><img width="590px" src="resources/img/colorit-choose-twig.png" alt="Tailwind Twig"></a></p>
 
 Brought to you by [Pressed Digital](https://presseddigital.co.uk).

@@ -1,5 +1,12 @@
 # Colorit Changelog
-> A palette fieldtype built for [Craft 3](http://craftcms.com)
+> A palette fieldtype built for [Craft 3](https://craftcms.com)
+
+## 1.1.2 - 2021-07-28
+
+### Changed
+- :mega: **Default Color Output Changed
+- The Auto (Best Guest) option in settings will now output a value including the # symbol (#123456) for any colour with an opacity set to 100 and an RGBa value where the opacity < 100. This is so the default twig fieldtype {{ entry.myColoritFieldName }} can handle all setting.
+- Update README imagery and include [Tailwind](https://tailwindcss.com/) usage example.
 
 ## 1.1.1 - 2021-07-26
 
