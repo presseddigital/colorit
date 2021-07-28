@@ -41,7 +41,7 @@ Define a custom color.
 
 Option field descriptions.
 
-<p align="left"><img width="590px" src="resources/img/colorit-field-desc.png" alt="Field Descriptions"></a></p>
+<p align="left"><img width="590px" src="resources/img/colorit-choose-desc.png" alt="Field Descriptions"></a></p>
 
 
 ## Templating
@@ -111,7 +111,7 @@ You can easily use Colorit with Tailwind CSS by outputting the Colorit field han
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-tailwind.png" alt="Tailwind"></a></p>
 
-<p align="left"><img width="590px" src="colorit-choose-tailwind-palette.png" alt="Tailwind Palette"></a></p>
+<p align="left"><img width="590px" src="resources/img/colorit-choose-tailwind-palette.png" alt="Tailwind Palette"></a></p>
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-twig.png" alt="Tailwind Twig"></a></p>
 
