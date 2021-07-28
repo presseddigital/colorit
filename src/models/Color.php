@@ -86,6 +86,9 @@ class Color extends Model
             case 'hex':
                 $color = $this->getHex();
                 break;
+            case 'hashhex':
+                $color = $this->getHashHex();
+                break;
             case 'rgb':
                 $color = $this->getRgb();
                 break;
@@ -93,7 +96,7 @@ class Color extends Model
                 $color = $this->getRgba();
                 break;
             default:
-                $color = $this->opacity < 100 ? $this->getRgba() : $this->getHex();
+                $color = $this->opacity < 100 ? $this->getRgba() : ($this->isCustomColor() ? $this->getHex() : $this->getHashHex());
                 break;
         }
         return $color ? $color : '';
@@ -136,6 +139,21 @@ class Color extends Model
             $this->_hex = $hex;
         }
         return $this->_hex;
+    }
+
+    public function getHashHex()
+    {
+        if ($this->isTransparent())
+        {
+            return self::TRANSPARENT_STRING;
+        }
+
+        $hex = $this->getHex();
+        if($hex)
+        {
+            return '#'.$hex;
+        }
+        return false;
     }
 
     public function getRgb()
