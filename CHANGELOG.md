@@ -1,6 +1,11 @@
 # Colorit Changelog
 > A palette fieldtype built for [Craft 3](https://craftcms.com)
 
+## 1.1.2.1 - 2021-07-28
+
+### Added
+- Added hashhex option example to templating in README.
+
 ## 1.1.2 - 2021-07-28
 
 ### Changed
