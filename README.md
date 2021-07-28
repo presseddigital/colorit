@@ -59,6 +59,7 @@ Each Colorit fieldtype returns a Color model.
 {{ entry.myColoritFieldName.hasColor }}       - (bool)    // Does the field have a color set
 {{ entry.myColoritFieldName.palette }}        - (array)   // All available colours in the palette
 {{ entry.myColoritFieldName.hex }}            - (string)  // Get the hex value
+{{ entry.myColoritFieldName.hashhex }}        - (string)  // Get the hex value including #
 {{ entry.myColoritFieldName.rgb }}            - (string)  // Get the rgb value
 {{ entry.myColoritFieldName.rgba }}           - (string)  // Get the rgba value
 
