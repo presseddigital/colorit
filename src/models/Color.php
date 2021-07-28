@@ -96,7 +96,7 @@ class Color extends Model
                 $color = $this->getRgba();
                 break;
             default:
-                $color = $this->opacity < 100 ? $this->getRgba() : $this->isCustomColor() ? $this->getHex() : $this->getHashHex();
+                $color = $this->opacity < 100 ? $this->getRgba() : ($this->isCustomColor() ? $this->getHex() : $this->getHashHex());
                 break;
         }
         return $color ? $color : '';
