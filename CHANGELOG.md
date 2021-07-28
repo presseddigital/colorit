@@ -4,8 +4,8 @@
 ## 1.1.2 - 2021-07-28
 
 ### Changed
-- :mega: **Default Color Output Changed
-- The Auto (Best Guest) option in settings will now output a value including the # symbol (#123456) for any colour with an opacity set to 100 and an RGBa value where the opacity < 100. This is so the default twig fieldtype {{ entry.myColoritFieldName }} can handle all setting.
+- :warning: Auto Color Output Changed
+- The Auto (Best Guest) option in settings will now output a value including the # symbol (#123456) for any color with an opacity set to 100 and an RGBa value where the opacity < 100. This is so the default twig fieldtype {{ entry.myColoritFieldName }} can handle all color options. For existing fields the previous output should remain (e.g. no #). A resave of the preset/ field maybe required.
 - Update README imagery and include [Tailwind](https://tailwindcss.com/) usage example.
 
 ## 1.1.1 - 2021-07-26
