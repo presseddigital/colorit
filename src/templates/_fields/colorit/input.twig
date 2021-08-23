@@ -23,7 +23,7 @@
 						handle == paletteColor.handle ? 'colorit--palette-colorIsSelected' : null,
 					]|filter|join(' ') %}
 
-					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : '#' ~ paletteColor.color %}
+					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : paletteColor.color %}
 
 					<li class="{{ class }}" title="{{ paletteColor.label }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }};" data-colorit-palette-color>
 					</li>
