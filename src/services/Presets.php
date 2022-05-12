@@ -99,7 +99,7 @@ class Presets extends Component
             $record = PresetRecord::findOne($model->id);
             if (!$record)
             {
-                throw new Exception(Craft::t('colorit', 'No preset exists with the ID “{id}”', ['id' => $model->id]));
+                throw new \Exception(Craft::t('colorit', 'No preset exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
         else

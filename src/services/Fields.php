@@ -34,7 +34,7 @@ class Fields extends Component
 
     public function getFieldIdByHandle(string $handle)
     {
-        $field = $this->getFieldByHandle();
+        $field = $this->getFieldByHandle($handle);
         return $field ? $field->id : false;
     }
 
@@ -51,7 +51,7 @@ class Fields extends Component
             return $this->_fieldsByType[$type];
         }
 
-        // TODO: @sam - Remove this temporary fix when new preset logic in place.
+        // TODO: Remove this temporary fix when new preset logic in place.
         $types = [$type];
         if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField']))
         {

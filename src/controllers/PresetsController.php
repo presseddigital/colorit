@@ -9,6 +9,7 @@ use craft\web\Controller;
 use craft\helpers\StringHelper;
 
 use yii\web\Response;
+use yii\web\NotFoundHttpException;
 
 class PresetsController extends Controller
 {
@@ -31,7 +32,7 @@ class PresetsController extends Controller
                 $preset = Colorit::$plugin->getPresets()->getPresetById($presetId);
                 if (!$preset)
                 {
-                    throw new HttpException(404);
+                    throw new NotFoundHttpException('Preset not found');
                 }
             }
             else
@@ -117,8 +118,8 @@ class PresetsController extends Controller
         try {
             $preset = Craft::createObject($type);
             return Craft::configure($preset, $attributes);
-        } catch(ErrorException $exception) {
-            $error = $exception->getMessage();
+        } catch(\Exception $e) {
+            $error = $e->getMessage();
             return false;
         }
     }
