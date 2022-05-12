@@ -1,9 +1,7 @@
 <?php
+
 namespace presseddigital\colorit\models;
 
-use presseddigital\colorit\fields\ColoritField;
-
-use Craft;
 use craft\base\Model;
 
 class Settings extends Model
@@ -12,12 +10,12 @@ class Settings extends Model
     // =========================================================================
 
     public $pluginNameOverride = 'Colorit';
-	public $hasCpSectionOverride = false;
+    public $hasCpSectionOverride = false;
 
     // Public Methods
     // =========================================================================
 
-	public function rules(): array
+    public function rules(): array
     {
         return [
             ['pluginNameOverride', 'string'],

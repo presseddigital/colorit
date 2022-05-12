@@ -1,11 +1,10 @@
 <?php
+
 namespace presseddigital\colorit\services;
 
-use presseddigital\colorit\Colorit;
-use presseddigital\colorit\helpers\ColorHelper;
-
-use Craft;
 use craft\base\Component;
+
+use presseddigital\colorit\helpers\ColorHelper;
 
 class Colors extends Component
 {
@@ -58,5 +57,4 @@ class Colors extends Component
     {
         return $this->getBaseColorsAsOptions();
     }
-
 }

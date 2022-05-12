@@ -1,9 +1,10 @@
 <?php
+
 namespace presseddigital\colorit\web\twig;
 
-use presseddigital\colorit\Colorit;
-
 use Craft;
+
+use presseddigital\colorit\Colorit;
 use yii\base\Behavior;
 
 class CraftVariableBehavior extends Behavior
@@ -16,5 +17,4 @@ class CraftVariableBehavior extends Behavior
         // Point `craft.colorit` to the craft\colorit\Plugin instance
         $this->colorit = Colorit::getInstance();
     }
-
 }

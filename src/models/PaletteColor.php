@@ -1,7 +1,7 @@
 <?php
+
 namespace presseddigital\colorit\models;
 
-use Craft;
 use craft\base\Model;
 use craft\validators\ColorValidator;
 
@@ -11,14 +11,14 @@ class PaletteColor extends Model
     // =========================================================================
 
     public $label;
-	public $handle;
+    public $handle;
     public $color;
     public $default = false;
 
     // Public Methods
     // =========================================================================
 
-	public function rules(): array
+    public function rules(): array
     {
         return [
             [['label', 'handle'], 'string'],

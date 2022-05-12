@@ -1,22 +1,21 @@
 <?php
+
 namespace presseddigital\colorit\fields;
 
-use presseddigital\colorit\Colorit;
-use presseddigital\colorit\models\Color;
-use presseddigital\colorit\models\PaletteColor;
-use presseddigital\colorit\helpers\ColorHelper;
-use presseddigital\colorit\web\assets\colorit\ColoritAssetBundle;
-
 use Craft;
-use craft\web\View;
-use craft\base\ElementInterface;
 use craft\base\Element;
+use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
-use craft\helpers\Db;
+
 use craft\helpers\Json;
-use craft\validators\ColorValidator;
 use craft\validators\ArrayValidator;
+use craft\web\View;
+use presseddigital\colorit\Colorit;
+use presseddigital\colorit\helpers\ColorHelper;
+use presseddigital\colorit\models\Color;
+use presseddigital\colorit\models\PaletteColor;
+use presseddigital\colorit\web\assets\colorit\ColoritAssetBundle;
 
 use yii\db\Schema;
 
@@ -77,8 +76,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
         $rules[] = [['defaultOpacity'], 'integer', 'min' => 0, 'max' => 100];
         $rules[] = [['defaultOpacity'], 'default', 'value' => 100];
 
-        if($this->presetMode)
-        {
+        if ($this->presetMode) {
             return $rules;
         }
         return array_merge(parent::rules(), $rules);
@@ -86,8 +84,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     public function validateDefaultColorHandle()
     {
-        if(!in_array($this->defaultColorHandle, array_keys($this->getPalette())))
-        {
+        if (!in_array($this->defaultColorHandle, array_keys($this->getPalette()))) {
             $this->addError('defaultColorHandle', Craft::t('colorit', 'Color handle not in use'));
         }
     }
@@ -95,15 +92,12 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public function validatePaletteColors()
     {
         $usedHandles = [];
-        foreach ($this->paletteColors as $i => $paletteColor)
-        {
+        foreach ($this->paletteColors as $i => $paletteColor) {
             $_paletteColor = new PaletteColor($paletteColor);
 
-            if($_paletteColor->handle ?? false)
-            {
+            if ($_paletteColor->handle ?? false) {
                 $isHandleUnique = !in_array($_paletteColor->handle, $usedHandles);
-                if(!$isHandleUnique)
-                {
+                if (!$isHandleUnique) {
                     $this->addError('paletteColors', Craft::t('colorit', 'Row {row} {error}', [
                         'row' => ($i + 1),
                         'error' => Craft::t('colorit', 'handle must be unique'),
@@ -112,8 +106,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
                 $usedHandles[] = $_paletteColor->handle;
             }
 
-            if(!$_paletteColor->validate() || !$isHandleUnique)
-            {
+            if (!$_paletteColor->validate() || !$isHandleUnique) {
                 $this->paletteColors[$i] = [
                     'label' => [
                         'value' => $_paletteColor->label ?? '',
@@ -128,8 +121,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
                         'hasErrors' => $_paletteColor->hasErrors('color') ?? '',
                     ],
                 ];
-                foreach ($_paletteColor->getErrors() as $error)
-                {
+                foreach ($_paletteColor->getErrors() as $error) {
                     $this->addError('paletteColors', Craft::t('colorit', 'Row {row} {error}', [
                         'row' => ($i + 1),
                         'error' => lcfirst($error[0]),
@@ -152,11 +144,9 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     public function validateColorValue(ElementInterface $element)
     {
-        if ($element->getScenario() === Element::SCENARIO_LIVE)
-        {
+        if ($element->getScenario() === Element::SCENARIO_LIVE) {
             $fieldValue = $element->getFieldValue($this->handle);
-            if($fieldValue && !$fieldValue->validate())
-            {
+            if ($fieldValue && !$fieldValue->validate()) {
                 $element->addModelErrors($fieldValue, $this->handle);
             }
         }
@@ -174,22 +164,17 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if($value instanceof Color)
-        {
+        if ($value instanceof Color) {
             return $value;
         }
 
-        if(is_string($value))
-        {
+        if (is_string($value)) {
             $value = Json::decodeIfJson($value);
         }
 
-        if (isset($value['handle']))
-        {
+        if (isset($value['handle'])) {
             return $this->_createColor($value);
-        }
-        else
-        {
+        } else {
             return $this->defaultColor();
         }
 
@@ -199,8 +184,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public function serializeValue($value, ElementInterface $element = null)
     {
         $serialized = [];
-        if($value instanceof Color)
-        {
+        if ($value instanceof Color) {
             $serialized = [
                 'handle' => $value->handle,
                 'custom' => $value->custom,
@@ -214,18 +198,15 @@ class ColoritField extends Field implements PreviewableFieldInterface
     {
         $field = $this;
         $presets = [];
-        $presetOptions[] =  [
+        $presetOptions[] = [
             'value' => '',
-            'label' => 'No Preset'
+            'label' => 'No Preset',
         ];
 
-        if(!$this->presetMode)
-        {
+        if (!$this->presetMode) {
             $presets = Colorit::$plugin->getPresets()->getAllPresetsByType(self::class);
-            if($presets)
-            {
-                foreach ($presets as $preset)
-                {
+            if ($presets) {
+                foreach ($presets as $preset) {
                     $presetOptions[] = [
                         'value' => $preset->id,
                         'label' => $preset->name,
@@ -256,7 +237,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
             'name' => $this->handle,
             'debug' => Craft::$app->getConfig()->getGeneral()->devMode,
         ]);
-        $view->registerJs('new Colorit('.$js.');', View::POS_END);
+        $view->registerJs('new Colorit(' . $js . ');', View::POS_END);
 
         return $view->renderTemplate('colorit/_fields/colorit/input', [
             'id' => $id,
@@ -268,13 +249,12 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
-        if (!$value)
-        {
+        if (!$value) {
             return '<div class="color small static"><div class="color-preview"></div></div>';
         }
 
-        return '<div class="color small static"><div class="color-preview" style="background-color: '.$value->getColor().';"></div></div>
-            <div class="colorhex code">'.$value->getColor().'</div>';
+        return '<div class="color small static"><div class="color-preview" style="background-color: ' . $value->getColor() . ';"></div></div>
+            <div class="colorhex code">' . $value->getColor() . '</div>';
     }
 
     public function getInputPreviewHtml(): string
@@ -289,17 +269,13 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public function getPalette()
     {
         $palette = [];
-        if($this->paletteBaseColors)
-        {
+        if ($this->paletteBaseColors) {
             $palette = ColorHelper::baseColors($this->paletteBaseColors);
         }
 
-        if($this->paletteColors)
-        {
-            foreach($this->paletteColors as $paletteColor)
-            {
-                if(is_string($paletteColor['handle']))
-                {
+        if ($this->paletteColors) {
+            foreach ($this->paletteColors as $paletteColor) {
+                if (is_string($paletteColor['handle'])) {
                     $palette[$paletteColor['handle']] = $paletteColor;
                 }
             }
@@ -310,8 +286,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
     protected function defaultColor()
     {
         $this->_populateWithPreset();
-        if($this->defaultColorHandle)
-        {
+        if ($this->defaultColorHandle) {
             return $this->_createColor([
                 'handle' => $this->defaultColorHandle,
                 'opacity' => $this->defaultOpacity,
@@ -333,16 +308,13 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     private function _populateWithPreset()
     {
-        if($this->presetId)
-        {
+        if ($this->presetId) {
             $preset = Colorit::$plugin->getPresets()->getPresetById($this->presetId);
-            if($preset)
-            {
+            if ($preset) {
                 Craft::configure($this, $preset->getSettings());
             }
         }
     }
-
 }
 
 class_alias(ColoritField::class, \fruitstudios\colorit\fields\ColoritField::class);

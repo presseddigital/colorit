@@ -1,7 +1,6 @@
 <?php
-namespace presseddigital\colorit\migrations;
 
-use presseddigital\colorit\Colorit;
+namespace presseddigital\colorit\migrations;
 
 use Craft;
 use craft\config\DbConfig;
@@ -20,8 +19,7 @@ class Install extends Migration
     public function safeUp()
     {
         $this->driver = Craft::$app->getConfig()->getDb()->driver;
-        if ($this->createTables())
-        {
+        if ($this->createTables()) {
             $this->createIndexes();
             $this->addForeignKeys();
             Craft::$app->db->schema->refresh();
@@ -44,8 +42,7 @@ class Install extends Migration
         $tablesCreated = false;
 
         $tableSchema = Craft::$app->db->schema->getTableSchema('{{%colorit_presets}}');
-        if($tableSchema === null)
-        {
+        if ($tableSchema === null) {
             $tablesCreated = true;
             $this->createTable(
                 '{{%colorit_presets}}',
@@ -84,7 +81,6 @@ class Install extends Migration
 
     protected function addForeignKeys()
     {
-
     }
 
     protected function removeTables()

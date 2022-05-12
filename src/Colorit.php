@@ -10,23 +10,23 @@
 
 namespace presseddigital\colorit;
 
-use presseddigital\colorit\models\Settings;
+use Craft;
+use craft\base\Plugin;
+use craft\commerce\Plugin as CommercePlugin;
+use craft\events\PluginEvent;
+use craft\events\RegisterComponentTypesEvent;
+use craft\helpers\UrlHelper;
+
+use craft\services\Fields;
+use craft\services\Plugins;
+use craft\web\twig\variables\CraftVariable;
 use presseddigital\colorit\fields\ColoritField;
+use presseddigital\colorit\models\Settings;
 use presseddigital\colorit\plugin\Routes as ColoritRoutes;
 use presseddigital\colorit\plugin\Services as ColoritServices;
 use presseddigital\colorit\web\twig\CraftVariableBehavior;
+
 use presseddigital\colorit\web\twig\Extension;
-
-use Craft;
-use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\services\Fields;
-use craft\helpers\UrlHelper;
-use craft\events\RegisterComponentTypesEvent;
-use craft\events\PluginEvent;
-use craft\web\twig\variables\CraftVariable;
-
-use craft\commerce\Plugin as CommercePlugin;
 
 use yii\base\Event;
 
@@ -100,8 +100,7 @@ class Colorit extends Plugin
     public function afterInstallPlugin(PluginEvent $event)
     {
         $isCpRequest = Craft::$app->getRequest()->isCpRequest;
-        if ($event->plugin === $this && $isCpRequest)
-        {
+        if ($event->plugin === $this && $isCpRequest) {
             Craft::$app->controller->redirect(UrlHelper::cpUrl('colorit/about'))->send();
         }
     }
@@ -113,7 +112,7 @@ class Colorit extends Plugin
 
     public function getGitHubUrl(string $append = '')
     {
-        return 'https://github.com/presseddigital/craft-'.$this->handle.$append;
+        return 'https://github.com/presseddigital/craft-' . $this->handle . $append;
     }
 
     // Protected Methods
@@ -129,7 +128,7 @@ class Colorit extends Plugin
 
     private function _addTwigExtensions()
     {
-        Craft::$app->view->registerTwigExtension(new Extension);
+        Craft::$app->view->registerTwigExtension(new Extension());
     }
 
     private function _registerPermissions()

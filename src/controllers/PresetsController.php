@@ -1,15 +1,15 @@
 <?php
+
 namespace presseddigital\colorit\controllers;
+
+use Craft;
+use craft\web\Controller;
 
 use presseddigital\colorit\Colorit;
 use presseddigital\colorit\models\Preset;
 
-use Craft;
-use craft\web\Controller;
-use craft\helpers\StringHelper;
-
-use yii\web\Response;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class PresetsController extends Controller
 {
@@ -25,18 +25,13 @@ class PresetsController extends Controller
 
     public function actionEdit(int $presetId = null, Preset $preset = null): Response
     {
-        if (!$preset)
-        {
-            if ($presetId)
-            {
+        if (!$preset) {
+            if ($presetId) {
                 $preset = Colorit::$plugin->getPresets()->getPresetById($presetId);
-                if (!$preset)
-                {
+                if (!$preset) {
                     throw new NotFoundHttpException('Preset not found');
                 }
-            }
-            else
-            {
+            } else {
                 $preset = new Preset();
             }
         }
@@ -52,8 +47,7 @@ class PresetsController extends Controller
             ];
         }
 
-        if($isNewPreset && !$preset->type)
-        {
+        if ($isNewPreset && !$preset->type) {
             $preset->type = $allPresetsTypes[0];
         }
 
@@ -77,7 +71,7 @@ class PresetsController extends Controller
             'type' => $type,
             'id' => $request->getBodyParam('presetId'),
             'name' => $request->getBodyParam('name'),
-            'settings' => $request->getBodyParam('types.'.$type),
+            'settings' => $request->getBodyParam('types.' . $type),
         ]);
 
         if (!Colorit::$plugin->getPresets()->savePreset($preset)) {
@@ -85,7 +79,7 @@ class PresetsController extends Controller
 
             // Send the plugin back to the template
             Craft::$app->getUrlManager()->setRouteParams([
-                'preset' => $preset
+                'preset' => $preset,
             ]);
 
             return null;
@@ -103,8 +97,7 @@ class PresetsController extends Controller
 
         $id = Craft::$app->getRequest()->getRequiredBodyParam('id');
 
-        if (Colorit::$plugin->getPresets()->deletePresetById($id))
-        {
+        if (Colorit::$plugin->getPresets()->deletePresetById($id)) {
             return $this->asJson(['success' => true]);
         }
         return $this->asErrorJson(Craft::t('colorit', 'Could not delete preset'));
@@ -118,10 +111,9 @@ class PresetsController extends Controller
         try {
             $preset = Craft::createObject($type);
             return Craft::configure($preset, $attributes);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $error = $e->getMessage();
             return false;
         }
     }
-
 }

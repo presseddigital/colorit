@@ -1,10 +1,10 @@
 <?php
+
 namespace presseddigital\colorit\services;
 
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
-use presseddigital\colorit\fields\ColoritField;
 
 class Fields extends Component
 {
@@ -18,13 +18,11 @@ class Fields extends Component
 
     public function getFieldById($id)
     {
-        if(isset($this->_fieldsById[$id]))
-        {
+        if (isset($this->_fieldsById[$id])) {
             return $this->_fieldsById[$id];
         }
 
-        if(!$field = Craft::$app->getFields()->getFieldById())
-        {
+        if (!$field = Craft::$app->getFields()->getFieldById()) {
             return false;
         }
 
@@ -46,15 +44,13 @@ class Fields extends Component
 
     public function getFieldsByType(string $type)
     {
-        if(isset($this->_fieldsByType[$type]))
-        {
+        if (isset($this->_fieldsByType[$type])) {
             return $this->_fieldsByType[$type];
         }
 
         // TODO: Remove this temporary fix when new preset logic in place.
         $types = [$type];
-        if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField']))
-        {
+        if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'])) {
             $type = 'presseddigital\\colorit\\fields\\ColoritField';
             $types = ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'];
         }
@@ -63,13 +59,11 @@ class Fields extends Component
             ->where(['type' => $types])
             ->all();
 
-        if(!$fields)
-        {
+        if (!$fields) {
             return false;
         }
 
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field) {
             $field = Craft::$app->getFields()->createField($field);
             $this->_fieldsById[$field->id] = $field;
             $this->_fieldsByType[get_class($field)][$field->id] = $field;
@@ -88,8 +82,7 @@ class Fields extends Component
     public function getMatrixFieldIdByChildFieldId($id)
     {
         $this->_buildFieldMaps();
-        if(!$this->_mapFieldsToMatrix[$id] ?? false)
-        {
+        if (!$this->_mapFieldsToMatrix[$id] ?? false) {
             return false;
         }
         return $this->getFieldById($this->_mapFieldsToMatrix[$id]);
@@ -113,18 +106,15 @@ class Fields extends Component
 
     private function _buildFieldMaps()
     {
-        if (is_null($this->_mapFields))
-        {
+        if (is_null($this->_mapFields)) {
             // Get all fields of any context and store a map to them
             $allFields = $this->_createFieldQuery()->all();
-            if(!$allFields)
-            {
+            if (!$allFields) {
                 $this->_mapFields = [];
                 return;
             }
 
-            foreach ($allFields as $field)
-            {
+            foreach ($allFields as $field) {
                 $field = Craft::$app->getFields()->createField($field);
                 $this->_fieldsById[$field->id] = $field;
                 $this->_fieldsByType[get_class($field)][$field->id] = $field;
@@ -133,28 +123,22 @@ class Fields extends Component
             // Get any matrix blocks and store a refenrece to them by block handle
             $matrixFieldInfoByContext = [];
             $matrixBlockTypes = $this->_createMatrixBlockTypeQuery()->all();
-            if($matrixBlockTypes)
-            {
-                foreach ($matrixBlockTypes as $matrixBlockType)
-                {
-                    $matrixFieldInfoByContext['matrixBlockType:'.$matrixBlockType['id']] = [
+            if ($matrixBlockTypes) {
+                foreach ($matrixBlockTypes as $matrixBlockType) {
+                    $matrixFieldInfoByContext['matrixBlockType:' . $matrixBlockType['id']] = [
                         'field' => $this->getFieldById($matrixBlockType['fieldId']),
-                        'handle' => $matrixBlockType['fieldHandle'].':'.$matrixBlockType['handle'].':'
+                        'handle' => $matrixBlockType['fieldHandle'] . ':' . $matrixBlockType['handle'] . ':',
                     ];
                 }
             }
 
             // Build and store the field maps
-            foreach ($this->_fieldsById as $field)
-            {
+            foreach ($this->_fieldsById as $field) {
                 $ownedByMatrix = $matrixFieldInfoByContext[$field['context']] ?? false;
-                if($ownedByMatrix)
-                {
-                    $this->_mapFields[$ownedByMatrix['handle'].$field['handle']] = $field;
+                if ($ownedByMatrix) {
+                    $this->_mapFields[$ownedByMatrix['handle'] . $field['handle']] = $field;
                     $this->_mapFieldsToMatrix[$field['id']] = $ownedByMatrix['field'];
-                }
-                else
-                {
+                } else {
                     $this->_mapFields[$field['handle']] = $field;
                 }
             }
@@ -176,7 +160,7 @@ class Fields extends Component
                 'fields.translationMethod',
                 'fields.translationKeyFormat',
                 'fields.type',
-                'fields.settings'
+                'fields.settings',
             ])
             ->from(['{{%fields}} fields'])
             ->orderBy(['fields.name' => SORT_ASC, 'fields.handle' => SORT_ASC]);
@@ -189,7 +173,7 @@ class Fields extends Component
                 'matrixblocktypes.id',
                 'matrixblocktypes.handle',
                 'matrixblocktypes.fieldId',
-                'fields.handle as fieldHandle'
+                'fields.handle as fieldHandle',
             ])
             ->from(['{{%matrixblocktypes}} matrixblocktypes'])
             ->orderBy('matrixblocktypes.id')

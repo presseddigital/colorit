@@ -1,9 +1,8 @@
 <?php
+
 namespace presseddigital\colorit\web\twig;
 
 use presseddigital\colorit\Colorit;
-
-use Craft;
 
 class Extension extends \Twig_Extension
 {

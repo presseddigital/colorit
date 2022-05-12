@@ -1,13 +1,10 @@
 <?php
+
 namespace presseddigital\colorit\controllers;
 
-use presseddigital\colorit\Colorit;
-
-use Craft;
 use craft\web\Controller;
-use craft\helpers\StringHelper;
 
-use yii\web\Response;
+use presseddigital\colorit\Colorit;
 
 class SettingsController extends Controller
 {

@@ -1,4 +1,5 @@
 <?php
+
 namespace presseddigital\colorit\plugin;
 
 use presseddigital\colorit\services\Colors;

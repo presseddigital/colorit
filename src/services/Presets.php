@@ -1,15 +1,15 @@
 <?php
+
 namespace presseddigital\colorit\services;
-
-use presseddigital\colorit\Colorit;
-use presseddigital\colorit\models\Preset;
-use presseddigital\colorit\records\Preset as PresetRecord;
-
-use presseddigital\colorit\fields\ColoritField;
 
 use Craft;
 use craft\base\Component;
+
 use craft\db\Query;
+
+use presseddigital\colorit\fields\ColoritField;
+use presseddigital\colorit\models\Preset;
+use presseddigital\colorit\records\Preset as PresetRecord;
 
 class Presets extends Component
 {
@@ -32,16 +32,13 @@ class Presets extends Component
 
     public function getAllPresets(): array
     {
-        if($this->_fetchedAllPresets)
-        {
+        if ($this->_fetchedAllPresets) {
             return $this->_presetsById;
         }
 
         $results = $this->_createPresetsQuery()->all();
-        if($results)
-        {
-            foreach($results as $result)
-            {
+        if ($results) {
+            foreach ($results as $result) {
                 $preset = $this->createPreset($result);
                 $this->_presetsById[$result['id']] = $preset;
                 $this->_presetsByType[$result['type']][$result['id']] = $preset;
@@ -53,8 +50,7 @@ class Presets extends Component
 
     public function getAllPresetsByType(string $type): array
     {
-        if($this->_fetchedAllPresets || isset($this->_presetsByType[$type]))
-        {
+        if ($this->_fetchedAllPresets || isset($this->_presetsByType[$type])) {
             return $this->_presetsByType[$type];
         }
 
@@ -62,10 +58,8 @@ class Presets extends Component
             ->where(['type' => $type])
             ->all();
 
-        if($results)
-        {
-            foreach($results as $result)
-            {
+        if ($results) {
+            foreach ($results as $result) {
                 $preset = $this->createPreset($result);
                 $this->_presetsByType[$result['type']][$result['id']] = $preset;
             }
@@ -76,8 +70,7 @@ class Presets extends Component
 
     public function getPresetById($id)
     {
-        if($this->_fetchedAllPresets || isset($this->_presetsById[$id]))
-        {
+        if ($this->_fetchedAllPresets || isset($this->_presetsById[$id])) {
             return $this->_presetsById[$id] ?? null;
         }
 
@@ -85,8 +78,7 @@ class Presets extends Component
             ->where(['id' => $id])
             ->one();
 
-        if (!$result)
-        {
+        if (!$result) {
             return null;
         }
         return $this->_presetsById[$id] = $this->createPreset($result);
@@ -94,21 +86,16 @@ class Presets extends Component
 
     public function savePreset(Preset $model, bool $runValidation = true): bool
     {
-        if ($model->id)
-        {
+        if ($model->id) {
             $record = PresetRecord::findOne($model->id);
-            if (!$record)
-            {
+            if (!$record) {
                 throw new \Exception(Craft::t('colorit', 'No preset exists with the ID “{id}”', ['id' => $model->id]));
             }
-        }
-        else
-        {
+        } else {
             $record = new PresetRecord();
         }
 
-        if ($runValidation && !$model->validate())
-        {
+        if ($runValidation && !$model->validate()) {
             Craft::info('Field template not saved due to validation error.', __METHOD__);
             return false;
         }
@@ -129,8 +116,7 @@ class Presets extends Component
     public function deletePresetById($id): bool
     {
         $record = PresetRecord::findOne($id);
-        if ($record)
-        {
+        if ($record) {
             return (bool)$record->delete();
         }
         return false;
@@ -139,8 +125,7 @@ class Presets extends Component
     public function getPresetField(string $type)
     {
         $field = Craft::$app->getFields()->createField($type);
-        if(!$field)
-        {
+        if (!$field) {
             return false;
         }
         return $field;
@@ -148,10 +133,9 @@ class Presets extends Component
 
     public function createPreset($config): Preset
     {
-        if(is_string($config))
-        {
+        if (is_string($config)) {
             $config = [
-                'type' => $config
+                'type' => $config,
             ];
         }
         return new Preset($config);

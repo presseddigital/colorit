@@ -1,11 +1,12 @@
 <?php
+
 namespace presseddigital\colorit\models;
 
-use presseddigital\colorit\helpers\ColorHelper;
-
 use Craft;
+
 use craft\base\Model;
 use craft\validators\ColorValidator as ColorValidator;
+use presseddigital\colorit\helpers\ColorHelper;
 
 class Color extends Model
 {
@@ -55,8 +56,7 @@ class Color extends Model
 
     public function getPalette()
     {
-        if(is_null($this->_palette))
-        {
+        if (is_null($this->_palette)) {
             $this->_palette = $this->field->getPalette() ?? [];
         }
         return $this->_palette;
@@ -75,14 +75,12 @@ class Color extends Model
     public function getColor(string $format = null)
     {
         $color = '';
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
         $format = $format ?? $this->field->colorFormat;
-        switch ($format)
-        {
+        switch ($format) {
             case 'hex':
                 $color = $this->getHex();
                 break;
@@ -109,18 +107,14 @@ class Color extends Model
 
     public function getHex()
     {
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
-        if(is_null($this->_hex))
-        {
+        if (is_null($this->_hex)) {
             $hex = '';
-            if ($this->handle)
-            {
-                switch ($this->handle)
-                {
+            if ($this->handle) {
+                switch ($this->handle) {
                     case '_custom_':
                         $hex = $this->custom;
                         break;
@@ -131,8 +125,7 @@ class Color extends Model
                 }
             }
 
-            if(empty($hex) || !ColorHelper::isValidHex($hex))
-            {
+            if (empty($hex) || !ColorHelper::isValidHex($hex)) {
                 return '';
             }
 
@@ -143,32 +136,27 @@ class Color extends Model
 
     public function getHashHex()
     {
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
         $hex = $this->getHex();
-        if($hex)
-        {
-            return '#'.$hex;
+        if ($hex) {
+            return '#' . $hex;
         }
         return false;
     }
 
     public function getRgb()
     {
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
         $hex = $this->getHex();
-        if($hex)
-        {
+        if ($hex) {
             $rgb = ColorHelper::hexToRgb($hex);
-            if($rgb)
-            {
+            if ($rgb) {
                 return $rgb;
             }
         }
@@ -177,17 +165,14 @@ class Color extends Model
 
     public function getRgba()
     {
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
         $hex = $this->getHex();
-        if($hex)
-        {
+        if ($hex) {
             $rgba = ColorHelper::hexToRgba($hex, $this->opacity);
-            if($rgba)
-            {
+            if ($rgba) {
                 return $rgba;
             }
         }
@@ -197,11 +182,9 @@ class Color extends Model
     public function getR()
     {
         $hex = $this->getHex();
-        if($hex)
-        {
+        if ($hex) {
             $rgb = ColorHelper::hexToRgb($hex, true);
-            if($rgb)
-            {
+            if ($rgb) {
                 return $rgb['r'];
             }
         }
@@ -216,11 +199,9 @@ class Color extends Model
     public function getG()
     {
         $hex = $this->getHex();
-        if($hex)
-        {
+        if ($hex) {
             $rgb = ColorHelper::hexToRgb($hex, true);
-            if($rgb)
-            {
+            if ($rgb) {
                 return $rgb['g'];
             }
         }
@@ -235,11 +216,9 @@ class Color extends Model
     public function getB()
     {
         $hex = $this->getHex();
-        if($hex)
-        {
+        if ($hex) {
             $rgb = ColorHelper::hexToRgb($hex, true);
-            if($rgb)
-            {
+            if ($rgb) {
                 return $rgb['b'];
             }
         }
@@ -253,8 +232,7 @@ class Color extends Model
 
     public function getA()
     {
-        if ($this->isTransparent())
-        {
+        if ($this->isTransparent()) {
             return 0;
         }
 
@@ -292,5 +270,4 @@ class Color extends Model
     {
         return array_key_exists($handle, $this->getPalette());
     }
-
 }

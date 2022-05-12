@@ -1,8 +1,8 @@
 <?php
+
 namespace presseddigital\colorit\records;
 
 use craft\db\ActiveRecord;
-use yii\db\ActiveQueryInterface;
 
 class Preset extends ActiveRecord
 {
@@ -29,5 +29,4 @@ class Preset extends ActiveRecord
     {
         return '{{%colorit_presets}}';
     }
-
 }

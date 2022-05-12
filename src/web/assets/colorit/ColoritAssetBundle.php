@@ -1,10 +1,8 @@
 <?php
+
 namespace presseddigital\colorit\web\assets\colorit;
 
-use Craft;
-
 use yii\web\AssetBundle;
-use craft\web\assets\cp\CpAsset;
 
 class ColoritAssetBundle extends AssetBundle
 {
