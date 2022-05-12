@@ -34,7 +34,7 @@
 
 {% set showInlineSettings = field.presetMode or (not selectedPresetExists or not field.presetId or field.presetId == '') %}
 
-<div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
+<div id="{{ ''|namespaceInputId }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
     {{ forms.editableTableField({
         label: 'Colors',
@@ -43,6 +43,9 @@
         textual: false,
         name: 'paletteColors',
         addRowLabel: 'Add color',
+        allowAdd: true,
+        allowReorder: true,
+        allowDelete: true,
         cols: {
             'label' : {
                 'heading' : 'Label',
@@ -58,7 +61,7 @@
             }
         },
         rows: field.paletteColors,
-        errors: (field.getErrors('paletteColors') ?? [])|unique
+        errors: (field.getErrors('paletteColors') ?? [])|unique,
     }) }}
 
 
