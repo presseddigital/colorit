@@ -16,7 +16,6 @@ use craft\commerce\Plugin as CommercePlugin;
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\UrlHelper;
-
 use craft\services\Fields;
 use craft\services\Plugins;
 use craft\web\twig\variables\CraftVariable;
@@ -25,9 +24,7 @@ use presseddigital\colorit\models\Settings;
 use presseddigital\colorit\plugin\Routes as ColoritRoutes;
 use presseddigital\colorit\plugin\Services as ColoritServices;
 use presseddigital\colorit\web\twig\CraftVariableBehavior;
-
 use presseddigital\colorit\web\twig\Extension;
-
 use yii\base\Event;
 
 /**
@@ -92,11 +89,6 @@ class Colorit extends Plugin
         Craft::info(Craft::t('colorit', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
     }
 
-    public function beforeInstall(): void
-    {
-        return true;
-    }
-
     public function afterInstallPlugin(PluginEvent $event): void
     {
         $isCpRequest = Craft::$app->getRequest()->isCpRequest;
@@ -118,7 +110,7 @@ class Colorit extends Plugin
     // Protected Methods
     // =========================================================================
 
-    protected function createSettingsModel(): \presseddigital\colorit\models\Settings
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }

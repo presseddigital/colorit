@@ -24,7 +24,7 @@ class Color extends Model implements \Stringable
     /**
      * @var mixed|null
      */
-    private ?mixed $_hex = null;
+    private mixed $_hex = null;
 
     // Public Properties
     // =========================================================================

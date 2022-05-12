@@ -14,11 +14,11 @@ class Preset extends Model
     /**
      * @var mixed|null
      */
-    private ?mixed $_fieldType = null;
+    private mixed $_fieldType = null;
     /**
      * @var mixed|null
      */
-    private ?mixed $_fieldTypeTemplate = null;
+    private mixed $_fieldTypeTemplate = null;
     private ?array $_fieldsUsing = null;
 
     // Public Properties
