@@ -8,8 +8,10 @@ class ColorHelper
 {
     // Public Methods
     // =========================================================================
-
-    public static function baseColors(array $include = null)
+    /**
+     * @return array<int|string, mixed[]>
+     */
+    public static function baseColors(array $include = null): array
     {
         $baseColors = [
             'transparent' => [
@@ -42,7 +44,10 @@ class ColorHelper
         return $baseColors;
     }
 
-    public static function baseColorsAsOptions()
+    /**
+     * @return array<int, array{label: mixed, value: mixed}>
+     */
+    public static function baseColorsAsOptions(): array
     {
         $options = [];
         $baseColors = static::baseColors();
@@ -58,23 +63,21 @@ class ColorHelper
         return $options;
     }
 
-    public static function hexIsWhite(string $color)
+    public static function hexIsWhite(string $color): bool
     {
         $isWhite = false;
         $color = strtoupper($color);
-        switch ($color) {
-            case 'WHITE':
-            case '#FFF':
-            case '#FFFFFF':
-            case 'FFF':
-            case 'FFFFFF':
-                $isWhite = true;
-                break;
-        }
-        return $isWhite;
+        $isWhite = match ($color) {
+            'WHITE', '#FFF', '#FFFFFF', 'FFF', 'FFFFFF' => true,
+            default => $isWhite,
+        };
+        return match ($color) {
+            'WHITE', '#FFF', '#FFFFFF', 'FFF', 'FFFFFF' => true,
+            default => $isWhite,
+        };
     }
 
-    public static function hexIsTransparent(string $color)
+    public static function hexIsTransparent(string $color): bool
     {
         $isTransparent = false;
         $color = strtoupper($color);
@@ -86,28 +89,26 @@ class ColorHelper
         return $isTransparent;
     }
 
-    public static function hexIsBlack(string $color)
+    public static function hexIsBlack(string $color): bool
     {
         $isBlack = false;
         $color = strtoupper($color);
-        switch ($color) {
-            case 'BLACK':
-            case '#000':
-            case '#000000':
-            case '000':
-            case '000000':
-                $isBlack = true;
-                break;
-        }
-        return $isBlack;
+        $isBlack = match ($color) {
+            'BLACK', '#000', '#000000', '000', '000000' => true,
+            default => $isBlack,
+        };
+        return match ($color) {
+            'BLACK', '#000', '#000000', '000', '000000' => true,
+            default => $isBlack,
+        };
     }
 
-    public static function isValidHex($color)
+    public static function isValidHex($color): bool
     {
         return preg_match('/^#?[0-9a-f]{3}(?:[0-9a-f]{3})?$/i', $color) ? true : false;
     }
 
-    public static function hexToRgba($color, $opacity = false, $asArray = false)
+    public static function hexToRgba($color, $opacity = false, $asArray = false): bool|array|string
     {
         if (empty($color)) {
             return false;
@@ -162,6 +163,6 @@ class ColorHelper
 
     public static function baseColoursAsOptions(array $include = null)
     {
-        return self::baseColorsAsOptions($include);
+        return self::baseColorsAsOptions();
     }
 }

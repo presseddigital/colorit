@@ -4,7 +4,7 @@ namespace presseddigital\colorit\web\twig;
 
 use presseddigital\colorit\Colorit;
 
-class Extension extends \Twig_Extension
+class Extension extends \Twig\Extension\AbstractExtension
 {
     protected $colors;
 
@@ -21,14 +21,17 @@ class Extension extends \Twig_Extension
         return 'Colorit Twig Extensions';
     }
 
+    /**
+     * @return \Twig\TwigFilter[]
+     */
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('hexIsWhite', [$this->colors, 'hexIsWhite']),
-            new \Twig_SimpleFilter('hexIsBlack', [$this->colors, 'hexIsBlack']),
-            new \Twig_SimpleFilter('hexIsTransparent', [$this->colors, 'hexIsTransparent']),
-            new \Twig_SimpleFilter('hexToRgb', [$this->colors, 'hexToRgb']),
-            new \Twig_SimpleFilter('hexToRgba', [$this->colors, 'hexToRgba']),
+            new \Twig\TwigFilter('hexIsWhite', [$this->colors, 'hexIsWhite']),
+            new \Twig\TwigFilter('hexIsBlack', [$this->colors, 'hexIsBlack']),
+            new \Twig\TwigFilter('hexIsTransparent', [$this->colors, 'hexIsTransparent']),
+            new \Twig\TwigFilter('hexToRgb', [$this->colors, 'hexToRgb']),
+            new \Twig\TwigFilter('hexToRgba', [$this->colors, 'hexToRgba']),
         ];
     }
 }

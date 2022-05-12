@@ -8,10 +8,10 @@ use craft\db\Query;
 
 class Fields extends Component
 {
-    private $_fieldsById;
+    private ?array $_fieldsById = null;
     private $_fieldsByType;
-    private $_mapFields;
-    private $_mapFieldsToMatrix;
+    private ?array $_mapFields = null;
+    private ?array $_mapFieldsToMatrix = null;
 
     // Public Methods
     // =========================================================================
@@ -50,9 +50,9 @@ class Fields extends Component
 
         // TODO: Remove this temporary fix when new preset logic in place.
         $types = [$type];
-        if (in_array($type, ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'])) {
-            $type = 'presseddigital\\colorit\\fields\\ColoritField';
-            $types = ['presseddigital\\colorit\\fields\\ColoritField', 'fruitstudios\\colorit\\fields\\ColoritField'];
+        if (in_array($type, [\presseddigital\colorit\fields\ColoritField::class, 'fruitstudios\\colorit\\fields\\ColoritField'])) {
+            $type = \presseddigital\colorit\fields\ColoritField::class;
+            $types = [\presseddigital\colorit\fields\ColoritField::class, 'fruitstudios\\colorit\\fields\\ColoritField'];
         }
 
         $fields = $this->_createFieldQuery()
@@ -66,7 +66,7 @@ class Fields extends Component
         foreach ($fields as $field) {
             $field = Craft::$app->getFields()->createField($field);
             $this->_fieldsById[$field->id] = $field;
-            $this->_fieldsByType[get_class($field)][$field->id] = $field;
+            $this->_fieldsByType[$field::class][$field->id] = $field;
         }
 
         return $this->_fieldsByType[$type];
@@ -104,7 +104,7 @@ class Fields extends Component
     // Private Methods
     // =========================================================================
 
-    private function _buildFieldMaps()
+    private function _buildFieldMaps(): void
     {
         if (is_null($this->_mapFields)) {
             // Get all fields of any context and store a map to them
@@ -117,7 +117,7 @@ class Fields extends Component
             foreach ($allFields as $field) {
                 $field = Craft::$app->getFields()->createField($field);
                 $this->_fieldsById[$field->id] = $field;
-                $this->_fieldsByType[get_class($field)][$field->id] = $field;
+                $this->_fieldsByType[$field::class][$field->id] = $field;
             }
 
             // Get any matrix blocks and store a refenrece to them by block handle

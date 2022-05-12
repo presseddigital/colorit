@@ -52,7 +52,7 @@ class Colorit extends Plugin
     // Public Properties
     // =========================================================================
 
-    public $schemaVersion = '1.0.3';
+    public string $schemaVersion = '1.0.3';
 
     // Traits
     // =========================================================================
@@ -66,7 +66,7 @@ class Colorit extends Plugin
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -92,12 +92,12 @@ class Colorit extends Plugin
         Craft::info(Craft::t('colorit', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
     }
 
-    public function beforeInstall(): bool
+    public function beforeInstall(): void
     {
         return true;
     }
 
-    public function afterInstallPlugin(PluginEvent $event)
+    public function afterInstallPlugin(PluginEvent $event): void
     {
         $isCpRequest = Craft::$app->getRequest()->isCpRequest;
         if ($event->plugin === $this && $isCpRequest) {
@@ -105,12 +105,12 @@ class Colorit extends Plugin
         }
     }
 
-    public function getSettingsResponse()
+    public function getSettingsResponse(): mixed
     {
         return Craft::$app->controller->redirect(UrlHelper::cpUrl('colorit/settings'));
     }
 
-    public function getGitHubUrl(string $append = '')
+    public function getGitHubUrl(string $append = ''): string
     {
         return 'https://github.com/presseddigital/craft-' . $this->handle . $append;
     }
@@ -118,7 +118,7 @@ class Colorit extends Plugin
     // Protected Methods
     // =========================================================================
 
-    protected function createSettingsModel()
+    protected function createSettingsModel(): \presseddigital\colorit\models\Settings
     {
         return new Settings();
     }
@@ -126,12 +126,12 @@ class Colorit extends Plugin
     // Private Methods
     // =========================================================================
 
-    private function _addTwigExtensions()
+    private function _addTwigExtensions(): void
     {
         Craft::$app->view->registerTwigExtension(new Extension());
     }
 
-    private function _registerPermissions()
+    private function _registerPermissions(): void
     {
         // Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
         //     $productTypes = Plugin::getInstance()->getProductTypes()->getAllProductTypes();
@@ -151,7 +151,7 @@ class Colorit extends Plugin
         // });
     }
 
-    private function _registerEventListeners()
+    private function _registerEventListeners(): void
     {
         Event::on(Plugins::class, Plugins::EVENT_AFTER_INSTALL_PLUGIN, [$this, 'afterInstallPlugin']);
 
@@ -164,30 +164,30 @@ class Colorit extends Plugin
         // }
     }
 
-    private function _registerFieldTypes()
+    private function _registerFieldTypes(): void
     {
-        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
+        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event): void {
             $event->types[] = ColoritField::class;
         });
     }
 
-    private function _registerWidgets()
+    private function _registerWidgets(): void
     {
         // Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
         //     $event->types[] = Example::class;
         // });
     }
 
-    private function _registerVariables()
+    private function _registerVariables(): void
     {
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event): void {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->attachBehavior('colorit', CraftVariableBehavior::class);
         });
     }
 
-    private function _registerElementTypes()
+    private function _registerElementTypes(): void
     {
         // Event::on(Elements::class, Elements::EVENT_REGISTER_ELEMENT_TYPES, function(RegisterComponentTypesEvent $e) {
         //     $e->types[] = Example::class;

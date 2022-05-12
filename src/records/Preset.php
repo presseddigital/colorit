@@ -12,7 +12,7 @@ class Preset extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'type'], 'required'],
@@ -23,7 +23,6 @@ class Preset extends ActiveRecord
 
     /**
      * @inheritdoc
-     * @return string
      */
     public static function tableName(): string
     {

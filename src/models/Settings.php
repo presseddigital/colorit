@@ -9,12 +9,14 @@ class Settings extends Model
     // Public Properties
     // =========================================================================
 
-    public $pluginNameOverride = 'Colorit';
-    public $hasCpSectionOverride = false;
+    public string $pluginNameOverride = 'Colorit';
+    public bool $hasCpSectionOverride = false;
 
     // Public Methods
     // =========================================================================
-
+    /**
+     * @return array<int, mixed[]>
+     */
     public function rules(): array
     {
         return [

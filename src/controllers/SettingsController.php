@@ -11,7 +11,7 @@ class SettingsController extends Controller
     // Public Methods
     // =========================================================================
 
-    public function actionIndex()
+    public function actionIndex(): \yii\web\Response
     {
         return $this->renderTemplate('colorit/settings', [
             'settings' => Colorit::$settings,

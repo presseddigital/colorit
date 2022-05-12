@@ -13,7 +13,7 @@ trait Routes
 
     private function _registerCpRoutes()
     {
-        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
+        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event): void {
             $event->rules['colorit'] = ['template' => 'colorit/index'];
             $event->rules['colorit/settings'] = 'colorit/settings';
             $event->rules['colorit/presets'] = 'colorit/presets/index';

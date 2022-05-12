@@ -9,7 +9,7 @@ class ColoritAssetBundle extends AssetBundle
     // Public Methods
     // =========================================================================
 
-    public function init()
+    public function init(): void
     {
         $this->sourcePath = "@presseddigital/colorit/web/assets/colorit/build";
 

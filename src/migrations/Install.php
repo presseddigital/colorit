@@ -16,7 +16,7 @@ class Install extends Migration
     // Public Methods
     // =========================================================================
 
-    public function safeUp()
+    public function safeUp(): bool
     {
         $this->driver = Craft::$app->getConfig()->getDb()->driver;
         if ($this->createTables()) {
@@ -27,7 +27,7 @@ class Install extends Migration
         return true;
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         $this->driver = Craft::$app->getConfig()->getDb()->driver;
         $this->removeTables();
@@ -37,7 +37,7 @@ class Install extends Migration
     // Protected Methods
     // =========================================================================
 
-    protected function createTables()
+    protected function createTables(): bool
     {
         $tablesCreated = false;
 
@@ -61,10 +61,10 @@ class Install extends Migration
         return $tablesCreated;
     }
 
-    protected function createIndexes()
+    protected function createIndexes(): void
     {
         $this->createIndex(
-            $this->db->getIndexName('{{%colorit_presets}}', 'name', true),
+            $this->db->getIndexName(),
             '{{%colorit_presets}}',
             ['name'],
             false
@@ -73,17 +73,16 @@ class Install extends Migration
         // Additional commands depending on the db driver
         switch ($this->driver) {
             case DbConfig::DRIVER_MYSQL:
-                break;
             case DbConfig::DRIVER_PGSQL:
                 break;
         }
     }
 
-    protected function addForeignKeys()
+    protected function addForeignKeys(): void
     {
     }
 
-    protected function removeTables()
+    protected function removeTables(): void
     {
         $this->dropTableIfExists('{{%colorit_presets}}');
     }

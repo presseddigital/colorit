@@ -16,13 +16,15 @@ class Presets extends Component
     // Properties
     // =========================================================================
 
-    private $_presetsById = [];
-    private $_presetsByType = [];
-    private $_fetchedAllPresets = false;
+    private array $_presetsById = [];
+    private array $_presetsByType = [];
+    private bool $_fetchedAllPresets = false;
 
     // Public Methods
     // =========================================================================
-
+    /**
+     * @return array<class-string<\presseddigital\colorit\fields\ColoritField>>
+     */
     public function getAllPresetTypes(): array
     {
         return [
@@ -30,6 +32,9 @@ class Presets extends Component
         ];
     }
 
+    /**
+     * @return \presseddigital\colorit\models\Preset[]
+     */
     public function getAllPresets(): array
     {
         if ($this->_fetchedAllPresets) {
@@ -48,6 +53,9 @@ class Presets extends Component
         return $this->_presetsById;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getAllPresetsByType(string $type): array
     {
         if ($this->_fetchedAllPresets || isset($this->_presetsByType[$type])) {

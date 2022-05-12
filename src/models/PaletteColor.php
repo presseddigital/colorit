@@ -13,11 +13,13 @@ class PaletteColor extends Model
     public $label;
     public $handle;
     public $color;
-    public $default = false;
+    public bool $default = false;
 
     // Public Methods
     // =========================================================================
-
+    /**
+     * @return array<int, mixed[]>
+     */
     public function rules(): array
     {
         return [

@@ -8,30 +8,35 @@ use craft\base\Model;
 use craft\validators\ColorValidator as ColorValidator;
 use presseddigital\colorit\helpers\ColorHelper;
 
-class Color extends Model
+class Color extends Model implements \Stringable
 {
     // Constants
     // =========================================================================
 
-    const TRANSPARENT_STRING = 'transparent';
+    public const TRANSPARENT_STRING = 'transparent';
 
     // Private Properties
     // =========================================================================
-
+    /**
+     * @var mixed|mixed[]|null
+     */
     private $_palette;
-    private $_hex;
+    /**
+     * @var mixed|null
+     */
+    private ?mixed $_hex = null;
 
     // Public Properties
     // =========================================================================
 
-    public function init()
+    public function init(): void
     {
         parent::init();
     }
 
     public $handle;
     public $custom;
-    public $opacity = 100;
+    public int $opacity = 100;
     public $field;
 
 
@@ -43,7 +48,10 @@ class Color extends Model
         return $this->getColor();
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = ['handle', 'string'];
@@ -74,33 +82,22 @@ class Color extends Model
 
     public function getColor(string $format = null)
     {
-        $color = '';
         if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
         }
 
-        $format = $format ?? $this->field->colorFormat;
-        switch ($format) {
-            case 'hex':
-                $color = $this->getHex();
-                break;
-            case 'hashhex':
-                $color = $this->getHashHex();
-                break;
-            case 'rgb':
-                $color = $this->getRgb();
-                break;
-            case 'rgba':
-                $color = $this->getRgba();
-                break;
-            default:
-                $color = $this->opacity < 100 ? $this->getRgba() : ($this->isCustomColor() ? $this->getHex() : $this->getHashHex());
-                break;
-        }
-        return $color ? $color : '';
+        $format ??= $this->field->colorFormat;
+        $color = match ($format) {
+            'hex' => $this->getHex(),
+            'hashhex' => $this->getHashHex(),
+            'rgb' => $this->getRgb(),
+            'rgba' => $this->getRgba(),
+            default => $this->opacity < 100 ? $this->getRgba() : ($this->isCustomColor() ? $this->getHex() : $this->getHashHex()),
+        };
+        return $color ?: '';
     }
 
-    public function hasColor()
+    public function hasColor(): bool
     {
         return !empty($this->getColor());
     }
@@ -114,15 +111,10 @@ class Color extends Model
         if (is_null($this->_hex)) {
             $hex = '';
             if ($this->handle) {
-                switch ($this->handle) {
-                    case '_custom_':
-                        $hex = $this->custom;
-                        break;
-
-                    default:
-                        $hex = $this->_inPalette($this->handle) ? $this->_palette[$this->handle]['color'] : '';
-                        break;
-                }
+                $hex = match ($this->handle) {
+                    '_custom_' => $this->custom,
+                    default => $this->_inPalette($this->handle) ? $this->_palette[$this->handle]['color'] : '',
+                };
             }
 
             if (empty($hex) || !ColorHelper::isValidHex($hex)) {
@@ -134,7 +126,7 @@ class Color extends Model
         return $this->_hex;
     }
 
-    public function getHashHex()
+    public function getHashHex(): string|bool
     {
         if ($this->isTransparent()) {
             return self::TRANSPARENT_STRING;
@@ -230,7 +222,7 @@ class Color extends Model
         return $this->getB();
     }
 
-    public function getA()
+    public function getA(): int|float
     {
         if ($this->isTransparent()) {
             return 0;
@@ -239,7 +231,7 @@ class Color extends Model
         return $this->opacity / 100;
     }
 
-    public function getAlpha()
+    public function getAlpha(): int|float
     {
         return $this->getA();
     }
@@ -252,9 +244,9 @@ class Color extends Model
         return $this->getColor($format);
     }
 
-    public function hasColour(string $format = null)
+    public function hasColour(string $format = null): bool
     {
-        return $this->hasColor($format);
+        return $this->hasColor();
     }
 
     public function isCustomColour(): bool
@@ -266,7 +258,7 @@ class Color extends Model
     // =========================================================================
 
 
-    private function _inPalette(string $handle)
+    private function _inPalette(string $handle): bool
     {
         return array_key_exists($handle, $this->getPalette());
     }

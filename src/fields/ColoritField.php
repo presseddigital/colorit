@@ -29,18 +29,18 @@ class ColoritField extends Field implements PreviewableFieldInterface
     // Public Properties
     // =========================================================================
 
-    public $presetMode = false;
+    public bool $presetMode = false;
 
     public $presetId;
     public $paletteColors;
     public $paletteBaseColors;
-    public $allowCustomColor = false;
-    public $allowOpacity = false;
-    public $fieldDescriptions = false;
-    public $colorFormat = 'auto';
+    public bool $allowCustomColor = false;
+    public bool $allowOpacity = false;
+    public bool $fieldDescriptions = false;
+    public string $colorFormat = 'auto';
 
     public $defaultColorHandle;
-    public $defaultOpacity = 100;
+    public int $defaultOpacity = 100;
 
     // Static Methods
     // =========================================================================
@@ -53,17 +53,20 @@ class ColoritField extends Field implements PreviewableFieldInterface
     // Public Methods
     // =========================================================================
 
-    public function init()
+    public function init(): void
     {
         parent::init();
     }
 
-    public function setPresetMode(bool $on)
+    public function setPresetMode(bool $on): void
     {
         $this->presetMode = $on;
     }
 
-    public function rules()
+    /**
+     * @return array<int, mixed[]>
+     */
+    public function rules(): array
     {
         $rules = [];
         $rules[] = [['paletteColors'], 'validatePaletteColors'];
@@ -82,14 +85,14 @@ class ColoritField extends Field implements PreviewableFieldInterface
         return array_merge(parent::rules(), $rules);
     }
 
-    public function validateDefaultColorHandle()
+    public function validateDefaultColorHandle(): void
     {
         if (!in_array($this->defaultColorHandle, array_keys($this->getPalette()))) {
             $this->addError('defaultColorHandle', Craft::t('colorit', 'Color handle not in use'));
         }
     }
 
-    public function validatePaletteColors()
+    public function validatePaletteColors(): void
     {
         $usedHandles = [];
         foreach ($this->paletteColors as $i => $paletteColor) {
@@ -134,15 +137,18 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     public function getType(): string
     {
-        return get_class($this);
+        return $this::class;
     }
 
+    /**
+     * @return string[]
+     */
     public function getElementValidationRules(): array
     {
         return ['validateColorValue'];
     }
 
-    public function validateColorValue(ElementInterface $element)
+    public function validateColorValue(ElementInterface $element): void
     {
         if ($element->getScenario() === Element::SCENARIO_LIVE) {
             $fieldValue = $element->getFieldValue($this->handle);
@@ -157,12 +163,12 @@ class ColoritField extends Field implements PreviewableFieldInterface
         return Schema::TYPE_TEXT;
     }
 
-    public function isValueEmpty($value, ElementInterface $element): bool
+    public function isValueEmpty(mixed $value, ElementInterface $element): bool
     {
         return empty($value->handle ?? '');
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         if ($value instanceof Color) {
             return $value;
@@ -181,7 +187,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
         return null;
     }
 
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         $serialized = [];
         if ($value instanceof Color) {
@@ -194,8 +200,9 @@ class ColoritField extends Field implements PreviewableFieldInterface
         return parent::serializeValue($serialized, $element);
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
+        $presetOptions = [];
         $field = $this;
         $presets = [];
         $presetOptions[] = [
@@ -222,7 +229,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
         ));
     }
 
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         $this->_populateWithPreset();
 
@@ -247,7 +254,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
         ]);
     }
 
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
         if (!$value) {
             return '<div class="color small static"><div class="color-preview"></div></div>';
@@ -306,7 +313,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
         return $color;
     }
 
-    private function _populateWithPreset()
+    private function _populateWithPreset(): void
     {
         if ($this->presetId) {
             $preset = Colorit::$plugin->getPresets()->getPresetById($this->presetId);

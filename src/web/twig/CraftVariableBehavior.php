@@ -11,7 +11,7 @@ class CraftVariableBehavior extends Behavior
 {
     public $colorit;
 
-    public function init()
+    public function init(): void
     {
         parent::init();
         // Point `craft.colorit` to the craft\colorit\Plugin instance

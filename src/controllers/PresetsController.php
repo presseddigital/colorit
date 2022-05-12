@@ -59,7 +59,7 @@ class PresetsController extends Controller
         ]);
     }
 
-    public function actionSave()
+    public function actionSave(): ?\yii\web\Response
     {
         $this->requirePostRequest();
 
@@ -112,7 +112,7 @@ class PresetsController extends Controller
             $preset = Craft::createObject($type);
             return Craft::configure($preset, $attributes);
         } catch (\Exception $e) {
-            $error = $e->getMessage();
+            $e->getMessage();
             return false;
         }
     }

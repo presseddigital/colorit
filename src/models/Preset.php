@@ -11,9 +11,15 @@ use presseddigital\colorit\Colorit;
 
 class Preset extends Model
 {
-    private $_fieldType;
-    private $_fieldTypeTemplate;
-    private $_fieldsUsing;
+    /**
+     * @var mixed|null
+     */
+    private ?mixed $_fieldType = null;
+    /**
+     * @var mixed|null
+     */
+    private ?mixed $_fieldTypeTemplate = null;
+    private ?array $_fieldsUsing = null;
 
     // Public Properties
     // =========================================================================
@@ -25,7 +31,9 @@ class Preset extends Model
 
     // Public Methods
     // =========================================================================
-
+    /**
+     * @return mixed[]
+     */
     public function rules(): array
     {
         $rules = parent::rules();
@@ -35,7 +43,7 @@ class Preset extends Model
         return $rules;
     }
 
-    public function validateFieldTypeSettings()
+    public function validateFieldTypeSettings(): void
     {
         $fieldType = $this->getFieldTypeTemplate();
         if ($fieldType && !$fieldType->validate()) {
