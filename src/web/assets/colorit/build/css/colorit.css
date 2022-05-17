@@ -78,8 +78,8 @@
 }
 
 .colorit--palette .colorit--palette-customColor .colorit--palette-customColorSwatch {
-    height:32px;
-    width:32px;
+    height:34px;
+    width:34px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0 3px 3px 0;
     display:none;
