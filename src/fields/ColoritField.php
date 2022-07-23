@@ -11,6 +11,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\helpers\Json;
 use craft\validators\ArrayValidator;
 use craft\web\View;
+use GraphQL\Type\Definition\Type;
 use presseddigital\colorit\Colorit;
 use presseddigital\colorit\helpers\ColorHelper;
 use presseddigital\colorit\models\Color;
@@ -161,6 +162,11 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
+    }
+
+    public function getContentGqlType(): Type|array
+    {
+        return Type::string();
     }
 
     public function isValueEmpty(mixed $value, ElementInterface $element): bool
