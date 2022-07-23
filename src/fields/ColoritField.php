@@ -7,10 +7,10 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
-
 use craft\helpers\Json;
 use craft\validators\ArrayValidator;
 use craft\web\View;
+
 use presseddigital\colorit\Colorit;
 use presseddigital\colorit\helpers\ColorHelper;
 use presseddigital\colorit\models\Color;
@@ -18,6 +18,8 @@ use presseddigital\colorit\models\PaletteColor;
 use presseddigital\colorit\web\assets\colorit\ColoritAssetBundle;
 
 use yii\db\Schema;
+
+use GraphQL\Type\Definition\Type;
 
 /**
  * @author    Pressed Digital
@@ -155,6 +157,11 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
+    }
+
+    public function getContentGqlType()
+    {
+        return Type::string();
     }
 
     public function isValueEmpty($value, ElementInterface $element): bool
