@@ -1,5 +1,18 @@
 # Colorit Changelog
-> A palette fieldtype built for [Craft 3](https://craftcms.com)
+> A palette fieldtype built for [Craft 4](https://craftcms.com)
+
+## 4.0.0 - 2022-08-16
+
+### Changed
+
+- Bump version numbers to mirror crafts major versions
+
+### Added
+- Craft 4 compatibility
+- Optional html5 picker support for custom colors [#30]
+- Custom color value persists when switching between pallette color and custom colors
+
+[#30]: https://github.com/presseddigital/colorit/issues/30
 
 ## 1.1.2.1 - 2021-07-28
 
