@@ -48,6 +48,14 @@ class Color extends Model implements \Stringable
         return $this->getColor();
     }
 
+    public function __construct($config = [])
+    {
+        // if(isset($config['opacity']) && !is_numeric($config['opacity'])){
+        //     $config['opacity'] = 100;
+        // }
+        parent::__construct($config);
+    }
+
     /**
      * @return mixed[]
      */

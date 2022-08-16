@@ -314,7 +314,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
 
     private function _createColor($value)
     {
-        $color = Craft::configure(new Color(), $value);
+        $color = new Color($value);
         $this->_populateWithPreset();
         $color->field = $this;
         return $color;
