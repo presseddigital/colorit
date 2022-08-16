@@ -8,8 +8,10 @@
 - Bump version numbers to mirror crafts major versions
 
 ### Added
-- Optional html5 picker support for custom colors
+- Optional html5 picker support for custom colors [#30]
 - Custom color value persists when switching between pallette color and custom colors
+
+[#30]: https://github.com/presseddigital/colorit/issues/30
 
 ## 1.1.2.1 - 2021-07-28
 
