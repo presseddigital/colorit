@@ -11,12 +11,14 @@ var Colorit = (function() {
 	};
 
 	var selectors = {
-		palette: '[data-colorit-palette]',
-		paletteColors: '[data-colorit-palette-colors]',
-		paletteColor: '[data-colorit-palette-color]',
-		opacity: '[data-colorit-palette-opacity]',
-		custom: '[data-colorit-palette-custom]',
-		customColor: '[data-colorit-palette-custom-color]',
+		palette: '[data]',
+		paletteColors: '[data-colors]',
+		paletteColor: '[data-color]',
+		opacity: '[data-opacity]',
+		custom: '[data-custom]',
+		customColor: '[data-custom-color]',
+		customColorPicker: '[data-custom-color-picker]',
+		customColorPickerTrigger: '[data-custom-color-picker-trigger]',
 	};
 
 	var classes = {
@@ -40,7 +42,8 @@ var Colorit = (function() {
 			customColor: null,
 			handleInput: null,
 			opacityInput: null,
-			customColorInput: null,
+			customColorPicker: null,
+			customColorPickerTrigger: null,
 		};
 
 		// Private Methods
@@ -85,6 +88,9 @@ var Colorit = (function() {
 		};
 
 		var clearCustomColorSelection = function(clearValue) {
+			if (isValidHex(dom.customColorInput.value)) {
+				dom.customColorInput.setAttribute('data-last-color', dom.customColorInput.value);
+			}
 	        if(clearValue) {
 	        	dom.customColorInput.value = '';
 	        }
@@ -95,7 +101,6 @@ var Colorit = (function() {
 	        if (dom.custom) {
 		        dom.custom.classList.remove(classes.selectedColor);
 	        }
-
 		};
 
 		// Event Handlers
@@ -120,6 +125,17 @@ var Colorit = (function() {
 			}
 		};
 
+		var customColorPickerHandler = function(event) {
+			dom.customColorInput.value = event.target.value;
+			dom.customColorInput.dispatchEvent(new Event('keyup'));
+		}
+
+		var customColorPickerTriggerHandler = function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			dom.customColorPicker.click();
+		}
+
 		var customColorHandler = function(event) {
 
 			event.preventDefault();
@@ -127,29 +143,31 @@ var Colorit = (function() {
 
 			clearPaletteColorSelection();
 
+			if (event.type === 'focus') {
+				var lastCustomColor = dom.customColorInput.getAttribute('data-last-color');
+				if(lastCustomColor) {
+					dom.customColorInput.value = lastCustomColor;
+					dom.customColorInput.removeAttribute('data-last-color');
+				}
+			}
+
 			var color = dom.customColorInput.value;
 
 			dom.handleInput.value = '_custom_';
-			if(color == '')
-			{
+			if(color == '') {
 				dom.handleInput.value = '';
 			}
 
-			if(!color.match('^#') && color != '#' && color != '')
-			{
+			if(!color.match('^#') && color != '#' && color != '') {
 				color = '#' + color;
 				dom.customColorInput.value = color;
 			}
 
 			if(isValidHex(color)) {
-
 				dom.customColor.setAttribute('data-color', color);
 				setOpacity(dom.customColor);
-
 				dom.custom.classList.add(classes.selectedColor);
-			}
-			else
-			{
+			} else {
 				clearCustomColorSelection();
 			}
 		};
@@ -201,6 +219,14 @@ var Colorit = (function() {
 				if(dom.customColorInput) {
 					dom.customColorInput.addEventListener("keyup", customColorHandler, false);
 					dom.customColorInput.addEventListener("focus", customColorHandler, false);
+				}
+
+				dom.customColorPicker = dom.field.querySelector(selectors.customColorPicker);
+				dom.customColorPickerTrigger = dom.field.querySelector(selectors.customColorPickerTrigger);
+
+				if(dom.customColorPicker && dom.customColorPickerTrigger) {
+					dom.customColorPicker.addEventListener("input", customColorPickerHandler, false);
+					dom.customColorPickerTrigger.addEventListener("click", customColorPickerTriggerHandler, false);
 				}
 
 			}

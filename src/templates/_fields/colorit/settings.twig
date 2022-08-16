@@ -30,11 +30,9 @@
 
 {% endif %}
 
-
-
 {% set showInlineSettings = field.presetMode or (not selectedPresetExists or not field.presetId or field.presetId == '') %}
 
-<div id="{{ ''|id }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
+<div id="{{ ''|namespaceInputId }}"{% if not showInlineSettings %} class="hidden"{% endif %}>
 
     {{ forms.editableTableField({
         label: 'Colors',
@@ -128,6 +126,14 @@
         errors: field.getErrors('allowCustomColor'),
     }) }}
 
+    {{ forms.lightswitchField({
+        label: "Custom Color Picker"|t('colorit'),
+        instructions: "Allow the user to set the custom color using the html5 picker."|t('colorit'),
+        id: 'allowCustomColorPicker',
+        name: 'allowCustomColorPicker',
+        on: field.allowCustomColorPicker,
+        errors: field.getErrors('allowCustomColorPicker'),
+    }) }}
 
     {{ forms.lightswitchField({
         label: "Field Descriptions"|t('colorit'),

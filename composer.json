@@ -16,8 +16,8 @@
         "swatch"
     ],
     "support": {
-        "docs": "https://github.com/presseddigital/colorit/blob/master/README.md",
-        "issues": "https://github.com/presseddigital/colorit/issues"
+        "docs": "https://github.com/presseddigital/colorit/blob/v3/README.md",
+        "issues": "https://github.com/presseddigital/colorit/issues?state=open"
     },
     "license": "proprietary",
     "authors": [
@@ -27,7 +27,8 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.2"
+        "craftcms/cms": "^3.1.8",
+        "php": "^7.2.5|^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +41,7 @@
         "handle": "colorit",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/presseddigital/colorit/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/presseddigital/colorit/v3/CHANGELOG.md",
         "class": "presseddigital\\colorit\\Colorit"
     }
 }

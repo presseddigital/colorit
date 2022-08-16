@@ -13,7 +13,7 @@
 				<p class="colorit--palette-description">{{ 'Palette'|t('colorit') }}</p>
 			{% endif %}
 
-			<ul class="colorit--palette-colors" data-colorit-palette-colors>
+			<ul class="colorit--palette-colors" data-colors>
 
 				{% for paletteColor in field.palette %}
 
@@ -25,7 +25,7 @@
 
 					{% set processedColor = field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(paletteColor.color, opacity) : '#' ~ paletteColor.color %}
 
-					<li class="{{ class }}" title="{{ paletteColor.label }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }};" data-colorit-palette-color>
+					<li class="{{ class }}" title="{{ paletteColor.label }}" data-handle="{{ paletteColor.handle }}" data-color="{{ paletteColor.color }}" style="background:{{ processedColor }};" data-color>
 					</li>
 
 				{% endfor %}
@@ -45,21 +45,26 @@
 
 		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
 
-		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}" data-colorit-palette-custom>
+		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}" data-custom style>
 			{% if field.fieldDescriptions %}
 				<p class="colorit--custom-description">{{ 'Custom HEX'|t('colorit') }}</p>
+			{% endif %}
+			{% if field.allowCustomColorPicker %}
+				<input type="color" style="opacity:0; width:0px; position:absolute;" data-custom-color-picker>
 			{% endif %}
 			{{ forms.text({
 				id: id~'-custom',
 				name: name~'[custom]',
-				placeholder: '#HEX',
+				placeholder: '#000000',
 				value: custom
 			}) }}
-			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }};" data-colorit-palette-custom-color>
-			</div>
+			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }};" data-custom-color></div>
 		</div>
-
-
+		{% if field.allowCustomColorPicker %}
+			<a href="#" data-custom-color-picker-trigger>
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABmJLR0QA/wD/AP+gvaeTAAABJUlEQVQ4jc3Uvy8DYRgA4IeahNLR7MeGRCJ2MTEZMVBLxW4Qi4mh8Q+IQaqDxNC/gXSxNsTKxCKERBgkhvsalxLpXW/wJpfc997lue/e973L6TwmsYkp3OC9u0OwiEM08IFzFHo6ANexijm8hlw3iknRPsxiCCtYiIFwj/EkYB511PCEwi8PvMREEnQf2+F8F2dovmm/qJ7FJCBM4w6jLXABF6IaJ4ocTsJxjZEY/IxSWrAc1jO4wnBY10QTkBpsRgW3ohrX0Ru/+Nfw53CMB2zF8mV0YTHcM4+3dndYwUFLfg+nvrvedvx/EI78bEpZ1KxcGrCEqqgJmYBEv698FmBzpJYD+hLgqujzW8Nnmh0O4hFjAWtgIw3UGjsBXsoCi8dAVtAX3k08llqNOnwAAAAASUVORK5CYII=">
+			</a>
+		{% endif %}
 
 	{% else %}
 
@@ -70,7 +75,7 @@
 
 	{% if field.allowOpacity %}
 
-		<div class="colorit--palette-opacity" data-colorit-palette-opacity>
+		<div class="colorit--palette-opacity" data-opacity>
 			{% if field.fieldDescriptions %}
 				<p class="colorit--opacity-description">{{ 'Opacity'|t('colorit') }}</p>
 			{% endif %}

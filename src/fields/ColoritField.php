@@ -37,6 +37,7 @@ class ColoritField extends Field implements PreviewableFieldInterface
     public $paletteColors;
     public $paletteBaseColors;
     public $allowCustomColor = false;
+    public $allowCustomColorPicker = false;
     public $allowOpacity = false;
     public $fieldDescriptions = false;
     public $colorFormat = 'auto';
@@ -73,8 +74,8 @@ class ColoritField extends Field implements PreviewableFieldInterface
         $rules[] = [['colorFormat', 'defaultColorHandle'], 'string'];
         $rules[] = [['defaultColorHandle'], 'validateDefaultColorHandle'];
         $rules[] = [['colorFormat'], 'default', 'value' => 'auto'];
-        $rules[] = [['allowCustomColor', 'allowOpacity', 'fieldDescriptions'], 'boolean'];
-        $rules[] = [['allowCustomColor', 'allowOpacity', 'fieldDescriptions'], 'default', 'value' => false];
+        $rules[] = [['allowCustomColor', 'allowCustomColorPicker', 'allowOpacity', 'fieldDescriptions'], 'boolean'];
+        $rules[] = [['allowCustomColor', 'allowCustomColorPicker', 'allowOpacity', 'fieldDescriptions'], 'default', 'value' => false];
         $rules[] = [['defaultOpacity'], 'integer', 'min' => 0, 'max' => 100];
         $rules[] = [['defaultOpacity'], 'default', 'value' => 100];
 
