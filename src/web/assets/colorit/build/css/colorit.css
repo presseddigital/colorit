@@ -39,11 +39,7 @@
     width: 24px;
     height: 24px;
     display: block;
-    position: absolute;
-    right: 0;
-    left: 4px;
-    top: 4px;
-    bottom: 0;
+    margin: 3px auto 0;
     z-index: 9;
 }
 .colorit--palette .colorit--palette-color.colorit--palette-colorIsTransparent::before {
