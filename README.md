@@ -2,7 +2,7 @@
 
 # Colorit plugin for Craft CMS 3
 
-A slick color picker fieldtype plugin for the Craft CMS 3 control panel. [That's a mouthful](https://www.youtube.com/watch?v=uFj5_2gk0rA).
+A color picker fieldtype plugin for the Craft CMS 3 control panel.
 
 This fieldtype plugin gives your content editors a simple tool for selecting from a color palette. Colorit also lets you create custom presets that can be selected when creating colorit fields.
 
@@ -39,9 +39,13 @@ Define a custom color.
 
 <p align="left"><img width="590px" src="resources/img/colorit-field-custom.png" alt="Custom Setting"></a></p>
 
-Option field descriptions.
+Optional field descriptions.
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-desc.png" alt="Field Descriptions"></a></p>
+
+Optional color picker.
+
+<p align="left"><img width="590px" src="resources/img/colorit-picker.png" alt="Color Picker"></a></p>
 
 
 ## Templating
@@ -108,7 +112,7 @@ When creating a new Colorit field you'll have the option to choose one of your p
 
 ## Tailwind CSS
 
-You can easily use Colorit with Tailwind CSS by outputting the Colorit field handle to the class attribute.
+You can easily use Colorit with [Tailwind CSS](https://tailwindcss.com/) by outputting the Colorit field handle to the class attribute.
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-tailwind.png" alt="Tailwind"></a></p>
 
@@ -116,4 +120,4 @@ You can easily use Colorit with Tailwind CSS by outputting the Colorit field han
 
 <p align="left"><img width="590px" src="resources/img/colorit-choose-twig.png" alt="Tailwind Twig"></a></p>
 
-Brought to you by [Pressed Digital](https://presseddigital.co.uk).
+Brought to you by [Pressed Digital](https://pressed.digital/).
