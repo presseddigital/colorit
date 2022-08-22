@@ -45,7 +45,7 @@
 
 		{% set processedColor = custom and field.allowOpacity and opacity < 100 ? craft.colorit.colors.hexToRgba(custom, opacity) : custom %}
 
-		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}" data-custom style>
+		<div class="colorit--palette-customColor{{ processedColor ? ' colorit--palette-colorIsSelected' }}{{ field.allowCustomColorPicker ? ' colorit--palette-customColorWithPicker' }}" data-custom style>
 			{% if field.fieldDescriptions %}
 				<p class="colorit--custom-description">{{ 'Custom HEX'|t('colorit') }}</p>
 			{% endif %}
@@ -59,13 +59,13 @@
 				value: custom
 			}) }}
 			<div class="colorit--palette-customColorSwatch" data-color="{{ custom }}" style="background:{{ processedColor }};" data-custom-color></div>
-		</div>
 
-		{% if field.allowCustomColorPicker %}
-			<a href="#" data-custom-color-picker-trigger>
-				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAABmJLR0QA/wD/AP+gvaeTAAABJUlEQVQ4jc3Uvy8DYRgA4IeahNLR7MeGRCJ2MTEZMVBLxW4Qi4mh8Q+IQaqDxNC/gXSxNsTKxCKERBgkhvsalxLpXW/wJpfc997lue/e973L6TwmsYkp3OC9u0OwiEM08IFzFHo6ANexijm8hlw3iknRPsxiCCtYiIFwj/EkYB511PCEwi8PvMREEnQf2+F8F2dovmm/qJ7FJCBM4w6jLXABF6IaJ4ocTsJxjZEY/IxSWrAc1jO4wnBY10QTkBpsRgW3ohrX0Ru/+Nfw53CMB2zF8mV0YTHcM4+3dndYwUFLfg+nvrvedvx/EI78bEpZ1KxcGrCEqqgJmYBEv698FmBzpJYD+hLgqujzW8Nnmh0O4hFjAWtgIw3UGjsBXsoCi8dAVtAX3k08llqNOnwAAAAASUVORK5CYII=">
-			</a>
-		{% endif %}
+			{% if field.allowCustomColorPicker %}
+				<a href="#" data-custom-color-picker-trigger>
+					<img src="data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ2OXB4IiBoZWlnaHQ9IjQ2OXB4IiB2aWV3Qm94PSIwIDAgNDY5IDQ2OSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJjbHIiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIG9wYWNpdHk9IjAuOTY5Ij4KICAgICAgICA8cGF0aCBkPSJNMzczLDIuODQyMTcwOTRlLTE0IEM0MjIuMDEzLDMuNTIzIDQ1My4xNzksMjguODU2IDQ2Ni41LDc2IEM0NzIuNDUyLDEwNy44NiA0NjUuMTE5LDEzNi4xOTQgNDQ0LjUsMTYxIEM0MjIuODMyNjI1LDE4Mi40OTk5MzYgNDAxLjMzMTk4MSwyMDQuMTY3MjUxIDM4MCwyMjYgQzM5NS4xNTIsMjU5Ljk0NyAzODguODE5LDI4OS4xMTQgMzYxLDMxMy41IEMzMzMuNjU2LDMzMS40NDEgMzA2LjMyMywzMzEuNDQxIDI3OSwzMTMuNSBDMjc0Ljg1NDc2OCwzMTAuMzU3NjgxIDI3MS4wMDU0MjMsMzA2Ljg0MzA2MiAyNjcuNSwzMDMgQzIxOC45OTk0MzksMzUxLjgzMzkxNCAxNzAuMTY0OTYsNDAwLjMzNTA1MiAxMjEsNDQ4LjUgQzg4LjE3NzU2NTksNDU2LjE2NDQyNCA1NS4xNjcwNzMyLDQ2Mi45OTk5MzEgMjIsNDY5IEM4Ljc2Niw0NjcuMjY2IDEuNDMzLDQ1OS43NjYgMi44NDIxNzA5NGUtMTQsNDQ2LjUgTDE4LjUsMzU0IEMxOS4yMjE4NjM4LDM1MS41NTcwMzQgMjAuMjI4NzkyNCwzNDkuMjA3NTMzIDIxLjUsMzQ3IEM2OS4zMzEyNTA4LDI5OC4xNjgwMzcgMTE3LjQ5OTA2NSwyNDkuNjY2ODgxIDE2NiwyMDEuNSBDMTQyLjI4LDE3OC4yMzYgMTM2LjQ0NywxNTEuMDcgMTQ4LjUsMTIwIEMxNjYuMjc2LDg4LjM4OSAxOTMuMTEsNzYuMjIyIDIyOSw4My41IEMyMzMuODQ2ODgzLDg0LjgzNjU0MzkgMjM4LjUzOTQ1NCw4Ni42ODAwNTM3IDI0Myw4OSBDMjY2LjE2NzgyNiw2NS45OTgxNDU2IDI4OS41MDE3Nyw0My4xNjQyMTQ2IDMxMywyMC41IEMzMzAuODY1LDcuMjA2IDM1MC44NjUsMC4zNzMgMzczLDIuODQyMTcwOTRlLTE0IFogTTE5NywyMzMgQzE1MS42NjcwMTksMjc4LjgzMjc3MiAxMDYuMTY2NzE1LDMyNC40OTk3NDQgNjAuNSwzNzAgQzU2LjgxLDM4NS45NDcgNTMuMzEsNDAxLjk0NyA1MCw0MTggQzY2LjMzLDQxNS44MzUgODIuNjYzLDQxMi42NjkgOTksNDA4LjUgTDk5LDQwOC41IEwyMzYsMjcxLjUgQzIyMy4xNjY2ODUsMjU4LjQ5ODkwNiAyMTAuMTY1NTk2LDI0NS42NjQ0OTggMTk3LDIzMyBaIiBpZD0iY2xyLXNocCIgZmlsbD0iIzkyOUJBMyI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4K">
+				</a>
+			{% endif %}
+		</div>
 
 	{% else %}
 

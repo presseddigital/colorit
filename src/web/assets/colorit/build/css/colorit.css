@@ -68,9 +68,15 @@
 
 .colorit--palette .colorit--palette-opacity input,
 .colorit--palette .colorit--palette-customColor input {
-    width: 120px;
     height: 34px;
     border-radius: 3px;
+}
+.colorit--palette .colorit--palette-customColor input {
+    width: 130px;
+}
+.colorit--palette .colorit--palette-customColorWithPicker input {
+    width: 160px;
+    padding-left: 42px;
 }
 
 .colorit--palette .colorit--palette-opacity input {
@@ -117,3 +123,26 @@
     margin-bottom: 2px;
     opacity: 0.7;
 }
+
+[data-custom-color-picker-trigger] {
+    height:34px;
+    width:34px;
+    border: 1px solid #d7dfe7;
+    border-radius: 3px 0 0 3px;
+    background-color: #f3f7fc;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+[data-custom-color-picker-trigger]:hover {
+    background-color: #eef4fa;
+}
+[data-custom-color-picker-trigger] img {
+    height:14px;
+    width:14px;
+    margin: 9px auto 0;
+}
+[data-custom-color-picker-trigger]:hover img {
+    filter: brightness(80%);
+}
+
