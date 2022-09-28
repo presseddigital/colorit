@@ -88,8 +88,6 @@ class Colorit extends Plugin
         $this->_registerWidgets();
         $this->_registerVariables();
         $this->_registerElementTypes();
-
-        Craft::info(Craft::t('colorit', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
     }
 
     public function beforeInstall(): bool
