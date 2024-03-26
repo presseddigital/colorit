@@ -1,14 +1,14 @@
 <p align="left"><a href="https://github.com/presseddigital/colorit" target="_blank"><img width="100" height="100" src="resources/img/colorit.svg" alt="Colorit"></a></p>
 
-# Colorit plugin for Craft CMS 4
+# Colorit plugin for Craft CMS 5
 
-A color picker fieldtype plugin for the Craft CMS 4 control panel.
+A color picker fieldtype plugin for the Craft CMS 5 control panel.
 
 This fieldtype plugin gives your content editors a simple tool for selecting from a color palette. Colorit also lets you create custom presets that can be selected when creating colorit fields.
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0, or later.
+This plugin requires Craft CMS 5.0.0, or later.
 
 ## Installation
 

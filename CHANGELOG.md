@@ -1,5 +1,10 @@
 # Colorit Changelog
-> A palette fieldtype built for [Craft 4](https://craftcms.com)
+> A palette fieldtype built for [Craft 5](https://craftcms.com)
+
+## 5.0.0 - 2024-03-26
+
+### Added
+- Craft 5 compatibility
 
 ## 4.0.0 - 2022-08-24
 

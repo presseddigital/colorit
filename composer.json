@@ -1,8 +1,8 @@
 {
     "name": "presseddigital/colorit",
-    "description": "A slick color picker fieldtype plugin for the Craft CMS 4 control panel.",
+    "description": "A slick color picker fieldtype plugin for the Craft CMS 5 control panel.",
     "type": "craft-plugin",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -16,19 +16,19 @@
         "swatch"
     ],
     "support": {
-        "docs": "https://github.com/presseddigital/colorit/blob/v4/README.md",
+        "docs": "https://github.com/presseddigital/colorit/blob/v5/README.md",
         "issues": "https://github.com/presseddigital/colorit/issues?state=open"
     },
     "license": "proprietary",
     "authors": [
         {
             "name": "Pressed Digital",
-            "homepage": "https://presseddigital.co.uk"
+            "homepage": "https://pressed.digital"
         }
     ],
     "require": {
-        "craftcms/cms": "^4.0.0",
-        "php": "^8.0"
+        "craftcms/cms": "^5.0.0",
+        "php": "^8.2"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +41,7 @@
         "handle": "colorit",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/presseddigital/colorit/v4/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/presseddigital/colorit/v5/CHANGELOG.md",
         "class": "presseddigital\\colorit\\Colorit"
     }
 }
